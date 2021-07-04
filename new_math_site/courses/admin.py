@@ -8,7 +8,9 @@ class CourseAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     search_fields = ['title', 'created']
     summernote_fields = ('description', )
+    filter_horizontal = ('students_on_course', )
     list_per_page = 10
+
 
 @admin.register(Module)
 class ModuleAdmin(admin.ModelAdmin):

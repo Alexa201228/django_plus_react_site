@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "./node_modules/.bin/webpack --progress --watch",
     "build": "./node_modules/.bin/webpack --progress --production --optimize-minimize"
-   },
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Alexa201228/django_plus_react_site.git"
@@ -35,5 +35,12 @@
     "style-loader": "^2.0.0",
     "webpack": "^5.38.1",
     "webpack-cli": "^4.7.2"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "react-redux": "^7.2.4",
+    "redux": "^4.1.0",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-thunk": "^2.3.0"
   }
 }
