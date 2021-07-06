@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 
 export class UserForm extends Component {
     state = {
-        name: '',
-        surname: '',
+        first_name: '',
         email: ''
     }
 
@@ -17,29 +16,19 @@ export class UserForm extends Component {
     }
 
     render() {
-        const { name, surname, email } = this.state;
+        const { first_name, email } = this.state;
         return (
             <div className="card card-body mt-4 mb-4">
                 <h1>Registration form</h1>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
-                      <label>Name</label>
+                      <label>First Name</label>
                         <input
                         className="form-control"
                         type="text"
-                        name="name"
+                        name="first_name"
                         onChange={this.onChange}
-                        value={name}
-                        />  
-                    </div>
-                    <div className="form-group">
-                      <label>Surname</label>
-                        <input
-                        className="form-control"
-                        type="text"
-                        name="surname"
-                        onChange={this.onChange}
-                        value={surname}
+                        value={first_name}
                         />  
                     </div>
                     <div className="form-group">

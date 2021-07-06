@@ -1,65 +1,107 @@
-import React, { Component } from "react";
-import { render } from "react-dom";
+import React, {Component, Fragment} from 'react';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { makeStyles } from '@material-ui/core/styles';
+import { NavLink } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
+import Button from '@material-ui/core/Button';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+ import { logout } from '../../actions/auth';
 
-class Header extends Component{
-    constructor(props) {
-        super(props);
-        this.state = {
-          data: [],
-          loaded: false,
-          placeholder: "Loading"
-        };
-    }
 
-        componentDidMount() {
-            fetch("api/courses/")
-              .then(response => {
-                if (response.status > 400) {
-                  return this.setState(() => {
-                    return { placeholder: "Something went wrong!" };
-                  });
-                }
-                return response.json();
-              })
-              .then(data => {
-                this.setState(() => {
-                  return {
-                    data,
-                    loaded: true
-                  };
-                });
-              });
-          }
 
-          render() {
-            var courses = this.state.data;
-            return (
-                <nav className="navbar navbar-expand-lg navbar-light bg-light" >
-                   <div className="container-fluid">
-                        <a className="navbar-brand" href="#">Math logo</a>
-                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <span className="navbar-toggler-icon"></span>
-                        </button>
-                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li className="nav-item dropdown">
-                            <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Courses
-                            </a>
-                
-                            <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                {courses.map(course => (
-                                <li><a className="dropdown-item" href="#">{course.title}</a></li>
-                                ))}
-                            </ul>
-                            </li>
-                        </ul>
-                    </div>
-                    </div>    
-                </nav>
-            );
-          }
-        
+export class Header extends Component {
+	static propTypes = {
+		auth: PropTypes.object.isRequired,
+		logout: PropTypes.func.isRequired
+	}
+
+	render() {
+		const { isAuthenticated, user } = this.props.auth;
+
+		const authLinks = (
+			<Fragment>
+				<Button
+					href="#"
+					color="primary"
+					variant="outlined"
+					component={NavLink}
+					to="/logout"
+					onClick={this.props.logout}
+					>
+					Logout
+				</Button>
+			</Fragment>
+				
+		);
+
+		const guessLinks = (
+			<Fragment>
+				<Link
+					color="textPrimary"
+					href="#"
+					component={NavLink}
+					to="/register"
+				>
+					Register
+				</Link>
+
+				<Button
+					href="#"
+					color="primary"
+					variant="outlined"
+					component={NavLink}
+					to="/login"
+				>
+					Login
+				</Button>
+			</Fragment>
+				
+		);
+
+		return (
+			<Fragment>
+				<nav className="navbar navbar-expand-sm">
+					<CssBaseline />
+				<AppBar
+					position="static"
+					color="default"
+					elevation={0}
+
+				>
+					<Toolbar >
+						<Typography
+							variant="h6"
+							color="inherit"
+							noWrap
+						>
+							<Link
+								component={NavLink}
+								to="/"
+								underline="none"
+								color="textPrimary"
+							>
+								Mathematiks
+							</Link>
+						</Typography>
+						{isAuthenticated ? authLinks : guessLinks }
+
+					</Toolbar>
+				</AppBar>
+				</nav>
+				
+			</Fragment>
+		);
+	}
 }
+	
 
-export default Header;
+
+const mapStateToProps = state => ({
+	auth: state.auth
+});
+
+export default connect(mapStateToProps, {logout})(Header);

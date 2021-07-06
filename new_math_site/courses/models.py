@@ -14,7 +14,9 @@ class Course(models.Model):
                                          verbose_name='Количество модулей')
     students_on_course = ManyToManyField(
         to='accounts.User',
-        related_name='courses')
+        related_name='courses',
+        null=True,
+        blank=True)
 
     def __str__(self):
         return self.title

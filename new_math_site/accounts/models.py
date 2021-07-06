@@ -44,22 +44,20 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-    nick_name = models.CharField(
-        max_length=100,
-        unique=True
-    )
-    first_name = models.CharField(max_length=30, null=True, blank=True)
+    first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30, null=True, blank=True)
     date_joined = models.DateTimeField(default=timezone.now)
     student_courses = models.ManyToManyField(
         to='courses.Course',
-        related_name='accounts'
+        related_name='accounts',
+        null=True,
+        blank=True
     )
 
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['nick_name']
+    REQUIRED_FIELDS = []
 
     def __str__(self) -> str:
         return f'{self.email}'

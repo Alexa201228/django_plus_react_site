@@ -5,8 +5,7 @@ import Courses from './Courses';
 export default function Dashboard() {
     return (
         <Fragment>
-            <UserForm />
-            <Courses />
+           
         </Fragment>
     )
 }
