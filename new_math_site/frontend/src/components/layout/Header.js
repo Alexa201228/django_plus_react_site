@@ -24,8 +24,14 @@ export class Header extends Component {
 
 		const authLinks = (
 			<Fragment>
+				<ul className="navbar-nav ml-auto mt-2 mt-lg-0">
+				<span className="navbar-text mr-3">
+					<strong>
+						{ user ? `Welcome ${user.first_name}` : ""}
+					</strong>
+				</span>
 				<Button
-					href="#"
+					href=""
 					color="primary"
 					variant="outlined"
 					component={NavLink}
@@ -34,30 +40,35 @@ export class Header extends Component {
 					>
 					Logout
 				</Button>
+				</ul>
 			</Fragment>
 				
 		);
 
 		const guessLinks = (
 			<Fragment>
-				<Link
-					color="textPrimary"
-					href="#"
+				<ul>
+				<Button
+					color="primary"
+					variant="outlined"
+					href=""
 					component={NavLink}
 					to="/register"
 				>
 					Register
-				</Link>
+				</Button>
 
 				<Button
-					href="#"
+					href=""
 					color="primary"
 					variant="outlined"
 					component={NavLink}
 					to="/login"
 				>
 					Login
-				</Button>
+				</Button>	
+				</ul>
+				
 			</Fragment>
 				
 		);

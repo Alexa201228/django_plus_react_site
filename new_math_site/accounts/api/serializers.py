@@ -1,6 +1,7 @@
 from django.contrib.auth import models
 from django.db.models import fields
 from rest_framework import serializers
+from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 from ..models import User
 from django.contrib.auth import authenticate
 
@@ -36,3 +37,4 @@ class LoginSerializer(serializers.Serializer):
         if user and user.is_active:
             return user
         raise serializers.ValidationError('Incorrect Credentials')
+
