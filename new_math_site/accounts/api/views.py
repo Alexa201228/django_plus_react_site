@@ -1,6 +1,10 @@
+from django.core.exceptions import ValidationError
+from django.db.models.query import ValuesIterable
+
 from rest_framework import generics, permissions
 from rest_framework_simplejwt.tokens import RefreshToken, OutstandingToken, BlacklistedToken
 from rest_framework.response import Response
+
 from rest_framework import status
 
 from .serializers import LoginSerializer, RegisterSerializer, UserSerializer
@@ -11,18 +15,22 @@ class RegisterApiView(generics.GenericAPIView):
     permission_classes = [permissions.AllowAny, ]
 
     def post(self, request):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.save()
-        token = RefreshToken.for_user(user).access_token
-        return Response(
-            {
-                'user': UserSerializer(
-                    user,
-                    context=self.get_serializer_context()).data,
-                'token': str(token)
-            }
-        )
+        try:
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            user = serializer.save()
+            print(user)
+            token = RefreshToken.for_user(user).access_token
+            return Response(
+                {
+                    'user': UserSerializer(
+                        user,
+                        context=self.get_serializer_context()).data,
+                    'token': str(token)
+                }
+            )
+        except ValidationError:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class LoginApiView(generics.GenericAPIView):
@@ -30,18 +38,22 @@ class LoginApiView(generics.GenericAPIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data
-        token = RefreshToken.for_user(user).access_token
-        return Response(
-            {
-                'user': UserSerializer(
-                    user,
-                    context=self.get_serializer_context()).data,
-                'token': str(token)
-            }
-        )
+        try:
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            user = serializer.validated_data
+            token = RefreshToken.for_user(user).access_token
+            return Response(
+                {
+                    'user': UserSerializer(
+                        user,
+                        context=self.get_serializer_context()).data,
+                    'token': str(token)
+                }
+            )
+        except ValidationError:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        
 
 
 class UserApiView(generics.RetrieveAPIView):
@@ -56,14 +68,15 @@ class UserApiView(generics.RetrieveAPIView):
 
 class LogoutView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated, ]
+    next_page = '/'
 
     def post(self, request, *args, **kwargs):
         if self.request.data.get('all'):
             token: OutstandingToken
             for token in OutstandingToken.objects.filter(user=request.user):
                 _, _ = BlacklistedToken.objects.get_or_create(token=token)
-            return Response({"status": "OK, goodbye, all refresh tokens blacklisted"})
+            return Response(status=status.HTTP_204_NO_CONTENT)
         refresh_token = self.request.data.get('refresh_token')
         token = RefreshToken(token=refresh_token)
         token.blacklist()
-        return Response({"status": "OK, goodbye"})
+        return Response(status=status.HTTP_200_OK)

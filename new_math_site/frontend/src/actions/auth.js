@@ -95,7 +95,7 @@ export const logout = () => (dispatch, getState) => {
             });
 
         }).catch(err => {
-            console.log(err.response);
+            console.log(err);
         });
 };
 

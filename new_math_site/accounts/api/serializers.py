@@ -1,7 +1,8 @@
-from django.contrib.auth import models
-from django.db.models import fields
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 from rest_framework import serializers
-from rest_framework_simplejwt.tokens import RefreshToken, TokenError
+from rest_framework.response import Response
+from rest_framework import status
 from ..models import User
 from django.contrib.auth import authenticate
 
@@ -20,12 +21,16 @@ class RegisterSerializer(serializers.HyperlinkedModelSerializer):
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
-        password = validated_data.pop('password', None)
-        instance = self.Meta.model(**validated_data)
-        if password is not None:
-            instance.set_password(password)
-        instance.save()
-        return instance
+        try:
+            password = validated_data.pop('password', None)
+            instance = self.Meta.model(**validated_data)
+            if password is not None:
+                validate_password(password, instance)
+                instance.set_password(password)
+                instance.save()
+                return instance
+        except ValidationError as e:
+            raise e
 
 
 class LoginSerializer(serializers.Serializer):
@@ -34,7 +39,6 @@ class LoginSerializer(serializers.Serializer):
 
     def validate(self, attrs):
         user = authenticate(**attrs)
-        if user and user.is_active:
+        if user and user.is_active and not user.is_superuser:
             return user
         raise serializers.ValidationError('Incorrect Credentials')
-

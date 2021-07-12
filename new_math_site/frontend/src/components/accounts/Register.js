@@ -1,29 +1,32 @@
-import React, { Component } from 'react';
+import '../styles/register.css';
+import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { register } from '../../actions/auth';
+import { Fragment } from 'react';
+import { useForm } from 'react-hook-form';
+import { ErrorMessage } from "@hookform/error-message";
 
 
-
-export class Register extends Component {
-  state = {
-    first_name: '',
-    email: '',
-    password: '',
-
-  };
-
-  static propTypes = {
-    register: PropTypes.func.isRequired,
-    isAuthenticated: PropTypes.bool,
-  };
-
-  onSubmit = (e) => {
-    e.preventDefault();
-    const { first_name, email, password } = this.state;
+export function Register(props) {
+  const { register,
+    handleSubmit,
+    formState,
+    formState: { errors },
+    watch
+  } = useForm({
+    mode: 'onChange',
+    criteriaMode: "all"
+  });
+ 
+  const first_name = watch('first_name');
+  const email = watch('email');
+  const password = watch('password');
+  
+  function onSubmit() {
     if (password === null) {
-      console.log("You've missed some credentials");
+      alert('Some credentials does not suit requirements')
     }
     else {
       const newUser = {
@@ -31,67 +34,109 @@ export class Register extends Component {
         email,
         password
       };
-      this.props.register(newUser);
+      props.register(newUser);
     }
-  };
+  }
 
-  onChange = (e) => this.setState({ [e.target.name]: e.target.value });
-
-  render() {
-    if (this.props.isAuthenticated) {
-      return <Redirect to="/" />;
-    }
-    const { first_name, email, password } = this.state;
-    return (
-      <div className="col-md-6 m-auto">
-        <div className="card card-body mt-5">
-          <h2 className="text-center">Register</h2>
-          <form onSubmit={this.onSubmit}>
-            <div className="form-group">
-              <label>First name</label>
-              <input
-                type="text"
-                className="form-control"
-                name="first_name"
-                onChange={this.onChange}
-                value={first_name}
-              />
-            </div>
-            <div className="form-group">
-              <label>Email</label>
-              <input
-                type="email"
-                className="form-control"
-                name="email"
-                onChange={this.onChange}
-                value={email}
-              />
-            </div>
-            <div className="form-group">
-              <label>Password</label>
-              <input
-                type="password"
-                className="form-control"
-                name="password"
-                onChange={this.onChange}
-                value={password}
-              />
-            </div>
-
-            <div className="form-group">
-              <button type="submit" className="btn btn-primary">
+  if (props.isAuthenticated) {
+      return <Redirect to='/' />;
+  }
+  
+  return (
+    <Fragment>
+      <div className='col-md-6 m-auto'>
+        <div className='card card-body mt-5'>
+          <h2 className='text-center'>Register</h2>
+          <form className='justify-content-center align-items-center' onSubmit={handleSubmit(onSubmit)}>
+              <div className='container'>
+              <label className='custom-field'>
+                <span>First name</span>
+                <input
+                  name='first_name'
+                  {...register('first_name', {
+                      required: true
+                    })}
+                    placeholder='First name'
+                />
+                {errors.first_name && <i>This field is required</i>}
+              </label>
+              <label className='custom-field'>
+                <span>Enter Email</span>
+                <input
+                  {...register('email', {
+                      required: true,
+                    pattern: {
+                      value: /^(([^<>()\[\]\.,;:\s@\']+(\.[^<>()\[\]\.,;:\s@\']+)*)|(\'.+\'))@(([^<>()[\]\.,;:\s@\']+\.)+[^<>()[\]\.,;:\s@\']{2,})$/i,
+                      message:"Please enter valid email"
+                      } 
+                  })}
+                  style={{ borderColor: errors.email && "red" }}
+                  placeholder='Enter Email'
+                />
+                <ErrorMessage
+                  errors={errors}
+                  name="email"
+                  render={({ messages }) => {
+                  return messages
+                  ? Object.entries(messages).map(([type, message]) => (
+                    <p style={{ color: 'red'}} key={type}>{message}</p>
+                  ))
+                  : null;
+                  }}
+                />
+              </label>
+              <label className='custom-field'>
+                <span>Password</span>
+                <input
+                  {...register('password', {
+                    required: true,
+                    minLength: {
+                      value: 9,
+                      message: "Password should contain at least 9 symbols"
+                    },
+                      pattern: {
+                        value: /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})$/i,
+                        message: "Password should contain at least one uppercase letter, one lowercase "
+                          + "letter, one digit and one special character [!@#$%^&()]"
+                    },                     
+                  })}
+                  placeholder="Password"
+                />
+                <ErrorMessage
+                  errors={errors}
+                  name="password"
+                  render={({ messages }) => {
+                  return messages
+                  ? Object.entries(messages).map(([type, message]) => (
+                    <p key={type}>{message}</p>
+                  ))
+                : null;
+                }}
+              />              
+              </label>
+                <button type='submit' className='btn btn-primary'
+                disabled={!formState.isValid}>
                 Register
               </button>
-            </div>
             <p>
-              Already have an account? <Link to="/login">Login</Link>
+              Already have an account? <Link to='/login'>Login</Link>
             </p>
+              </div>
+              
           </form>
         </div>
       </div>
+    </Fragment>
+      
     );
   }
+
+
+Register.propTypes = {
+  register: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
 }
+
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });

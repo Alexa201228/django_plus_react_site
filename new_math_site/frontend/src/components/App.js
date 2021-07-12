@@ -10,11 +10,12 @@ import PrivateRoute from "./common/PrivateRoute";
 
 import { Provider } from 'react-redux';
 import store from "../store";
-import { loadUser } from "../actions/auth"
+import { loadUser } from "../actions/auth";
+import { getCourses } from "../actions/courses";
 
 class App extends Component {
   componentDidMount() {
-    store.dispatch(loadUser());
+    store.dispatch(getCourses());
   }
 
   render() {
@@ -25,7 +26,7 @@ class App extends Component {
           <Header />
           <div className='container'>
               <Switch>
-                <PrivateRoute exact path='/' component={Dashboard} />
+                <Route exact path='/' component={Dashboard} />
                 <Route exact path='/register' component={Register} />
                 <Route exact path='/login' component={Login} />
             </Switch>

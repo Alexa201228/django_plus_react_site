@@ -7,7 +7,6 @@ export class Courses extends Component {
     static propTypes = {
         courses: PropTypes.array.isRequired,
         getCourses: PropTypes.func.isRequired,
-        enrollCourse: PropTypes.func.isRequired,
     }
     componentDidMount() {
         this.props.getCourses();
@@ -22,33 +21,7 @@ export class Courses extends Component {
                         <th>Modules</th>
                         <th>Enroll</th>
                     </thead>
-                    <tbody>
-                        {this.props.courses.map((course, index) =>
-                            (
-                            <tr key={index}>
-                                <td>{course.title}</td>
-                                <td><ul>
-                                {course.course_modules.map((module, i) =>(
-                                    <li key={i}>
-                                    {module.module_name}
-                                    </li>
-                            ))}
-                                </ul>
-                                </td>
-                                <td>
-                                    <button onClick=
-                                        {this.props.enrollCourse.bind(
-                                            this, course.slug
-                                        )}
-                                        className="btn btn-success">
-                                        Enroll course
-                                    </button>
-                                </td>
-                            </tr>
-          
-                            ))}
-                    </tbody>
-                </table>
+                   </table>
             </Fragment>
             
         )
