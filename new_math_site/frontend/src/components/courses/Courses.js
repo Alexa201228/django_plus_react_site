@@ -5,7 +5,7 @@ import { getCourses, enrollCourse } from '../../actions/courses';
 
 export class Courses extends Component {
     static propTypes = {
-        courses: PropTypes.array.isRequired,
+        courses: PropTypes.object.isRequired,
         getCourses: PropTypes.func.isRequired,
     }
     componentDidMount() {
@@ -30,7 +30,7 @@ export class Courses extends Component {
 
 const mapStateToProps = state => (
     {
-        courses: state.courses.courses
+        courses: state.courses
     }
 )
 

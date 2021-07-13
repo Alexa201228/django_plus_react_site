@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react';
+import React, { Fragment } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -8,108 +8,120 @@ import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
- import { logout } from '../../actions/auth';
+import { logout } from '../../actions/auth';
+import { makeStyles } from '@material-ui/core/styles';
 
 
-export class Header extends Component {
-	static propTypes = {
-		auth: PropTypes.object.isRequired,
-		logout: PropTypes.func.isRequired
-	}
+ const useStyles = makeStyles((theme) => ({
+	appBar: {
+		borderBottom: `1px solid ${theme.palette.divider}`,
+	},
+	link: {
+		margin: theme.spacing(1, 1.5),
+	},
+	toolbarTitle: {
+		flexGrow: 1,
+	},
+ }));
 
-	render() {
-		const { isAuthenticated, user } = this.props.auth;
 
-		const authLinks = (
-			<Fragment>
-				<ul className="navbar-nav ml-auto mt-2 mt-lg-0">
-				<span className="navbar-text mr-3">
-					<strong>
-						{ user ? `Welcome ${user.first_name}` : ""}
-					</strong>
-				</span>
-				<Button
-					href=""
-					color="primary"
-					variant="outlined"
-					component={NavLink}
-					to="/logout"
-					onClick={this.props.logout}
-					>
-					Logout
-				</Button>
-				</ul>
-			</Fragment>
+export function Header(props) {
+
+	const { isAuthenticated, user } = props.auth;
+	const classes = useStyles();
+	
+	//Header in case authenticated user
+	const authLinks = (
+		<Fragment>
+			<Typography
+				variant="h6"
+				color="inherit">
+				{ user ? `Welcome ${user.first_name}` : ""}
+			</Typography>
+			<Button
+				href=""
+				color="primary"
+				variant="outlined"
+				component={NavLink}
+				to="/logout"
+				onClick={props.logout}
+				>
+				Logout
+			</Button>
+
+		</Fragment>
 				
-		);
-
-		const guessLinks = (
-			<Fragment>
-				<ul>
+	);
+	
+	//Header if use is not authenticated
+	const guessLinks = (
+		<Fragment>
+			<nav>
 				<Button
 					color="primary"
+					href="#"
 					variant="outlined"
-					href=""
+					className={classes.link}
 					component={NavLink}
 					to="/register"
-				>
+					>
 					Register
 				</Button>
-
 				<Button
 					href=""
 					color="primary"
 					variant="outlined"
+					className={classes.link}
 					component={NavLink}
 					to="/login"
 				>
-					Login
+				Login
 				</Button>	
-				</ul>
+			</nav>
 				
-			</Fragment>
+		</Fragment>
 				
-		);
+	);
+	
 
-		return (
-			<Fragment>
-				<nav className="navbar navbar-expand-sm">
-					<CssBaseline />
+	return (
+		<Fragment>
+			<CssBaseline />
 				<AppBar
 					position="static"
 					color="default"
 					elevation={0}
-
+					className={classes.appBar}
 				>
-					<Toolbar >
-						<Typography
-							variant="h6"
-							color="inherit"
-							noWrap
+				<Toolbar className={classes.toolbar}>
+					<Typography
+						variant="h6"
+						color="inherit"
+						noWrap
+					>
+						<Link
+							component={NavLink}
+							to="/"
+							underline="none"
+							color="textPrimary"
 						>
-							<Link
-								component={NavLink}
-								to="/"
-								underline="none"
-								color="textPrimary"
-							>
-								Mathematiks
-							</Link>
-						</Typography>
-						{isAuthenticated ? authLinks : guessLinks }
-
-					</Toolbar>
-				</AppBar>
-				</nav>
-				
-			</Fragment>
-		);
-	}
+							Mathematiks
+						</Link>
+					</Typography>
+					{isAuthenticated ? authLinks : guessLinks }
+				</Toolbar>
+			</AppBar>
+		</Fragment>
+	);
 }
+
 	
+Header.propTypes = {
+	auth: PropTypes.object.isRequired,
+	logout: PropTypes.func.isRequired
+}
 
-
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
 	auth: state.auth
 });
 

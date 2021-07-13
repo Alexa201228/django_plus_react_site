@@ -1,73 +1,105 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from '../../actions/auth';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Box from '@material-ui/core/Box';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import { Typography } from '@material-ui/core';
 
 
-export class Login extends Component {
-  state = {
+const loginStyles = makeStyles((theme) => ({
+  input: {
+    width: '100%'
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
+
+
+export function Login(props) {
+  
+  const [userCredentials, setUserCredentials] = useState({
     email: '',
     password: '',
-  };
+  })
+  
 
-  static propTypes = {
-    login: PropTypes.func.isRequired,
-    isAuthenticated: PropTypes.bool,
-  };
-
-  onSubmit = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    this.props.login(this.state.email, this.state.password);
+    props.login(userCredentials.email, userCredentials.password);
   };
 
-  onChange = (e) => this.setState({ [e.target.name]: e.target.value });
+  const onChange = (e) => {
+    setUserCredentials({ ...userCredentials, [e.target.name]: e.target.value })
+  };
 
-    render() {
-    if (this.props.isAuthenticated) {
+  const logStyle = loginStyles();
+
+    if (props.isAuthenticated) {
             return <Redirect to="/" />;
-    }
-    const { email, password } = this.state;
-    return (
+  }
+  
+  return (
+      <Container p={2}>
       <div className="col-md-6 m-auto">
         <div className="card card-body mt-5">
           <h2 className="text-center">Login</h2>
-          <form onSubmit={this.onSubmit}>
-            <div className="form-group">
-              <label>Email</label>
-              <input
+          <form onSubmit={onSubmit}>
+            <Box my={2}>
+              <TextField
+                autoComplete="email"
+                className={logStyle.input}
                 type="email"
-                className="form-control"
                 name="email"
-                onChange={this.onChange}
-                value={email}
+                label="Email"
+                onChange={onChange}
+                value={userCredentials.email}
+                variant="filled"
               />
-            </div>
-            <div className="form-group">
-              <label>Password</label>
-              <input
+            </Box>
+            <Box my={2}>
+              <TextField
+                autoComplete="current-password"
+                className={logStyle.input}
                 type="password"
-                className="form-control"
                 name="password"
-                onChange={this.onChange}
-                value={password}
+                label="Password"
+                onChange={onChange}
+                value={userCredentials.password}
+                variant="filled"
               />
-            </div>
-
-            <div className="form-group">
-              <button type="submit" className="btn btn-primary">
-                Login
-              </button>
-            </div>
-            <p>
+            </Box>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              className={logStyle.submit}
+              size="large"
+            >
+              Login
+            </Button>
+            <Typography paragraph={true}>
               Don't have an account? <Link to="/register">Register</Link>
-            </p>
+            </Typography>
           </form>
         </div>
       </div>
+      </Container>
+      
     );
   }
+
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
 }
+
 const mapStateToProps = (state) => ({
     isAuthenticated: state.auth.isAuthenticated,
 });

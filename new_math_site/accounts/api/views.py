@@ -29,8 +29,11 @@ class RegisterApiView(generics.GenericAPIView):
                     'token': str(token)
                 }
             )
-        except ValidationError:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+        except ValidationError as e:
+            return Response(
+                {'errors': e.messages},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
 
 class LoginApiView(generics.GenericAPIView):
@@ -53,7 +56,6 @@ class LoginApiView(generics.GenericAPIView):
             )
         except ValidationError:
             return Response(status=status.HTTP_400_BAD_REQUEST)
-        
 
 
 class UserApiView(generics.RetrieveAPIView):

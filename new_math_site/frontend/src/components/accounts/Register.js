@@ -1,131 +1,202 @@
-import '../styles/register.css';
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { register } from '../../actions/auth';
 import { Fragment } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { ErrorMessage } from "@hookform/error-message";
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Box from '@material-ui/core/Box';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import { Typography } from '@material-ui/core';
+
+
+const useStyles = makeStyles((theme) => ({
+  form: {
+    width: '100%', 
+    marginTop: theme.spacing(3),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
 
 
 export function Register(props) {
-  const { register,
-    handleSubmit,
+  
+  //Define controls for form validation
+  const { control,
     formState,
     formState: { errors },
+    handleSubmit,
     watch
   } = useForm({
-    mode: 'onChange',
+    mode: "onChange",
     criteriaMode: "all"
   });
- 
+
+ //Add watch on input fields to get values
   const first_name = watch('first_name');
   const email = watch('email');
   const password = watch('password');
+  const classes = useStyles();
   
   function onSubmit() {
-    if (password === null) {
-      alert('Some credentials does not suit requirements')
-    }
-    else {
       const newUser = {
         first_name,
         email,
         password
       };
       props.register(newUser);
-    }
   }
 
   if (props.isAuthenticated) {
       return <Redirect to='/' />;
   }
-  
+
+
+
   return (
     <Fragment>
+      <Container>
+      <CssBaseline />
       <div className='col-md-6 m-auto'>
         <div className='card card-body mt-5'>
           <h2 className='text-center'>Register</h2>
-          <form className='justify-content-center align-items-center' onSubmit={handleSubmit(onSubmit)}>
-              <div className='container'>
-              <label className='custom-field'>
-                <span>First name</span>
-                <input
-                  name='first_name'
-                  {...register('first_name', {
-                      required: true
-                    })}
-                    placeholder='First name'
+          <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+            <div className="container">
+              <Box my={2}>
+              <Controller
+                  render={({ field }) =>
+                    <TextField
+                      {...field}
+                    label="First Name"
+                    fullWidth
+                        variant="filled"
+                        autoComplete="on"
+                  />}
+                    name="first_name"
+                    control={control}
+                    rules={{
+                      required: {
+                        value: true,
+                        message: "This field is required"               
+                      } 
+                    }}
+                    defaultValue=""
                 />
-                {errors.first_name && <i>This field is required</i>}
-              </label>
-              <label className='custom-field'>
-                <span>Enter Email</span>
-                <input
-                  {...register('email', {
-                      required: true,
+                <ErrorMessage
+                  errors={errors}
+                  name="first_name"
+                  render={({ messages }) => {
+                  return messages
+                  ? Object.entries(messages).map(([type, message]) => (
+                    <Typography
+                    paragraph={true}
+                    style={{ color: 'red' }}
+                    key={type}>{message}</Typography>
+                  ))
+                  : null;
+                  }}
+                />
+              </Box> 
+              <Box my={2}>
+                <Controller
+                  render={({ field }) =>
+                    <TextField
+                      {...field}
+                      fullWidth
+                      variant="filled"
+                      label="Email"
+                    />}
+                  control={control}
+                  name="email"
+                  rules={{
+                    required: {
+                      value: true,
+                      message: "Email address is required"
+                    }, 
                     pattern: {
                       value: /^(([^<>()\[\]\.,;:\s@\']+(\.[^<>()\[\]\.,;:\s@\']+)*)|(\'.+\'))@(([^<>()[\]\.,;:\s@\']+\.)+[^<>()[\]\.,;:\s@\']{2,})$/i,
                       message:"Please enter valid email"
                       } 
-                  })}
-                  style={{ borderColor: errors.email && "red" }}
-                  placeholder='Enter Email'
-                />
+                  }}
+                  defaultValue=""
+                > 
+                </Controller>
                 <ErrorMessage
                   errors={errors}
                   name="email"
                   render={({ messages }) => {
                   return messages
                   ? Object.entries(messages).map(([type, message]) => (
-                    <p style={{ color: 'red'}} key={type}>{message}</p>
+                    <Typography
+                    paragraph={true}
+                    style={{ color: 'red' }}
+                    key={type}>{message}</Typography>
                   ))
                   : null;
                   }}
                 />
-              </label>
-              <label className='custom-field'>
-                <span>Password</span>
-                <input
-                  {...register('password', {
+              </Box>
+              <Box my={2}>
+                <Controller
+                  render={({ field }) =>
+                    <TextField
+                      {...field}
+                      fullWidth
+                      variant="filled"
+                        label="Password"
+                      type="Password"/>}
+                  control={control}
+                  name="password"
+                  rules={{
                     required: true,
                     minLength: {
                       value: 9,
                       message: "Password should contain at least 9 symbols"
                     },
-                      pattern: {
-                        value: /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})$/i,
-                        message: "Password should contain at least one uppercase letter, one lowercase "
-                          + "letter, one digit and one special character [!@#$%^&()]"
-                    },                     
-                  })}
-                  placeholder="Password"
-                />
+                    pattern: {
+                      value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])/,
+                      message: "Password should contain at least one uppercase letter, one lowercase "
+                        + "letter, one digit and one special character [!@#$%^&*]"
+                    },                      
+                  }}
+                  defaultValue="">
+
+                </Controller>
+
                 <ErrorMessage
                   errors={errors}
                   name="password"
                   render={({ messages }) => {
                   return messages
                   ? Object.entries(messages).map(([type, message]) => (
-                    <p key={type}>{message}</p>
+                    <Typography
+                      paragraph={true}
+                      style={{ color: 'red' }}
+                      key={type}>{message}</Typography>
                   ))
                 : null;
                 }}
-              />              
-              </label>
-                <button type='submit' className='btn btn-primary'
+              />
+              </Box>
+                <Button variant="contained" type='submit' color="primary" className={classes.submit}
                 disabled={!formState.isValid}>
                 Register
-              </button>
-            <p>
+              </Button>
+            <Typography paragraph={true}>
               Already have an account? <Link to='/login'>Login</Link>
-            </p>
-              </div>
-              
+            </Typography>
+            </div>
           </form>
         </div>
-      </div>
+        </div>
+      </Container>
     </Fragment>
       
     );

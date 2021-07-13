@@ -6,7 +6,7 @@ from django.utils.translation import gettext as _
 
 class CustomValidator:
 
-    def __init__(self, min_length=10):
+    def __init__(self, min_length=9):
         self.min_length = min_length
 
     def validate(self, password, user=None):
@@ -21,8 +21,7 @@ class CustomValidator:
         """
         if len(password) < self.min_length:
             raise ValidationError(
-                _(f'Password length should be at least \
-                    {self.min_length} characters'))
+                _(f'Password length should be at least {self.min_length} characters'))
         if not re.findall('\d', password):
             raise ValidationError(
                 _('Password should contain at least one digit'))

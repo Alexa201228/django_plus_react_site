@@ -1,4 +1,5 @@
 import axios from "axios";
+import { createMessage } from "./messages";
 import {
     USER_LOADED,
     USER_LOADING,
@@ -7,7 +8,8 @@ import {
     LOGIN_FAIL,
     LOGOUT_SUCCESS,
     REGISTER_SUCCESS,
-    REGISTER_FAIL
+    REGISTER_FAIL,
+    GET_ERRORS
 } from "./types";
 
 //Check token
@@ -44,6 +46,7 @@ export const login = (email, password) => dispatch => {
     axios
         .post('/api/auth/login', body, config)
         .then(res => {
+            dispatch(createMessage({successfulLogin: 'You have been successfully logged in!'}))
             dispatch({
                 type: LOGIN_SUCCESS,
                 payload: res.data
@@ -77,9 +80,13 @@ export const register = ({ first_name, email, password }) => dispatch => {
             });
 
         }).catch(err => {
-            console.log(err);
+            const errors = {
+                msg: err.response.data,
+                status: err.response.status
+            };
             dispatch({
-                type: REGISTER_FAIL
+                type: GET_ERRORS,
+                payload: errors
             });
         });
 };
