@@ -15,13 +15,7 @@ export class Courses extends Component {
         return (
             <Fragment>
                 <h1>Here are Courses</h1>
-                <table className="table table-striped">
-                    <thead>
-                        <th>Title</th>
-                        <th>Modules</th>
-                        <th>Enroll</th>
-                    </thead>
-                   </table>
+
             </Fragment>
             
         )

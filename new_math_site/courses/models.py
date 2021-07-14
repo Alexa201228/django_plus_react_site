@@ -15,7 +15,6 @@ class Course(models.Model):
     students_on_course = ManyToManyField(
         to='accounts.User',
         related_name='courses',
-        null=True,
         blank=True)
 
     def __str__(self):

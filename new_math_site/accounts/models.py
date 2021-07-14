@@ -1,9 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import (BaseUserManager,
                                         AbstractBaseUser, PermissionsMixin)
-from django.conf import settings
-
 from django.utils import timezone
+
+from rest_framework_simplejwt.tokens import RefreshToken
 
 
 class UserManager(BaseUserManager):
@@ -50,7 +50,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     student_courses = models.ManyToManyField(
         to='courses.Course',
         related_name='accounts',
-        null=True,
         blank=True
     )
 
@@ -61,6 +60,13 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self) -> str:
         return f'{self.email}'
+
+    def tokens(self):
+        refresh = RefreshToken.for_user(self)
+        return {
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        }
 
 
 # Create your models here.

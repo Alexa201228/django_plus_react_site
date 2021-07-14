@@ -1,16 +1,17 @@
 import React, { Component, Fragment } from "react";
 import { render } from "react-dom";
 import { HashRouter as Router, Route, Switch} from "react-router-dom";
-import { positions, Provider as AlertProvider } from 'react-alert';
-import { Provider } from 'react-redux';
+import { positions, Provider as AlertProvider } from "react-alert";
+import { Provider } from "react-redux";
 import AlertTemplate from "react-alert-template-snackbar-material-ui";
 
-import Header from './layout/Header';
+import Header from "./layout/Header";
 import Dashboard from "./courses/Dashboard";
 import Alerts from "./layout/Alerts";
 import Register from "./accounts/Register";
 import Login from "./accounts/Login";
 import PrivateRoute from "./common/PrivateRoute";
+import UserProfile from "./accounts/UserProfile";
 
 
 import store from "../store";
@@ -44,6 +45,7 @@ class App extends Component {
                   <Route exact path='/' component={Dashboard} />
                   <Route exact path='/register' component={Register} />
                   <Route exact path='/login' component={Login} />
+                  <PrivateRoute exact path='/profile' component={UserProfile}/>
               </Switch>
             </div>
             </Fragment>

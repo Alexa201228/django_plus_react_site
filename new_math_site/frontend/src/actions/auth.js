@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createMessage } from "./messages";
+import { createMessage, returnErrorMessages } from "./messages";
 import {
     USER_LOADED,
     USER_LOADING,
@@ -9,11 +9,11 @@ import {
     LOGOUT_SUCCESS,
     REGISTER_SUCCESS,
     REGISTER_FAIL,
-    GET_ERRORS
 } from "./types";
 
 //Check token
 export const loadUser = () => (dispatch, getState) => {
+
     dispatch({ type: USER_LOADING });
 
     axios
@@ -25,9 +25,9 @@ export const loadUser = () => (dispatch, getState) => {
             });
 
         }).catch(err => {
-            console.log(err);
+            dispatch(returnErrorMessages(err.response.data, err.response.status));
             dispatch({
-                type: AUTH_ERROR
+                type: AUTH_ERROR,
             });
         });
 };
@@ -40,9 +40,7 @@ export const login = (email, password) => dispatch => {
             'Content-Type': 'application/json'
         }
     }
-
     const body = JSON.stringify({ email, password });
-
     axios
         .post('/api/auth/login', body, config)
         .then(res => {
@@ -53,7 +51,7 @@ export const login = (email, password) => dispatch => {
             });
 
         }).catch(err => {
-            console.log(err);
+            dispatch(returnErrorMessages(err.response.data, err.response.status));
             dispatch({
                 type: LOGIN_FAIL
             });
@@ -68,9 +66,7 @@ export const register = ({ first_name, email, password }) => dispatch => {
             'Content-Type': 'application/json'
         }
     }
-
     const body = JSON.stringify({ first_name, email, password });
-
     axios
         .post('/api/auth/register', body, config)
         .then(res => {
@@ -78,15 +74,10 @@ export const register = ({ first_name, email, password }) => dispatch => {
                 type: REGISTER_SUCCESS,
                 payload: res.data
             });
-
         }).catch(err => {
-            const errors = {
-                msg: err.response.data,
-                status: err.response.status
-            };
+            dispatch(returnErrorMessages(err.response.data, err.response.status));
             dispatch({
-                type: GET_ERRORS,
-                payload: errors
+                type: REGISTER_FAIL
             });
         });
 };
@@ -100,25 +91,22 @@ export const logout = () => (dispatch, getState) => {
             dispatch({
                 type: LOGOUT_SUCCESS
             });
-
         }).catch(err => {
-            console.log(err);
+            console.log(err.response);
+            dispatch(returnErrorMessages(err.response.data, err.response.status));
         });
 };
 
 //Setup config
 export const tokenConfig = getState => {
-    const token = getState().auth.token;
-
+    const token = getState().auth.access_token;
     const config = {
         headers: {
             'Content-Type': 'application/json'
         }
     }
-
     if (token) {
         config.headers['Authorization'] = `Bearer ${token}`;
     }
-
     return config
 }

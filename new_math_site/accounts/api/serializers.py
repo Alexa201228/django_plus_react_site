@@ -1,20 +1,18 @@
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from rest_framework import serializers
-from rest_framework.response import Response
-from rest_framework import status
 from ..models import User
 from django.contrib.auth import authenticate
 
 
 class UserSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = User
-        fields = ('id', 'email', 'first_name')
+        fields = ['id', 'email', 'first_name', 'last_name', 'student_courses']
 
 
 class RegisterSerializer(serializers.HyperlinkedModelSerializer):
-
     class Meta:
         model = User
         fields = ['email', 'password', 'first_name', 'last_name']
@@ -34,11 +32,21 @@ class RegisterSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class LoginSerializer(serializers.Serializer):
-    email = serializers.EmailField()
-    password = serializers.CharField()
+    email = serializers.EmailField(error_messages={
+        'blank': 'Please enter an email address',
+    },)
+    password = serializers.CharField(error_messages={
+        'blank': 'Please enter your password',
+    },)
+
+    class Meta:
+        model = User
 
     def validate(self, attrs):
         user = authenticate(**attrs)
         if user and user.is_active and not user.is_superuser:
-            return user
-        raise serializers.ValidationError('Incorrect Credentials')
+            return {
+                'user': user,
+                'tokens': user.tokens()
+            }
+        raise ValidationError('Invalid credentials')

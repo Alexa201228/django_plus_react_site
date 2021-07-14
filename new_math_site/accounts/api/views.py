@@ -1,5 +1,4 @@
 from django.core.exceptions import ValidationError
-from django.db.models.query import ValuesIterable
 
 from rest_framework import generics, permissions
 from rest_framework_simplejwt.tokens import RefreshToken, OutstandingToken, BlacklistedToken
@@ -19,14 +18,14 @@ class RegisterApiView(generics.GenericAPIView):
             serializer = self.get_serializer(data=request.data)
             serializer.is_valid(raise_exception=True)
             user = serializer.save()
-            print(user)
-            token = RefreshToken.for_user(user).access_token
+            tokens = user.tokens()
             return Response(
                 {
                     'user': UserSerializer(
                         user,
                         context=self.get_serializer_context()).data,
-                    'token': str(token)
+                    'access_token': tokens['access'],
+                    'refresh_token': tokens['refresh'],
                 }
             )
         except ValidationError as e:
@@ -44,18 +43,23 @@ class LoginApiView(generics.GenericAPIView):
         try:
             serializer = self.get_serializer(data=request.data)
             serializer.is_valid(raise_exception=True)
+            print(serializer)
             user = serializer.validated_data
-            token = RefreshToken.for_user(user).access_token
             return Response(
                 {
                     'user': UserSerializer(
-                        user,
+                        user['user'],
                         context=self.get_serializer_context()).data,
-                    'token': str(token)
+                    'access_token': user['tokens']['access'],
+                    'refresh_token': user['tokens']['refresh'],
+
                 }
             )
-        except ValidationError:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+        except ValidationError as e:
+            return Response(
+                {'errors': e.messages},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
 
 class UserApiView(generics.RetrieveAPIView):
