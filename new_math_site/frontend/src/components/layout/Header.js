@@ -48,6 +48,15 @@ export function Header(props) {
 				>
 				Logout
 			</Button>
+			<Button
+				href=""
+				color="primary"
+				variant="outlined"
+				component={NavLink}
+				to="/user"
+				>
+				Profile
+			</Button>
 
 		</Fragment>
 				

@@ -43,7 +43,6 @@ class LoginApiView(generics.GenericAPIView):
         try:
             serializer = self.get_serializer(data=request.data)
             serializer.is_valid(raise_exception=True)
-            print(serializer)
             user = serializer.validated_data
             return Response(
                 {

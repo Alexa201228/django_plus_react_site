@@ -19,5 +19,11 @@ module.exports = {
             },
             { test: /\.css$/, use: [ 'style-loader', 'css-loader' ] }
         ]
-    },  
+    },
+
+    devServer: {
+        historyApiFallback: true,
+        contentBase: './',
+        hot: true
+    },
 };

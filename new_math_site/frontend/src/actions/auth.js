@@ -1,4 +1,7 @@
+import { CollectionsOutlined } from "@material-ui/icons";
 import axios from "axios";
+import createAuthRefreshInterceptor from 'axios-auth-refresh';
+
 import { createMessage, returnErrorMessages } from "./messages";
 import {
     USER_LOADED,
@@ -11,11 +14,33 @@ import {
     REGISTER_FAIL,
 } from "./types";
 
+
+
+//Refresh jwt token
+const refreshAuthToken = failedRequest =>
+    axios
+        .post('/api/token/refresh', {
+        refresh: localStorage.getItem('refresh_token')
+    })
+        .then(refreshedToken => {
+            localStorage.setItem('access_token', refreshedToken.data.access)
+            failedRequest.response.config.headers['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`
+            return Promise.resolve();
+    }).catch(err => {
+        return Promise.reject(err);
+});
+
+createAuthRefreshInterceptor(axios, refreshAuthToken,
+    {
+    pauseInstanceWhileRefreshing: true
+}
+);
+
+
 //Check token
 export const loadUser = () => (dispatch, getState) => {
 
     dispatch({ type: USER_LOADING });
-
     axios
         .get('/api/auth/user', tokenConfig(getState))
         .then(res => {
@@ -25,7 +50,6 @@ export const loadUser = () => (dispatch, getState) => {
             });
 
         }).catch(err => {
-            dispatch(returnErrorMessages(err.response.data, err.response.status));
             dispatch({
                 type: AUTH_ERROR,
             });
@@ -88,6 +112,7 @@ export const logout = () => (dispatch, getState) => {
     axios
         .post('/api/auth/logout', null, tokenConfig(getState))
         .then(res => {
+            localStorage.clear();
             dispatch({
                 type: LOGOUT_SUCCESS
             });
@@ -96,6 +121,7 @@ export const logout = () => (dispatch, getState) => {
             dispatch(returnErrorMessages(err.response.data, err.response.status));
         });
 };
+
 
 //Setup config
 export const tokenConfig = getState => {
@@ -110,3 +136,4 @@ export const tokenConfig = getState => {
     }
     return config
 }
+

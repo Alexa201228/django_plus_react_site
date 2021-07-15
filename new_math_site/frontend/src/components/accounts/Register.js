@@ -43,6 +43,7 @@ export function Register(props) {
   const first_name = watch('first_name');
   const email = watch('email');
   const password = watch('password');
+  
   const classes = useStyles();
   
   function onSubmit() {
