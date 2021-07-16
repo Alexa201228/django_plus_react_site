@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from ..models import Course, Module
 
+
 class ModuleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Module
@@ -12,8 +13,10 @@ class CourseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Course
-        fields = ['id', 'title', 'slug', 'num_of_modules', 'course_modules']
+        fields = ['id', 'title', 'slug', 'num_of_modules',
+                  'course_modules', 'students_on_course']
         lookup_field = 'slug'
         extra_kwargs = {
-            'url': {'lookup_field': 'slug'}
+            'url': {'lookup_field': 'slug'},
+            'students_on_course': {'required': False}
         }

@@ -1,4 +1,3 @@
-import { CollectionsOutlined } from "@material-ui/icons";
 import axios from "axios";
 import createAuthRefreshInterceptor from 'axios-auth-refresh';
 

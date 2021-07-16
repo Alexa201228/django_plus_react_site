@@ -2,10 +2,11 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { register } from '../../actions/auth';
+
 import { Fragment } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { ErrorMessage } from "@hookform/error-message";
+
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -14,6 +15,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Typography } from '@material-ui/core';
 
+import { register } from '../../actions/auth';
 
 const useStyles = makeStyles((theme) => ({
   form: {

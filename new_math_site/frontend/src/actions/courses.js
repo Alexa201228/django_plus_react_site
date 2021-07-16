@@ -1,32 +1,33 @@
 import axios from "axios";
 
-import { GET_COURSES, ENROLL_COURSE, ADD_USER } from "./types";
+import { createMessage, returnErrorMessages } from "./messages";
+import { GET_COURSES, ENROLL_COURSE } from "./types";
 
 //Get courses
 export const getCourses = () => dispatch => {
-    axios.get('/api/courses/')
+    axios
+        .get('/api/courses/')
         .then(res => {
             dispatch({
                 type: GET_COURSES,
-                payload: res.data
+                payload: res.data.results
             });
-        }).catch(err => console.log(err));
+        }).catch(err => {
+            dispatch(returnErrorMessages(err.response.data, err.response.status))
+        });
 };
 
 //Enroll on course
 export const enrollCourse = (slug) => dispatch => {
-    axios.get('/api/courses/${slug}/')
+    axios.get(`/api/courses/${slug}/`)
         .then(res => {
+            dispatch(createMessage('You have joined course!'))
             dispatch({
                 type: ENROLL_COURSE,
-                payload: slug
+                payload: res.data
             });
         })
-        .catch(err => console.log(err));
-}
-
-//ADD USER
-export const addUser = (student) => dispatch => {
-    axios
-        .post('api/courses/', )
+        .catch(err => {
+            dispatch(returnErrorMessages(err.response.data, err.response.status));
+        });
 }
