@@ -1,4 +1,3 @@
-import { CollectionsOutlined } from "@material-ui/icons";
 import axios from "axios";
 import createAuthRefreshInterceptor from 'axios-auth-refresh';
 
@@ -50,9 +49,13 @@ export const loadUser = () => (dispatch, getState) => {
             });
 
         }).catch(err => {
+            if (err.response && (err.response.status === 400 || err.response.status === 401)) {
+                console.clear();
+            }
             dispatch({
                 type: AUTH_ERROR,
             });
+            
         });
 };
 
@@ -75,10 +78,14 @@ export const login = (email, password) => dispatch => {
             });
 
         }).catch(err => {
+            if (err.response && (err.response.status === 400 || err.response.status === 401)) {
+                console.clear();
+            }
             dispatch(returnErrorMessages(err.response.data, err.response.status));
             dispatch({
                 type: LOGIN_FAIL
             });
+            
         });
 };
 

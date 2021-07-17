@@ -53,7 +53,7 @@ export function Header(props) {
 				color="primary"
 				variant="outlined"
 				component={NavLink}
-				to="/user"
+				to="/profile"
 				>
 				Profile
 			</Button>

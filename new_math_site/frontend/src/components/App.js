@@ -29,7 +29,6 @@ const alertOptions = {
 class App extends Component {
   componentDidMount() {
     store.dispatch(loadUser());
-    store.dispatch(getCourses());
   }
 
   render() {
@@ -45,7 +44,7 @@ class App extends Component {
                   <Route exact path='/' component={Dashboard} />
                   <Route exact path='/register' component={Register} />
                   <Route exact path='/login' component={Login} />
-                  <PrivateRoute exact path='/user' component={UserProfile}/>
+                  <PrivateRoute exact path='/profile' component={UserProfile}/>
               </Switch>
             </div>
             </Fragment>

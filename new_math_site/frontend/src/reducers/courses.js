@@ -9,13 +9,13 @@ export default function (state = initialState, action) {
         case GET_COURSES:
             return {
                 ...state,
-                courses: action.payload
+                courses: action.payload,
             };
         case ENROLL_COURSE:
             return {
                 ...state,
                 courses: state.courses.filter(course => course.slug
-                    === action.payload)
+                    === action.payload),
             };
         default:
             return state;

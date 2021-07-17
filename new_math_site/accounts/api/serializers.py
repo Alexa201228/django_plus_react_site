@@ -10,6 +10,9 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'email', 'first_name', 'last_name', 'student_courses']
+        extra_kwargs = {
+            'student_courses': {'required': False}
+        }
 
 
 class RegisterSerializer(serializers.HyperlinkedModelSerializer):
