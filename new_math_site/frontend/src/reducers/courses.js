@@ -1,4 +1,4 @@
-import { GET_COURSES, ENROLL_COURSE } from '../actions/types.js';
+import { GET_COURSES, GET_COURSE_DETAILS } from '../actions/types.js';
 
 const initialState = {
     courses: []
@@ -11,11 +11,10 @@ export default function (state = initialState, action) {
                 ...state,
                 courses: action.payload,
             };
-        case ENROLL_COURSE:
+        case GET_COURSE_DETAILS:
             return {
                 ...state,
-                courses: state.courses.filter(course => course.slug
-                    === action.payload),
+                courses: action.payload,
             };
         default:
             return state;

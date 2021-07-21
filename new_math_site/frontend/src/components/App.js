@@ -17,6 +17,7 @@ import UserProfile from "./accounts/UserProfile";
 import store from "../store";
 import { loadUser } from "../actions/auth";
 import { getCourses } from "../actions/courses";
+import { CourseDetail } from "./courses/CourseDetail";
 
 
 //Alert options
@@ -44,6 +45,7 @@ class App extends Component {
                   <Route exact path='/' component={Dashboard} />
                   <Route exact path='/register' component={Register} />
                   <Route exact path='/login' component={Login} />
+                  <Route exact path='/:slug' component={CourseDetail} />
                   <PrivateRoute exact path='/profile' component={UserProfile}/>
               </Switch>
             </div>

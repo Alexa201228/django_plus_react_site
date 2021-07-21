@@ -9,9 +9,6 @@ class Course(models.Model):
     slug = models.SlugField(max_length=50)
     created = models.DateTimeField(auto_now=True)
     description = RichTextField(verbose_name='Описание курса')
-    num_of_modules = models.IntegerField(default=0,
-                                         validators=[MinValueValidator(1)],
-                                         verbose_name='Количество модулей')
     students_on_course = ManyToManyField(
         to='accounts.User',
         related_name='courses',
@@ -29,6 +26,7 @@ class Module(models.Model):
                                   related_name='course_modules',
                                   on_delete=models.CASCADE)
     module_name = models.CharField(max_length=200, verbose_name='Название')
+    theme = models.CharField(max_length=250, blank=True, null=True)
     body = RichTextField(verbose_name='Контент модуля')
     slug = models.SlugField(max_length=50)
 

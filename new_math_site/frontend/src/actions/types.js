@@ -1,5 +1,6 @@
 export const GET_COURSES = 'GET_COURSES';
 export const ENROLL_COURSE = 'ENROLL_COURSE';
+export const GET_COURSE_DETAILS = 'GET_COURSE_DETAILS';
 export const USER_LOADING = 'USER_LOADING';
 export const USER_LOADED = 'USER_LOADED';
 export const AUTH_ERROR = 'AUTH_ERROR';

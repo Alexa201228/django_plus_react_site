@@ -1,16 +1,16 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
+import { Link, Route, } from 'react-router-dom';
 
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Typography } from '@material-ui/core';
 
-import { getCourses, enrollCourse } from '../../actions/courses';
+import { getCourses, courseDetails } from '../../actions/courses';
+import { CourseDetail } from './CourseDetail';
 
 
 export class Courses extends Component {
@@ -18,12 +18,11 @@ export class Courses extends Component {
         isAuthenticated: PropTypes.bool,
         courses: PropTypes.array.isRequired,
         getCourses: PropTypes.func.isRequired,
-        enrollCourse: PropTypes.func.isRequired,
+
     }
 
     componentDidMount() {
         this.props.getCourses();
-
     }
 
     onSubmit = () => {
@@ -39,14 +38,19 @@ export class Courses extends Component {
                 <Container>
 
                     {courseList.map((course, index) => (
+                        
                         <Box
                             key={index}
                             m={3}>
-                            <Typography
-                                paragraph={true}
+                                
+                            <Link
+                                to={`/${course.slug}`}
                             >
                                 {course.title}
-                            </Typography>
+                            </Link>
+                            <Route path={`/:slug`}>
+                                <CourseDetail/>
+                            </Route>
                             {this.props.isAuthenticated ?
                                 <Button
                                     type='submit'
@@ -73,4 +77,4 @@ const mapStateToProps = (state) => (
     }
 )
 
-export default connect(mapStateToProps, { getCourses, enrollCourse })(Courses);
+export default connect(mapStateToProps, { getCourses })(Courses);

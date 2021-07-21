@@ -13,7 +13,7 @@ class CourseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Course
-        fields = ['id', 'title', 'slug', 'num_of_modules',
+        fields = ['id', 'title', 'slug',
                   'course_modules', 'students_on_course']
         lookup_field = 'slug'
         extra_kwargs = {
