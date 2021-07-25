@@ -1,8 +1,7 @@
 import React, { Fragment, Component, useEffect, useState } from 'react';
 import { courseDetails } from '../../actions/courses';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
-import { useLocation, useParams } from 'react-router';
+import { useParams } from 'react-router';
 
 
 export function CourseDetail(){
@@ -13,7 +12,7 @@ export function CourseDetail(){
     useEffect(() => {
         dispatch(courseDetails(slug));
     }, []);
-
+    
         return(
             <Fragment>
                   <h3>{courses.title}</h3> 

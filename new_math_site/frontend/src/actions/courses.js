@@ -10,7 +10,7 @@ export const getCourses = () => dispatch => {
         .then(res => {
             dispatch({
                 type: GET_COURSES,
-                payload: res.data.results
+                payload: res.data
             });
         }).catch(err => {
             dispatch(returnErrorMessages(err.response.data, err.response.status))
