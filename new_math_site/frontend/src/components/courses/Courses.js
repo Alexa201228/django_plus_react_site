@@ -40,14 +40,6 @@ export function Courses(props) {
                     <Route path={`/:slug`}>
                         <CourseDetail/>
                     </Route>
-                    {props.isAuthenticated ?
-                        <Button
-                            type='submit'
-                            color='primary'
-                            variant="contained">
-                            Enroll course
-                        </Button>
-                        : null}
                 </Box>            
                 ))}
         </Container>}

@@ -46,7 +46,7 @@ class App extends Component {
                   <Route exact path='/register' component={Register} />
                   <Route exact path='/login' component={Login} />
                   <Route exact path='/:slug' component={CourseDetail} />
-                  <PrivateRoute exact path='/profile' component={UserProfile}/>
+                  <PrivateRoute exact path='/profile/:id' component={UserProfile}/>
               </Switch>
             </div>
             </Fragment>
