@@ -30,5 +30,4 @@ export function CourseDetail(){
     }
 
 
-
 export default CourseDetail;
