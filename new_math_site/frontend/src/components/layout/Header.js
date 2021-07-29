@@ -59,6 +59,7 @@ export function Header(props) {
 					Profile
 				</Button>
 			}
+
 		</Fragment>
 				
 	);
