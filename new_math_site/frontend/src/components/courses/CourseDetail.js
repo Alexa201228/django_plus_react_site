@@ -1,33 +1,50 @@
-import React, { Fragment, Component, useEffect, useState } from 'react';
-import { courseDetails } from '../../actions/courses';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { Fragment, useEffect } from 'react';
+import { courseDetails, enrollCourse } from '../../actions/courses';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import { useParams } from 'react-router';
+import PropTypes from 'prop-types';
 
 
-export function CourseDetail(){
+export function CourseDetail(props){
 
     let { slug } = useParams()
     const dispatch = useDispatch()
     const {courses} = useSelector(state => state.courses)
-    const { isAuthenticated } = useSelector(state => state.auth)
     useEffect(() => {
         dispatch(courseDetails(slug));
     }, []);
     
+    function onButtonClick(){
+        const { title, slug } = courses;
+        const enrollData = {
+            title,
+            slug
+        }
+        props.enrollCourse(enrollData)
+    }
         return(
             <Fragment>
                   <h3>{courses.title}</h3>
-                    {isAuthenticated ? 
+                    {props.isAuthenticated ? 
                     <Button
                     type='submit'
                     color='primary'
-                    variant="contained">
+                    variant="contained"
+                    onClick={onButtonClick}>
                     Enroll course
                 </Button>: null}
             </Fragment>
         )
     }
 
+CourseDetail.propTypes = {
+    enrollCourse: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool,
+}
 
-export default CourseDetail;
+const mapStateToProps = (state) => ({
+    isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { enrollCourse })(CourseDetail);

@@ -13,11 +13,9 @@ import Login from "./accounts/Login";
 import PrivateRoute from "./common/PrivateRoute";
 import UserProfile from "./accounts/UserProfile";
 
-
 import store from "../store";
 import { loadUser } from "../actions/auth";
-import { getCourses } from "../actions/courses";
-import { CourseDetail } from "./courses/CourseDetail";
+import CourseDetail from "./courses/CourseDetail";
 
 
 //Alert options
