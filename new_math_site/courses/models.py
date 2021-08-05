@@ -1,5 +1,4 @@
 from django.db import models
-from django.core.validators import MinValueValidator
 from ckeditor.fields import RichTextField
 from django.db.models.fields.related import ManyToManyField
 

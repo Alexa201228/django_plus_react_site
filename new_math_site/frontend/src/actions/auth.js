@@ -26,7 +26,10 @@ const refreshAuthToken = failedRequest =>
             failedRequest.response.config.headers['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`
             return Promise.resolve();
     }).catch(err => {
-        return Promise.reject(err);
+        if(err.response.data === 400){
+            return null;
+        }
+        
 });
 
 createAuthRefreshInterceptor(axios, refreshAuthToken,
@@ -68,7 +71,7 @@ export const login = (email, password) => dispatch => {
     axios
         .post('/api/auth/login', body, config)
         .then(res => {
-            dispatch(createMessage({successfulLogin: 'You have been successfully logged in!'}))
+            dispatch(createMessage({successfullLogin: 'You have been successfully logged in!'}))
             dispatch({
                 type: LOGIN_SUCCESS,
                 payload: res.data
@@ -118,7 +121,6 @@ export const logout = () => (dispatch, getState) => {
                 type: LOGOUT_SUCCESS
             });
         }).catch(err => {
-            console.log(err.response);
             dispatch(returnErrorMessages(err.response.data, err.response.status));
         });
 };

@@ -4,8 +4,8 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
-    "dev": "webpack --progress --watch",
-    "build": "webpack --progress --production --optimize-minimize"
+    "dev": "webpack --progress --watch --history-api-fallback",
+    "build": "webpack --progress --production --optimize-minimize --history-api-fallback"
   },
   "repository": {
     "type": "git",

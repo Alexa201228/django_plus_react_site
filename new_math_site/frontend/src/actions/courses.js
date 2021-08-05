@@ -48,6 +48,12 @@ export const enrollCourse = ({title, slug}) => dispatch => {
         });
     })
     .catch(err =>{
-        dispatch(returnErrorMessages(err.response.data, err.response.status))
+        if(err.response.status === 401){
+            dispatch(createMessage({requestToLogin: 'Пожалуйста, зарегистрируйтесь для записи на курс'}));
+        }
+        else{
+            dispatch(returnErrorMessages(err.response.data, err.response.status))
+        }
+        
     })
 }
