@@ -13,7 +13,7 @@ import {
     access_token: localStorage.getItem('access_token'),
     refresh_token: localStorage.getItem('refresh_token'),
     isAuthenticated: null,
-    isLoading: false,
+    isLoading: true,
     user: null,
   };
   

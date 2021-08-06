@@ -1,10 +1,10 @@
 from rest_framework import serializers
-from ..models import Course, Module
+from ..models import Course, Lesson
 
 
 class ModuleSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Module
+        model = Lesson
         fields = ['id', 'module_name', 'slug']
 
 

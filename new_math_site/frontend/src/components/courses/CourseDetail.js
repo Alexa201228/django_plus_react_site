@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from 'react';
 import { courseDetails, enrollCourse } from '../../actions/courses';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
-import { useParams } from 'react-router';
+import { useParams, withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 
 
@@ -14,10 +14,15 @@ export function CourseDetail(props){
     useEffect(() => {
         dispatch(courseDetails(slug));
     }, []);
-    
+
     function onButtonClick(){
+        if(!props.isAuthenticated){
+           props.history.push('/login');
+        }
         const { title, slug } = courses;
+        const token = props.access_token;
         const enrollData = {
+            token,
             title,
             slug
         }
@@ -26,25 +31,26 @@ export function CourseDetail(props){
         return(
             <Fragment>
                   <h3>{courses.title}</h3>
-                    {props.isAuthenticated ? 
                     <Button
                     type='submit'
                     color='primary'
                     variant="contained"
                     onClick={onButtonClick}>
                     Enroll course
-                </Button>: null}
+                </Button>
             </Fragment>
         )
     }
 
 CourseDetail.propTypes = {
-    enrollCourse: PropTypes.func.isRequired,
+    enrollCourse: PropTypes.func,
     isAuthenticated: PropTypes.bool,
+    access_token: PropTypes.string
 }
 
 const mapStateToProps = (state) => ({
     isAuthenticated: state.auth.isAuthenticated,
+    access_token: state.auth.access_token
 });
 
-export default connect(mapStateToProps, { enrollCourse })(CourseDetail);
+export default withRouter(connect(mapStateToProps, { enrollCourse })(CourseDetail));

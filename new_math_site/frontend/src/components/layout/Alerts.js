@@ -4,6 +4,7 @@ import { withAlert } from 'react-alert';
 import PropTypes from 'prop-types'
 
 
+// Retreive all alerts from json
 const getAlerts = (obj) => {
     for (var key in obj) {
         if (typeof (obj[key]) === 'object') {
@@ -16,10 +17,10 @@ const getAlerts = (obj) => {
     }
 };
 
+// Show alerts and clear alert array
 const showAlerts = (func) => {
     for (var key in alerts) {
         func(alerts[key]);
-
     }
     alerts.length = 0;
 }

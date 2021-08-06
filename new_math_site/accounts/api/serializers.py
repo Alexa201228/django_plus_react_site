@@ -1,11 +1,15 @@
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
-from rest_framework import serializers
-from ..models import User
 from django.contrib.auth import authenticate
+
+from rest_framework import serializers
+
+from ..models import User
+from courses.api.serializers import CourseSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
+    student_courses = CourseSerializer(many=True, read_only=True)
 
     class Meta:
         model = User

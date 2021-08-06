@@ -3,7 +3,6 @@ from django.core.exceptions import ValidationError
 from rest_framework import generics, permissions
 from rest_framework_simplejwt.tokens import RefreshToken, OutstandingToken, BlacklistedToken
 from rest_framework.response import Response
-
 from rest_framework import status
 
 from .serializers import LoginSerializer, RegisterSerializer, UserSerializer
@@ -73,7 +72,6 @@ class UserApiView(generics.RetrieveAPIView):
 
 class LogoutView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated, ]
-    next_page = '/'
 
     def post(self, request, *args, **kwargs):
         if self.request.data.get('all'):
