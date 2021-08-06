@@ -81,6 +81,7 @@ export function Register(props) {
                     fullWidth
                         variant="filled"
                         autoComplete="on"
+                        autoFocus
                   />}
                     name="first_name"
                     control={control}

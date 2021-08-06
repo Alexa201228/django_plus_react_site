@@ -41,7 +41,6 @@ createAuthRefreshInterceptor(axios, refreshAuthToken,
 
 //Check token
 export const loadUser = () => (dispatch, getState) => {
-
     dispatch({ type: USER_LOADING });
     axios
         .get('/api/auth/user', tokenConfig(getState))

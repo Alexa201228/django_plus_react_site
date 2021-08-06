@@ -1,4 +1,5 @@
 import axios from "axios";
+import { loadUser } from "./auth";
 
 import { createMessage, returnErrorMessages } from "./messages";
 import { GET_COURSES, ENROLL_COURSE, GET_COURSE_DETAILS } from "./types";
@@ -33,16 +34,17 @@ export const courseDetails = (slug) => dispatch => {
 }
 
 //Enroll course
-export const enrollCourse = ({title, slug}) => dispatch => {
+export const enrollCourse = ({token, title, slug}) => dispatch => {
     const config = {
         headers: {
+            'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
         }
     }
     const body = JSON.stringify({title, slug})
     axios.post(`/api/courses/${slug}/enroll/`, body, config)
     .then(res => {
-        dispatch(createMessage({successfullEnroll: 'You have been successfully joined the course!'}))
+        dispatch(createMessage({successfullEnroll: 'Вы успешно зарегистрировались на курс!'}))
         dispatch({
             type: ENROLL_COURSE
         });

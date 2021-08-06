@@ -60,6 +60,7 @@ export function Login(props) {
                 onChange={onChange}
                 value={userCredentials.email}
                 variant="filled"
+                autoFocus
               />
             </Box>
             <Box my={2}>

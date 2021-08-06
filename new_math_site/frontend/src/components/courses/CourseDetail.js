@@ -14,13 +14,15 @@ export function CourseDetail(props){
     useEffect(() => {
         dispatch(courseDetails(slug));
     }, []);
-    console.log(courses)
+
     function onButtonClick(){
         if(!props.isAuthenticated){
            props.history.push('/login');
         }
         const { title, slug } = courses;
+        const token = props.access_token;
         const enrollData = {
+            token,
             title,
             slug
         }
@@ -43,10 +45,12 @@ export function CourseDetail(props){
 CourseDetail.propTypes = {
     enrollCourse: PropTypes.func,
     isAuthenticated: PropTypes.bool,
+    access_token: PropTypes.string
 }
 
 const mapStateToProps = (state) => ({
     isAuthenticated: state.auth.isAuthenticated,
+    access_token: state.auth.access_token
 });
 
 export default withRouter(connect(mapStateToProps, { enrollCourse })(CourseDetail));

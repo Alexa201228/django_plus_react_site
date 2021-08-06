@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Course, Module
+from .models import Course, Lesson
 
 
 @admin.register(Course)
@@ -11,7 +11,7 @@ class CourseAdmin(admin.ModelAdmin):
     list_per_page = 10
 
 
-@admin.register(Module)
+@admin.register(Lesson)
 class ModuleAdmin(admin.ModelAdmin):
     list_display = ['module_name', 'theme']
     prepopulated_fields = {'slug': ('module_name', )}

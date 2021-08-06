@@ -47,6 +47,7 @@ urlpatterns = [
     path('', include('frontend.urls')),
     path('api/', include('courses.api.urls', namespace='api')),
     path('api/', include('accounts.api.urls', namespace='accounts')),
+    path('api/', include('testsApp.api.urls', namespace='tests')),
     path('swagger/', schema_view.with_ui('swagger',
          cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc',
