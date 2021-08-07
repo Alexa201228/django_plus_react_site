@@ -1,5 +1,4 @@
 import axios from "axios";
-import { loadUser } from "./auth";
 
 import { createMessage, returnErrorMessages } from "./messages";
 import { GET_COURSES, ENROLL_COURSE, GET_COURSE_DETAILS } from "./types";

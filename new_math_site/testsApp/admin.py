@@ -19,5 +19,7 @@ class QuestionInline(nested_admin.NestedStackedInline):
 @admin.register(Test)
 class TestsAdmin(nested_admin.NestedModelAdmin):
     list_display = ('title', )
+    autocomplete_fields = ['lesson', 'course', 'students']
+    readonly_fields = ['students']
     inlines = [QuestionInline]
 # Register your models here.

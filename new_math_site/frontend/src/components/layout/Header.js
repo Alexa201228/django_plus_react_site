@@ -30,7 +30,7 @@ import { Container } from '@material-ui/core';
 	},
 	buttonContainer: {
 		display: 'flex',
-		justifyContent: 'space-between',
+		justifyContent: 'space-around',
 		alignItems: 'center',
 	}
  }));
