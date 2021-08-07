@@ -10,16 +10,16 @@ class AnswerSerializer(serializers.ModelSerializer):
 
 
 class QuestionSerializer(serializers.ModelSerializer):
-    answers = AnswerSerializer(many=True)
+    answer_to_question = AnswerSerializer(many=True)
 
     class Meta:
         model = Question
-        fields = ('id', 'question_body', 'answers')
+        fields = ('id', 'question_body', 'answer_to_question')
 
 
 class TestSerializer(serializers.ModelSerializer):
-    questions = QuestionSerializer(many=True)
+    questions_on_test = QuestionSerializer(many=True)
 
     class Meta:
         model = Test
-        fields = ('id', 'questions', 'lesson', 'course')
+        fields = ('id', 'questions_on_test', 'lesson', 'course')

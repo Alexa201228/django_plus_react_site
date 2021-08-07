@@ -22,7 +22,7 @@ class Course(models.Model):
 
 class Lesson(models.Model):
     course_id = models.ForeignKey(Course,
-                                  related_name='course_modules',
+                                  related_name='course_lessons',
                                   on_delete=models.CASCADE)
     module_name = models.CharField(max_length=200, verbose_name='Название урока')
     theme = models.CharField(max_length=250, blank=True, null=True)

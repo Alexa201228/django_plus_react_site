@@ -11,3 +11,4 @@ export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAIL = 'REGISTER_FAIL';
 export const GET_ERRORS = 'GET_ERRORS';
 export const CREATE_MESSAGES = 'CREATE_MESSAGES';
+export const GET_TEST = 'GET_TEST';
