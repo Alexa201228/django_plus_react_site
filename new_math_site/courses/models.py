@@ -24,13 +24,13 @@ class Lesson(models.Model):
     course_id = models.ForeignKey(Course,
                                   related_name='course_lessons',
                                   on_delete=models.CASCADE)
-    module_name = models.CharField(max_length=200, verbose_name='Название урока')
+    lesson_name = models.CharField(max_length=200, verbose_name='Название урока')
     theme = models.CharField(max_length=250, blank=True, null=True)
     body = RichTextField(verbose_name='Содержание урока')
-    slug = models.SlugField(max_length=50)
+    lesson_slug = models.SlugField(max_length=150)
 
     def __str__(self):
-        return self.module_name
+        return self.lesson_name
 
     class Meta:
         verbose_name_plural = 'Уроки курсов'

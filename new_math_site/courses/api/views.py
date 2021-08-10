@@ -52,3 +52,16 @@ class CourseDetailView(generics.RetrieveAPIView):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
     permission_classes = [permissions.AllowAny]
+
+
+class ModuleDetailApiView(generics.RetrieveAPIView):
+    serializer_class = ModuleSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def get_object(self):
+        course_slug = self.kwargs.get('course_slug')
+        lesson_slug = self.kwargs.get('lesson_slug')
+
+        course = Course.objects.get(slug=course_slug)
+        lesson = Lesson.objects.get(course_id=course.id, lesson_slug=lesson_slug)
+        return lesson

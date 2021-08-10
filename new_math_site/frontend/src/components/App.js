@@ -12,10 +12,11 @@ import Register from "./accounts/Register";
 import Login from "./accounts/Login";
 import PrivateRoute from "./common/PrivateRoute";
 import UserProfile from "./accounts/UserProfile";
+import CourseDetail from "./courses/CourseDetail";
 
 import store from "../store";
 import { loadUser } from "../actions/auth";
-import CourseDetail from "./courses/CourseDetail";
+import TestPage from "./tests/TestPage";
 
 
 //Alert options
@@ -41,9 +42,10 @@ class App extends Component {
             <div className='container'>
                 <Switch>
                   <Route exact path='/' component={Dashboard} />
-                  <Route exact path='/register' component={Register} />
-                  <Route exact path='/login' component={Login} />
-                  <Route exact path='/:slug' component={CourseDetail} />
+                  <Route path='/register' component={Register} />
+                  <Route path='/login' component={Login} />
+                  <Route path='/:slug/:lesson_slug/:test_id' component={TestPage}/>
+                  <Route path='/:slug' component={CourseDetail} />
                   <PrivateRoute exact path='/profile/:id' component={UserProfile}/>
               </Switch>
             </div>

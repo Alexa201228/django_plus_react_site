@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { createMessage, returnErrorMessages } from "./messages";
-import { GET_COURSES, ENROLL_COURSE, GET_COURSE_DETAILS } from "./types";
+import { GET_COURSES, ENROLL_COURSE, GET_COURSE_DETAILS, GET_LESSON } from "./types";
 
 //Get courses
 export const getCourses = () => dispatch => {
@@ -30,6 +30,21 @@ export const courseDetails = (slug) => dispatch => {
         .catch(err => {
             dispatch(returnErrorMessages(err.response.data, err.response.status));
         });
+}
+
+
+//Get lesson
+export const getLesson = ({slug, lesson_slug}) => dispatch =>{
+    axios.get(`/api/courses/${slug}/${lesson_slug}/`)
+    .then(res => {
+        dispatch({
+            type: GET_LESSON,
+            payload: res.data
+        })
+    })
+    .catch(err => {
+        dispatch(returnErrorMessages(err.response.data, err.response.status))
+    })
 }
 
 //Enroll course

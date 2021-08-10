@@ -1,40 +1,55 @@
 import React, { useEffect } from 'react';
 import { PropTypes } from 'prop-types';
-import { connect, useDispatch } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { getTest } from '../../actions/tests';
-import { Box, Container, Typography } from '@material-ui/core';
+import { Box, Button, Container, Typography } from '@material-ui/core';
 import { Fragment } from 'react';
 import { removeHTMLTags } from '../../helpers/editContentHelper';
+import { useParams } from 'react-router';
+import { getLesson } from '../../actions/courses';
+import { Link, NavLink } from 'react-router-dom';
 
-export function CourseLessons(props){
-    const lessons = props.course;
+export function CourseLessons(){
+    const { slug, lesson_slug } = useParams();
     const dispatch = useDispatch();
+    const lesson = useSelector(state => state.courses.lesson)
+    
+    //перезапускаем useEffect только если поменялся lesson_slug
     useEffect(() => {
-        dispatch(getTest(2))
-    }, [])
-
+        dispatch(getLesson({slug, lesson_slug}))
+    }, [lesson_slug])
+    
     return(
+        
         <Fragment>
-            <h3>Course lessons</h3>
-            <Container>
-                <Box>
-                    {lessons.map((lesson, index) => (
-                        <Typography key={index}>
-                            {removeHTMLTags(lesson.body)}
-                        </Typography>
-                    ))}
-                </Box>
-            </Container>
+            {lesson ?
+            <Fragment>
+                <Container>
+                    <Typography>
+                        {lesson.lesson_name}
+                    </Typography>
+                    <Typography>
+                        {removeHTMLTags(lesson.body)}
+                    </Typography>
+                    {lesson.module_test ?
+                    lesson.module_test.map((test, index) => (
+                        <Button
+                        key={index}
+                        component={NavLink}
+                        to={`${lesson_slug}/${test.id}`}>        
+                            {test.title}
+                        </Button>
+                ))
+                : null}
+                </Container>
+                
+                
+            </Fragment>
+            : null}
+            
         </Fragment>
     )
 }
 
-CourseLessons.propTypes = {
-    course: PropTypes.array.isRequired
-}
 
-const mapStateToProps = (state) => ({
-    course: state.courses.course.course_lessons
-})
-
-export default connect(mapStateToProps)(CourseLessons);
+export default (CourseLessons);

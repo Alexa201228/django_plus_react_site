@@ -1,7 +1,10 @@
 import { GET_TEST } from "../actions/types";
 
 const initialState = {
-    test: null
+    test: null,
+    questions: [],
+    chosen_answers: [],
+    correct_answers: []
 }
 
 
