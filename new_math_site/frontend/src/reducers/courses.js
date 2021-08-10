@@ -1,8 +1,9 @@
-import { GET_COURSES, GET_COURSE_DETAILS } from '../actions/types.js';
+import { GET_COURSES, GET_COURSE_DETAILS, GET_LESSON } from '../actions/types.js';
 
 const initialState = {
     courses: [],
-    course: null
+    course: null,
+    lesson: null
 }
 
 export default function (state = initialState, action) {
@@ -17,6 +18,11 @@ export default function (state = initialState, action) {
                 ...state,
                 course: action.payload,
             };
+        case GET_LESSON:
+            return {
+                ...state,
+                lesson: action.payload,
+            }
         default:
             return state;
     }

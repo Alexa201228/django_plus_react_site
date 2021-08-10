@@ -8,7 +8,11 @@ class ModuleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Lesson
-        fields = ['id', 'module_name', 'body', 'module_test', 'slug']
+        extra_kwargs = {
+            'url': {'lookup_field': 'lesson_slug'}
+        }
+        lookup_field = 'lesson_slug'
+        fields = ['id', 'lesson_name', 'body', 'course_id', 'lesson_slug','module_test']
 
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -18,9 +22,8 @@ class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = ['id', 'title', 'slug', 'description',
-                  'course_lessons', 'students_on_course', 'course_test']
+                  'course_lessons', 'course_test']
         lookup_field = 'slug'
         extra_kwargs = {
-            'url': {'lookup_field': 'slug'},
-            'students_on_course': {'required': False}
+            'url': {'lookup_field': 'slug'}
         }

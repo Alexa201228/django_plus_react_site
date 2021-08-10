@@ -13,7 +13,7 @@ class CourseAdmin(admin.ModelAdmin):
 
 @admin.register(Lesson)
 class ModuleAdmin(admin.ModelAdmin):
-    list_display = ['module_name', 'theme']
-    prepopulated_fields = {'slug': ('module_name', )}
-    search_fields = ['theme', 'module_name']
+    list_display = ['lesson_name', 'theme']
+    prepopulated_fields = {'lesson_slug': ('lesson_name', )}
+    search_fields = ['theme', 'lesson_name']
 

@@ -2,7 +2,7 @@ import axios from "axios"
 import { returnErrorMessages } from "./messages";
 import { GET_TEST } from "./types"
 
-
+//Get test by id
 export const getTest = (id) => dispatch => {
     axios.get(
         `api/tests/${id}/`
