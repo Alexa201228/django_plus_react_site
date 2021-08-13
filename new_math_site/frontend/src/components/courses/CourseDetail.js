@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from 'react';
 import { courseDetails } from '../../actions/courses';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch, useParams } from 'react-router';
-import CourseLessons from './CourseLessons';
+import CourseLesson from './CourseLessons';
 import { Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import CourseLessonsList from './CourseLessonList';
@@ -11,6 +11,7 @@ import CourseInfo from './CourseInfo';
 const useStyles = makeStyles((theme) => ({
 	courseContainer: {
         marginTop: theme.spacing(3),
+        padding: 0,
 		display: 'flex',
         alignContent: 'flex-start',
 	},
@@ -33,7 +34,7 @@ export function CourseDetail(){
                     <Container className={styles.courseContainer}>
                         <CourseLessonsList lessons={course.course_lessons} course={course}/>
                         <Switch>
-                            <Route exact path='/:slug/:lesson_slug' component={CourseLessons}/>
+                            <Route exact path='/:slug/:lesson_slug' component={CourseLesson}/>
                             <Route path='/:slug' component={CourseInfo} />          
                         </Switch>
                     </Container>                    

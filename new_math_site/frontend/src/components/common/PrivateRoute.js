@@ -2,6 +2,7 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { CircularProgress } from '@material-ui/core';
 
 
 const PrivateRoute = ({ component: Component, auth, ...rest }) => (
@@ -9,7 +10,7 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => (
     {...rest}
     render={(props) => {
       if (auth.isLoading) {
-        return <h2>Loading...</h2>;
+        return <CircularProgress/>;
       } else if (!auth.isAuthenticated) {
         return <Redirect to="/login" />;
       } else {

@@ -44,14 +44,8 @@ export function UserProfile(props) {
                  {
                      `Welcome ${user.first_name}`}
                  </Typography>
-                </div>
-                
-            
-            
-                
+                </div>               
                 <Box p={4}>
-                    
-                
                  <Box>
                      {user.student_courses.map((course, index) => (
                          <Box

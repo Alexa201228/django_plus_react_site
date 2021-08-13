@@ -17,6 +17,7 @@ import CourseDetail from "./courses/CourseDetail";
 import store from "../store";
 import { loadUser } from "../actions/auth";
 import TestPage from "./tests/TestPage";
+import QuestionBody from "./tests/QuestionBody";
 
 
 //Alert options
@@ -41,12 +42,12 @@ class App extends Component {
               <Alerts/>
             <div className='container'>
                 <Switch>
+                  <PrivateRoute exact path='/profile/:id' component={UserProfile}/>
                   <Route exact path='/' component={Dashboard} />
                   <Route path='/register' component={Register} />
                   <Route path='/login' component={Login} />
-                  <Route path='/:slug/:lesson_slug/:test_id' component={TestPage}/>
+                  <PrivateRoute path='/:slug/:lesson_slug/:test_id' component={TestPage}/>
                   <Route path='/:slug' component={CourseDetail} />
-                  <PrivateRoute exact path='/profile/:id' component={UserProfile}/>
               </Switch>
             </div>
             </Fragment>

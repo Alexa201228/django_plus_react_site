@@ -13,6 +13,6 @@ export const GET_ERRORS = 'GET_ERRORS';
 export const CREATE_MESSAGES = 'CREATE_MESSAGES';
 export const GET_TEST = 'GET_TEST';
 export const GET_LESSON = 'GET_LESSON';
-export const GET_QUESTIONS = 'GET_QUESTIONS';
+export const GET_QUESTION = 'GET_QUESTION';
 export const GET_CHOSEN_ANSWERS = 'GET_CHOSEN_ANSWERS';
 export const GET_CORRECT_ANSWERS = 'GET_CORRECT_ANSWERS'; 

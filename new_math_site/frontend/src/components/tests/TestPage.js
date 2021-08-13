@@ -1,8 +1,22 @@
 import React, { useEffect } from 'react';
+import { Fragment } from 'react';
+import Switch from 'react-bootstrap/esm/Switch';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router';
+import { Route, useParams } from 'react-router';
 import { getTest } from '../../actions/tests';
+import QuestionBody from './QuestionBody';
+import QuestionList from './QuestionList';
+import PrivateRoute
+ from '../common/PrivateRoute';
+import { Container } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 
+
+const useStyles = makeStyles((theme) =>({
+    testContainer:{
+        display: 'flex',
+    },
+}));
 
 export function TestPage(){
     const { test_id } = useParams();
@@ -11,9 +25,21 @@ export function TestPage(){
     useEffect(()=>{
         dispatch(getTest(test_id))
     }, [])
-    console.log(test)
+
+    const styles = useStyles();
     return(
-        <h3></h3>
+        <Fragment>
+            {test ?
+            <Fragment>
+                <Container className={styles.testContainer}>
+                <QuestionList questions={test.questions_on_test}/>
+                <Switch>
+                    <PrivateRoute exact path='/:slug/:lesson_slug/:test_id/:question_id' component={QuestionBody}/>
+                </Switch>
+                </Container>
+            </Fragment>
+            :null}
+        </Fragment>
     )
 }
 
