@@ -58,6 +58,12 @@ class Question(models.Model):
         config_name='tests_config',
         verbose_name='Текст вопроса')
 
+    def get_correct_answers(self):
+        correct_answers = list(self.answers_to_question.filter(is_correct=True))
+        return correct_answers
+
+    def __str__(self):
+        return f'{self.question_body[:50]}...'
 
 class Answer(models.Model):
     question = models.ForeignKey(

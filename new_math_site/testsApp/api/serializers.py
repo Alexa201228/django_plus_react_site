@@ -10,7 +10,7 @@ class AnswerSerializer(serializers.ModelSerializer):
 
 
 class QuestionSerializer(serializers.ModelSerializer):
-    answer_to_question = AnswerSerializer(many=True)
+    answer_to_question = AnswerSerializer(many=True, read_only=True)
 
     class Meta:
         model = Question
@@ -18,8 +18,12 @@ class QuestionSerializer(serializers.ModelSerializer):
 
 
 class TestSerializer(serializers.ModelSerializer):
-    questions_on_test = QuestionSerializer(many=True)
+    questions_on_test = QuestionSerializer(many=True, read_only=True)
 
     class Meta:
         model = Test
         fields = ('id', 'title', 'questions_on_test', 'lesson', 'course')
+        extra_kwargs = {
+            'questions_on_test': {'required': False},
+            'title':{'required': False, 'read_only': True}
+        }

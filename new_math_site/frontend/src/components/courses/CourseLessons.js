@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
-import { PropTypes } from 'prop-types';
-import { connect, useDispatch, useSelector } from 'react-redux';
-import { getTest } from '../../actions/tests';
+import { useDispatch, useSelector } from 'react-redux';
 import { Box, Button, Container, Typography } from '@material-ui/core';
 import { Fragment } from 'react';
 import { removeHTMLTags } from '../../helpers/editContentHelper';
@@ -9,10 +7,10 @@ import { useParams } from 'react-router';
 import { getLesson } from '../../actions/courses';
 import { Link, NavLink } from 'react-router-dom';
 
-export function CourseLessons(){
+export function CourseLesson(){
     const { slug, lesson_slug } = useParams();
     const dispatch = useDispatch();
-    const lesson = useSelector(state => state.courses.lesson)
+    const {lesson} = useSelector(state => state.courses)
     
     //перезапускаем useEffect только если поменялся lesson_slug
     useEffect(() => {
@@ -52,4 +50,4 @@ export function CourseLessons(){
 }
 
 
-export default (CourseLessons);
+export default CourseLesson;

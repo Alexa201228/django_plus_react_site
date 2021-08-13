@@ -72,6 +72,7 @@ class UserApiView(generics.RetrieveAPIView):
 
 class LogoutView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated, ]
+    serializer_class = LoginSerializer
 
     def post(self, request, *args, **kwargs):
         if self.request.data.get('all'):
