@@ -26,19 +26,16 @@ class TestViewSet(viewsets.ReadOnlyModelViewSet):
     )
     def test_results(self, request, *args, **kwargs):
         try:
-            print(request.data)
             test = self.get_object()
-            t = request.data['questions_on_test'][0]['answer_to_question']
-            print(test, t)
-            user_answers = self.request.get('user_answers')
-            test_checker = TestChecker(test, user_answers)
+            test_checker = TestChecker(test, request.data)
             result = test_checker.get_test_result()
             if result[2]:
                 request.user.succeded_students.append(test)
             return Response(
-                context={
+                {
                     'correct_answers': result[1],
-                    'is_passed': result[2]
+                    'is_passed': result[2],
+                    'finished': True
                 },
                 status=status.HTTP_200_OK
             )

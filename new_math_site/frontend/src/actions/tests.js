@@ -1,7 +1,7 @@
 import axios from "axios"
 import { tokenConfig } from "./auth";
-import { returnErrorMessages } from "./messages";
-import { GET_QUESTION, GET_TEST } from "./types"
+import { createMessage, returnErrorMessages } from "./messages";
+import { GET_QUESTION, GET_TEST, GET_TEST_RESULTS } from "./types"
 
 //Get test by id
 export const getTest = (id) => (dispatch, getState) => {
@@ -35,4 +35,20 @@ export const getQuestion = (id) =>(dispatch, getState) => {
     .catch(err => {
         dispatch(returnErrorMessages(err.response.data, err.response.status))
     });
+}
+
+//Get Test results
+export const testResults = ({test_id, chosen_answers}) => (dispatch, getState) =>{
+
+    axios.post(`/api/tests/${test_id}/test_results/`, chosen_answers, tokenConfig(getState))
+    .then(res =>{
+        dispatch(createMessage({test_finished:'Вы завершили тест!'}));
+        dispatch({
+            type: GET_TEST_RESULTS,
+            payload: res.data
+        })
+    })
+    .catch(err =>{
+        dispatch(returnErrorMessages(err.response.data, err.response.status))
+    })
 }

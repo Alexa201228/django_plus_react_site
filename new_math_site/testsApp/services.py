@@ -34,7 +34,7 @@ class TestChecker():
         correct_answers: dict = {}
         #Получаем правильные ответы
         for question in questions:
-            correct_answers[question.id] = question.get_correct_answers()
+            correct_answers[str(question.id)] = question.get_correct_answers()
         #Счетчик результата пользователя
         user_points = 0
         #Проверка ответов пользователя

@@ -1,4 +1,4 @@
-import { GET_QUESTION, GET_TEST } from "../actions/types";
+import { GET_QUESTION, GET_TEST, GET_TEST_RESULTS } from "../actions/types";
 
 const initialState = {
     test: null,
@@ -12,6 +12,7 @@ const initialState = {
 
 
 export default function(state = initialState, action) {
+
     switch(action.type){
         case GET_TEST:
             const answers = {};
@@ -30,6 +31,15 @@ export default function(state = initialState, action) {
             return{
                 ...state,
                 question: action.payload,
+            }
+        case GET_TEST_RESULTS:
+            return{
+                ...state,
+                correct_answers:{
+                    ...state.correct_answers, ...action.payload.correct_answers
+                },
+                is_passed: action.payload.is_passed,
+                finished: action.payload.finished, 
             }
         default:
             return state;
