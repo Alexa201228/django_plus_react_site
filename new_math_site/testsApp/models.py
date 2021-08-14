@@ -59,8 +59,11 @@ class Question(models.Model):
         verbose_name='Текст вопроса')
 
     def get_correct_answers(self):
-        correct_answers = list(self.answers_to_question.filter(is_correct=True))
-        return correct_answers
+        correct_answers = list(self.answer_to_question.filter(is_correct=True))
+        answers_ids = []
+        for i in correct_answers:
+            answers_ids.append(i.id)
+        return answers_ids
 
     def __str__(self):
         return f'{self.question_body[:50]}...'
