@@ -1,4 +1,4 @@
-import { GET_QUESTION, GET_TEST, GET_TEST_RESULTS } from "../actions/types";
+import { GET_QUESTION, GET_TEST, GET_TEST_RESULTS, TRY_TEST_AGAIN } from "../actions/types";
 
 const initialState = {
     test: null,
@@ -6,6 +6,7 @@ const initialState = {
     questions: [],
     chosen_answers: {},
     correct_answers: {},
+    result: null,
     is_passed: false,
     finished: false
 }
@@ -33,13 +34,28 @@ export default function(state = initialState, action) {
                 question: action.payload,
             }
         case GET_TEST_RESULTS:
+
             return{
                 ...state,
+                result: action.payload.result,
                 correct_answers:{
                     ...state.correct_answers, ...action.payload.correct_answers
                 },
                 is_passed: action.payload.is_passed,
                 finished: action.payload.finished, 
+            }
+
+        case TRY_TEST_AGAIN:
+            const newAnswers = {};
+            action.payload.questions_on_test.forEach(q => {
+                newAnswers[q.id] = []
+            });
+            return{
+                ...state, 
+                finished: false,
+                chosen_answers:{
+                    ...state.chosen_answers, ...newAnswers
+                }
             }
         default:
             return state;

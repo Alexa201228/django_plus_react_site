@@ -1,8 +1,9 @@
 import { Container, Typography } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Fragment } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 
 
 export const useStyles = makeStyles((theme) => ({
@@ -12,10 +13,11 @@ export const useStyles = makeStyles((theme) => ({
  }));
 
 export function QuestionList({questions}){
-    const { test_id, lesson_slug, slug } = useParams();
 
-
+    const  {slug, lesson_slug, test_id } = useParams();
+    const {finished} = useSelector(state => state.tests)
     const styles = useStyles();
+
     return (
         <Fragment>
             <Container className={styles.questionContainer}>
@@ -29,10 +31,16 @@ export function QuestionList({questions}){
                         </Link>
                     </Typography>
                 ))}
-                
+                {finished &&
+                <Typography>
+                    <Link
+                        to={`/${slug}/${lesson_slug}/${test_id}/results/test_results`}>
+                            Результаты теста
+                    </Link>
+                </Typography>}
             </Container>            
         </Fragment>
     )
 }
 
-export default QuestionList;
+export default withRouter(QuestionList);

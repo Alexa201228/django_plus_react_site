@@ -1,7 +1,7 @@
 import axios from "axios"
 import { tokenConfig } from "./auth";
 import { createMessage, returnErrorMessages } from "./messages";
-import { GET_QUESTION, GET_TEST, GET_TEST_RESULTS } from "./types"
+import { GET_QUESTION, GET_TEST, GET_TEST_RESULTS, TRY_TEST_AGAIN } from "./types"
 
 //Get test by id
 export const getTest = (id) => (dispatch, getState) => {
@@ -51,4 +51,21 @@ export const testResults = ({test_id, chosen_answers}) => (dispatch, getState) =
     .catch(err =>{
         dispatch(returnErrorMessages(err.response.data, err.response.status))
     })
+}
+
+//Try to pass test again
+export const tryTestAgain = (test_id) => (dispatch, getState) => {
+    axios.get(
+        `api/tests/${test_id}/`,
+        tokenConfig(getState)
+    )
+    .then(res =>{
+        dispatch({
+            type: TRY_TEST_AGAIN,
+            payload: res.data
+        })
+    })
+    .catch(err => {
+        dispatch(returnErrorMessages(err.response.data, err.response.status))
+    });
 }

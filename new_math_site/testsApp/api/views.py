@@ -5,7 +5,7 @@ from rest_framework import status, viewsets
 from rest_framework import permissions
 from rest_framework.decorators import action
 
-from .serializers import QuestionSerializer, TestSerializer
+from .serializers import AnswerSerializer, QuestionSerializer, TestSerializer
 from ..models import Question, Test
 
 
@@ -30,9 +30,11 @@ class TestViewSet(viewsets.ReadOnlyModelViewSet):
             test_checker = TestChecker(test, request.data)
             result = test_checker.get_test_result()
             if result[2]:
-                request.user.succeded_students.append(test)
+                request.user.succeded_students.add(test)
+                test.students.add(request.user)
             return Response(
                 {
+                    'result': result[0],
                     'correct_answers': result[1],
                     'is_passed': result[2],
                     'finished': True

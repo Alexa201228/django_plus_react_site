@@ -6,6 +6,7 @@ from rest_framework import serializers
 
 from ..models import User
 from courses.api.serializers import CourseSerializer
+from testsApp.api.serializers import TestSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -13,7 +14,8 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'email', 'first_name', 'last_name', 'student_courses']
+        fields = ['id', 'email', 'first_name', 'last_name', 
+        'student_courses', 'succeded_students']
         extra_kwargs = {
             'student_courses': {'required': False}
         }
