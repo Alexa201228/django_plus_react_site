@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from '../../actions/auth';
@@ -28,10 +28,12 @@ export function Login(props) {
     password: '',
   })
   
+  const history = useHistory();
 
   const onSubmit = (e) => {
     e.preventDefault();
     props.login(userCredentials.email, userCredentials.password);
+    history.goBack();
   };
 
   const onChange = (e) => {
@@ -40,8 +42,8 @@ export function Login(props) {
 
   const logStyle = loginStyles();
 
-    if (props.isAuthenticated) {
-            return <Redirect to="/" />;
+  if (props.isAuthenticated) {
+      return <Redirect to="/" />;
   }
   
   return (

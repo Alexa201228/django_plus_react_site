@@ -14,10 +14,10 @@ import PrivateRoute from "./common/PrivateRoute";
 import UserProfile from "./accounts/UserProfile";
 import CourseDetail from "./courses/CourseDetail";
 
-import store from "../store";
+import {store, persistor} from "../store";
 import { loadUser } from "../actions/auth";
 import TestPage from "./tests/TestPage";
-import QuestionBody from "./tests/QuestionBody";
+import { PersistGate } from "redux-persist/integration/react";
 
 
 //Alert options
@@ -35,6 +35,7 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
         <AlertProvider template={AlertTemplate} {...alertOptions}>
           <Router>
             <Fragment>
@@ -53,8 +54,8 @@ class App extends Component {
             </Fragment>
           </Router>
         </AlertProvider> 
-      </Provider>
-      
+        </PersistGate>
+      </Provider> 
     );
   }
 }

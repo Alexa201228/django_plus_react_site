@@ -1,4 +1,7 @@
+from .api.serializers import AnswerSerializer
 from typing import Dict, List
+from django.core import serializers
+
 
 from .models import Question, Test, Answer
 
@@ -46,7 +49,16 @@ class TestChecker():
         is_passed: bool = False
         if user_result >= 80:
             is_passed = True
-
-        return [user_result, correct_answers, is_passed]
+        #Заполняем словарь правильных ответов
+        returned_correct_answers = {}
+        for key in correct_answers.keys():
+            temp_arr = []
+            for answer in correct_answers[key]:
+                temp_arr.append(
+                    AnswerSerializer(
+                        Answer.objects.get(pk=answer)).data
+                    )
+            returned_correct_answers[key] = temp_arr
+        return [user_result, returned_correct_answers, is_passed]
         
 

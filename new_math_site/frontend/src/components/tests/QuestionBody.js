@@ -1,9 +1,9 @@
-import { Button, Checkbox, Container, FormControl, FormControlLabel, FormGroup, Typography } from '@material-ui/core';
+import { Button, Checkbox, Container, FormControlLabel, FormGroup, Typography } from '@material-ui/core';
 import { Box } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import { Fragment } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import { getQuestion, testResults } from '../../actions/tests';
 import { removeHTMLTags } from '../../helpers/editContentHelper';
 import { useStyles } from './QuestionList';
@@ -12,22 +12,25 @@ import PropTypes from 'prop-types';
 
 export function QuestionBody(props){
 
-    const { test_id, question_id } = useParams();
+    const { slug, lesson_slug, test_id, question_id } = useParams();
     const dispatch = useDispatch();
-    const { question, chosen_answers } = useSelector(state => state.tests);
+    const { question, chosen_answers, finished } = useSelector(state => state.tests);
+
     useEffect(() => {
         dispatch(getQuestion(question_id))
     },[question_id])
 
     const styles = useStyles();
+    const history = useHistory();
+
     //Получение результатов тестирования
     const getTestResult = () => {
         const requestBody = {
             test_id,
             chosen_answers
         }
-        console.log(requestBody)
-        props.testResults(requestBody)
+        props.testResults(requestBody);
+        history.push(`/${slug}/${lesson_slug}/${test_id}/results/test_results`)
     }
 
     const setSelectedAnswers = (ans) => {
@@ -46,6 +49,14 @@ export function QuestionBody(props){
         }
     }
 
+    const testNotFinished = (
+        <Box>
+            <Button
+                onClick={getTestResult}>
+                Завершить тест
+            </Button>
+        </Box>
+    )
     return(
         <Fragment>
             {question ?
@@ -68,12 +79,9 @@ export function QuestionBody(props){
                         ))}
                     </FormGroup>
                 </Container>
-                <Container>
-                    <Button
-                    onClick={getTestResult}>
-                        Завершить тест
-                    </Button>
-                </Container>
+                    <Container>
+                        {finished ? null : testNotFinished }
+                   </Container> 
             </Fragment>
             : null}
         </Fragment>

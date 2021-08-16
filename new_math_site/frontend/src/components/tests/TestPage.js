@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Fragment } from 'react';
 import Switch from 'react-bootstrap/esm/Switch';
 import { useDispatch, useSelector } from 'react-redux';
-import { Route, useParams } from 'react-router';
-import { getTest } from '../../actions/tests';
+import { Redirect, Route, useParams, withRouter } from 'react-router';
+import { getQuestion, getTest } from '../../actions/tests';
 import QuestionBody from './QuestionBody';
 import QuestionList from './QuestionList';
+import TestResults from './TestResults';
 import PrivateRoute
  from '../common/PrivateRoute';
 import { Container } from '@material-ui/core';
@@ -19,13 +20,13 @@ const useStyles = makeStyles((theme) =>({
 }));
 
 export function TestPage(){
-    const { test_id } = useParams();
+    const { slug, lesson_slug, test_id } = useParams();
     const { test } = useSelector(state => state.tests);
     const dispatch = useDispatch();
+
     useEffect(()=>{
         dispatch(getTest(test_id))
     }, [])
-
     const styles = useStyles();
     return(
         <Fragment>
@@ -34,7 +35,9 @@ export function TestPage(){
                 <Container className={styles.testContainer}>
                 <QuestionList questions={test.questions_on_test}/>
                 <Switch>
-                    <PrivateRoute exact path='/:slug/:lesson_slug/:test_id/:question_id' component={QuestionBody}/>
+                    <Redirect from={`/${slug}/${lesson_slug}/${test_id}/`} to={`/${slug}/${lesson_slug}/${test_id}/${test.questions_on_test[0].id}`}/>
+                    <PrivateRoute exact path='/:slug/:lesson_slug/:test_id/results/test_results' component={TestResults}/>
+                    <PrivateRoute key='question' exact path='/:slug/:lesson_slug/:test_id/:question_id' component={QuestionBody}/>
                 </Switch>
                 </Container>
             </Fragment>
@@ -43,4 +46,4 @@ export function TestPage(){
     )
 }
 
-export default TestPage;
+export default withRouter(TestPage);

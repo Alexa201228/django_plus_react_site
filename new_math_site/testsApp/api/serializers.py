@@ -3,7 +3,6 @@ from ..models import Test, Question, Answer
 
 
 class AnswerSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Answer
         fields = ('id', 'answer_body', 'is_correct')
@@ -22,7 +21,7 @@ class TestSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Test
-        fields = ('id', 'title', 'questions_on_test', 'lesson', 'course')
+        fields = ('id', 'title', 'questions_on_test', 'lesson', 'course', 'students')
         extra_kwargs = {
             'questions_on_test': {'required': False},
             'title':{'required': False, 'read_only': True},
