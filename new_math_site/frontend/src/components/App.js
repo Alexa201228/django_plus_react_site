@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component, Fragment, useLayoutEffect } from "react";
 import { render } from "react-dom";
 import { HashRouter as Router, Route, Switch} from "react-router-dom";
 import { positions, Provider as AlertProvider } from "react-alert";
@@ -27,12 +27,12 @@ const alertOptions = {
   offset: "30px"
 };
 
-class App extends Component {
-  componentDidMount() {
-    store.dispatch(loadUser());
-  }
+export function App(){
 
-  render() {
+  useLayoutEffect(() => {
+    store.dispatch(loadUser());
+  })
+
     return (
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
@@ -58,7 +58,6 @@ class App extends Component {
       </Provider> 
     );
   }
-}
 
 export default App;
 

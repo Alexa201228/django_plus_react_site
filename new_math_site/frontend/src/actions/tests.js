@@ -16,7 +16,12 @@ export const getTest = (id) => (dispatch, getState) => {
         })
     })
     .catch(err => {
-        dispatch(returnErrorMessages(err.response.data, err.response.status))
+        if(err.response.status === 401){
+            return null;
+        }
+        else{
+            dispatch(returnErrorMessages(err.response.data, err.response.status))
+        }
     });
 }
 
@@ -33,7 +38,12 @@ export const getQuestion = (id) =>(dispatch, getState) => {
         })
     })
     .catch(err => {
-        dispatch(returnErrorMessages(err.response.data, err.response.status))
+        if(err.response.status === 401){
+            return null;
+        }
+        else{
+            dispatch(returnErrorMessages(err.response.data, err.response.status))
+        }
     });
 }
 
@@ -49,7 +59,12 @@ export const testResults = ({test_id, chosen_answers}) => (dispatch, getState) =
         })
     })
     .catch(err =>{
-        dispatch(returnErrorMessages(err.response.data, err.response.status))
+        if(err.response.status === 401){
+            return null;
+        }
+        else{
+            dispatch(returnErrorMessages(err.response.data, err.response.status))
+        }
     })
 }
 
@@ -66,6 +81,11 @@ export const tryTestAgain = (test_id) => (dispatch, getState) => {
         })
     })
     .catch(err => {
-        dispatch(returnErrorMessages(err.response.data, err.response.status))
+        if(err.response.status === 401){
+            return null;
+        }
+        else{
+            dispatch(returnErrorMessages(err.response.data, err.response.status))
+        }
     });
 }

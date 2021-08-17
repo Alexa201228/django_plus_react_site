@@ -16,16 +16,12 @@ export default function(state = initialState, action) {
 
     switch(action.type){
         case GET_TEST:
-            const answers = {};
-            action.payload.questions_on_test.forEach(q => {
-                answers[q.id] = []
-            });
             return {
                 ...state,
                 test: action.payload,
                 questions: action.payload.questions_on_test,
                 chosen_answers:{
-                    ...state.chosen_answers, ...answers
+                    ...state.chosen_answers, ...clearChosenAnswers(action.payload.questions_on_test)
                 }
             }
         case GET_QUESTION:
@@ -46,18 +42,22 @@ export default function(state = initialState, action) {
             }
 
         case TRY_TEST_AGAIN:
-            const newAnswers = {};
-            action.payload.questions_on_test.forEach(q => {
-                newAnswers[q.id] = []
-            });
             return{
                 ...state, 
                 finished: false,
                 chosen_answers:{
-                    ...state.chosen_answers, ...newAnswers
+                    ...state.chosen_answers, ...clearChosenAnswers(action.payload.questions_on_test)
                 }
             }
         default:
             return state;
     }
+}
+
+const clearChosenAnswers = (questions) => {
+    const answers = {};
+    questions.forEach(q => {
+        answers[q.id] = []
+    });
+    return answers;
 }
