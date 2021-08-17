@@ -34,7 +34,7 @@ const refreshAuthToken = failedRequest =>
 
 createAuthRefreshInterceptor(axios, refreshAuthToken,
     {
-    pauseInstanceWhileRefreshing: true
+    pauseInstanceWhileRefreshing: false
 }
 );
 
@@ -51,10 +51,12 @@ export const loadUser = () => (dispatch, getState) => {
             });
 
         }).catch(err => {
-            dispatch({
-                type: AUTH_ERROR,
-            });
-            
+            if(err.response.status === 401){
+                return null;
+            }
+            else{
+                dispatch(returnErrorMessages(err.response.data, err.response.status))
+            }
         });
 };
 

@@ -35,7 +35,9 @@ export function TestPage(){
                 <Container className={styles.testContainer}>
                 <QuestionList questions={test.questions_on_test}/>
                 <Switch>
-                    <Redirect from={`/${slug}/${lesson_slug}/${test_id}/`} to={`/${slug}/${lesson_slug}/${test_id}/${test.questions_on_test[0].id}`}/>
+                    <Redirect 
+                    from={`/${slug}/${lesson_slug}/${test_id}/`} 
+                    to={`/${slug}/${lesson_slug}/${test_id}/${test.questions_on_test[0].id}`}/>
                     <PrivateRoute exact path='/:slug/:lesson_slug/:test_id/results/test_results' component={TestResults}/>
                     <PrivateRoute key='question' exact path='/:slug/:lesson_slug/:test_id/:question_id' component={QuestionBody}/>
                 </Switch>

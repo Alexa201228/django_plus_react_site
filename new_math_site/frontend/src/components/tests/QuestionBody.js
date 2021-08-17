@@ -1,6 +1,6 @@
 import { Button, Checkbox, Container, FormControlLabel, FormGroup, Typography } from '@material-ui/core';
 import { Box } from '@material-ui/core';
-import React, { useEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 import { Fragment } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
@@ -16,9 +16,10 @@ export function QuestionBody(props){
     const dispatch = useDispatch();
     const { question, chosen_answers, finished } = useSelector(state => state.tests);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         dispatch(getQuestion(question_id))
     },[question_id])
+
 
     const styles = useStyles();
     const history = useHistory();
@@ -34,6 +35,13 @@ export function QuestionBody(props){
     }
 
     const setSelectedAnswers = (ans) => {
+        //При новой попытке прохождения теста необходимо 
+        //отчистить ответы. Так как при новой попытке 
+        //вызывается метод history.push, то используем
+        //данное свойство для отчистки выбранных ранее ответов
+        if(history.action === 'PUSH'){
+            return false
+        }
         return chosen_answers[question_id].some(a => a == ans)
     }
 
@@ -80,7 +88,7 @@ export function QuestionBody(props){
                     </FormGroup>
                 </Container>
                     <Container>
-                        {finished ? null : testNotFinished }
+                        {!finished && testNotFinished }
                    </Container> 
             </Fragment>
             : null}
