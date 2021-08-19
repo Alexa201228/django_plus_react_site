@@ -3,15 +3,14 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { NavLink, Redirect, useLocation } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logout } from '../../actions/auth';
 import { makeStyles } from '@material-ui/core/styles';
-import { Container } from '@material-ui/core';
-
+import { Box, Container } from '@material-ui/core';
 
  const useStyles = makeStyles((theme) => ({
 	appBar: {
@@ -25,14 +24,33 @@ import { Container } from '@material-ui/core';
 	},
 	headerContainer: {
 		display: 'flex',
-		justifyContent: 'space-between',
-		alignItems: 'center'
+		alignItems: 'center',
+		flexWrap: 'wrap',
+		[theme.breakpoints.down('xs')]:{
+			flexDirection: 'column',
+		},
 	},
 	buttonContainer: {
+		width: '30%',
 		display: 'flex',
-		justifyContent: 'space-around',
 		alignItems: 'center',
-	}
+		justifyContent:'flex-end',
+		[theme.breakpoints.down('xs')]:{
+			paddingRight: '0px',
+			marginLeft: 'auto',
+			marginRight: 'auto',
+			flexWrap: 'wrap',
+			order: 2,
+		},
+	},
+	labelContainer:{
+		width: '70%',
+		[theme.breakpoints.down('xs')]:{
+			textAlign: 'center',
+			width: '100%',
+		},
+	},
+	toolbar: theme.mixins.toolbar,
  }));
 
 
@@ -48,11 +66,8 @@ export function Header(props) {
 	//Header in case authenticated user
 	const authLinks = (
 		<Fragment>
-			<Typography
-				variant="h6"
-				color="inherit">
-				{ user ? `Welcome ${user.first_name}` : ""}
-			</Typography>
+			<Box
+				p={1}>
 			<Button
 				href=""
 				color="primary"
@@ -63,6 +78,9 @@ export function Header(props) {
 				>
 				Logout
 			</Button>
+			</Box>
+			<Box
+				p={1}>
 			{user && 
 				<Button
 					href=""
@@ -74,6 +92,8 @@ export function Header(props) {
 					Profile
 				</Button>
 			}
+			</Box>
+			
 
 		</Fragment>
 				
@@ -82,6 +102,8 @@ export function Header(props) {
 	//Header if use is not authenticated
 	const guessLinks = (
 		<Fragment>
+			<Box
+				p={1}>
 				<Button
 					color="primary"
 					href="#"
@@ -92,20 +114,22 @@ export function Header(props) {
 					>
 					Register
 				</Button>
-				<Button
-					href=""
-					color="primary"
-					variant="outlined"
-					className={classes.link}
-					component={NavLink}
-					to="/login"
-				>
-				Login
-				</Button>
-		</Fragment>
-				
+			</Box>
+				<Box
+					p={1}>
+					<Button
+						href=""
+						color="primary"
+						variant="outlined"
+						className={classes.link}
+						component={NavLink}
+						to="/login"
+					>
+					Login
+					</Button>
+				</Box>	
+		</Fragment>			
 	);
-	
 
 	return (
 		<Fragment>	
@@ -118,35 +142,31 @@ export function Header(props) {
 				>
 				<Toolbar className={classes.toolbar}>
 					<Container className={classes.headerContainer}>
-						<Container>
-							<Typography
-							variant="h6"
-							color="inherit"
-							noWrap
-							>
-							<Link
-								component={NavLink}
-								to="/"
-								underline="none"
-								color="textPrimary"
-							>
-							Mathematiks
-							</Link>
-							</Typography>
-						</Container>
-					
-						<Container className={classes.buttonContainer} display={{ xs: 'none'}}>
+						<Container className={classes.labelContainer}>
+								<Typography
+								variant="h6"
+								color="inherit"
+								noWrap
+								>
+								<Link
+									component={NavLink}
+									to="/"
+									underline="none"
+									color="textPrimary"
+								>
+								Mathematiks
+								</Link>
+								</Typography>
+							</Container>
+						<Container className={classes.buttonContainer}>
 							{isAuthenticated ? authLinks : guessLinks }
 						</Container>
-					
-					</Container>
-					
+					</Container>		
 				</Toolbar>
 			</AppBar>
 		</Fragment>
 	);
 }
-
 	
 Header.propTypes = {
 	auth: PropTypes.object.isRequired,

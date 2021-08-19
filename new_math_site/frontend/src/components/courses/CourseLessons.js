@@ -5,7 +5,14 @@ import { Fragment } from 'react';
 import { removeHTMLTags } from '../../helpers/editContentHelper';
 import { useParams } from 'react-router';
 import { getLesson } from '../../actions/courses';
-import { Link, NavLink } from 'react-router-dom';
+import {  NavLink } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core';
+
+export const useStyles = makeStyles((theme) => ({
+    contentContainer:{
+        marginTop:theme.spacing(10)
+    }
+}))
 
 export function CourseLesson(){
     const { slug, lesson_slug } = useParams();
@@ -17,12 +24,13 @@ export function CourseLesson(){
         dispatch(getLesson({slug, lesson_slug}))
     }, [lesson_slug])
     
+    const styles = useStyles();
     return(
         
         <Fragment>
             {lesson ?
             <Fragment>
-                <Container>
+                <Container className={styles.courseContainer}>
                     <Typography>
                         {lesson.lesson_name}
                     </Typography>
@@ -39,12 +47,9 @@ export function CourseLesson(){
                         </Button>
                 ))
                 : null}
-                </Container>
-                
-                
+                </Container>  
             </Fragment>
             : null}
-            
         </Fragment>
     )
 }

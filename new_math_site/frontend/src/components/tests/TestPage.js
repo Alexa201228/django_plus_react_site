@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Fragment } from 'react';
 import Switch from 'react-bootstrap/esm/Switch';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect, Route, useParams, withRouter } from 'react-router';
-import { getQuestion, getTest } from '../../actions/tests';
+import { Redirect, useParams, withRouter } from 'react-router';
+import { getTest } from '../../actions/tests';
 import QuestionBody from './QuestionBody';
 import QuestionList from './QuestionList';
 import TestResults from './TestResults';

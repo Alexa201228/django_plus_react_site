@@ -1,35 +1,156 @@
-import React, { Fragment } from 'react';
-import { Container, Typography } from '@material-ui/core';
+import React from 'react';
+import { Drawer, List, ListItem, Toolbar, Typography } from '@material-ui/core';
 import { Link, NavLink, useParams } from 'react-router-dom';
 import { Button } from '@material-ui/core';
+import { makeStyles, useTheme } from '@material-ui/core';
+import AppBar from '@material-ui/core/AppBar';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Divider from '@material-ui/core/Divider';
+import Hidden from '@material-ui/core/Hidden';
+import IconButton from '@material-ui/core/IconButton';
 
+import MenuIcon from '@material-ui/icons/Menu';
+
+const drawerWidth = 150;
+const useStyles = makeStyles((theme) => ({
+   root: {
+     display: 'flex',
+   },
+   drawer: {
+     [theme.breakpoints.up('sm')]: {
+       width: drawerWidth,
+       flexShrink: 0,
+     },
+   },
+   appBar: {
+     [theme.breakpoints.up('sm')]: {
+       width: `calc(100% - ${drawerWidth}px)`,
+       marginLeft: drawerWidth,
+     },
+     [theme.breakpoints.down('xs')]:{
+      marginTop: theme.spacing(17)
+     },
+     marginTop: theme.spacing(8)
+   },
+   menuButton: {
+     marginRight: theme.spacing(2),
+     [theme.breakpoints.up('sm')]: {
+       display: 'none',
+     },
+   },
+   // necessary for content to be below app bar
+   toolbar: theme.mixins.toolbar,
+   toolbar: {
+    alignItems: 'center',
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(2)
+   },
+   drawerPaper: {
+     width: drawerWidth,
+     marginTop: theme.spacing(8),
+     [theme.breakpoints.down('xs')]:{
+      marginTop: theme.spacing(17)
+     },
+   },
+   content: {
+     flexGrow: 1,
+     [theme.breakpoints.down('xs')]:{
+      padding: 0,
+     },
+   },
+ }));
 
 export function CourseLessonsList({lessons, course}){
     const { slug } = useParams();
+    const classes = useStyles();
+    const theme = useTheme();
+    const [mobileOpen, setMobileOpen] = React.useState(false);
 
+    const handleDrawerToggle = () => {
+        setMobileOpen(!mobileOpen);
+      };
+
+    const drawer = (
+        <div>
+          <div className={classes.toolbar}>
+              <ListItem
+                button
+                component={Link}
+                to={`/${slug}`}>
+                    <Typography>
+                        {course.title}
+                    </Typography>    
+              </ListItem>
+          </div>
+          <Divider />
+               <List>
+                   {lessons.map((lesson, index) => (
+                       <ListItem 
+                           button 
+                           component={Link}
+                           to={`/${slug}/${lesson.lesson_slug}`}
+                           key={index}>
+                               <Typography>
+                           {lesson.lesson_name}
+                              </Typography>
+                       </ListItem>
+                       ))}   
+               </List>
+        </div>
+      );
     return(
-        <Fragment>
-            <Container>
-                <Button
-                    href=''
-                    component={NavLink}
-                    to={`/${course.slug}`}
-                >
-                    {course.title}
-                </Button>
-                {lessons.map((lesson, index) => (
-                    <Typography
-                        key={`${lesson.lesson_name}+${index}`}>
-                            <Link 
-                                to={`/${slug}/${lesson.lesson_slug}`}
-                                key={index}>
-                                {lesson.lesson_name}
-                            </Link>
-                    </Typography> 
-                ))}
-                
-            </Container>
-        </Fragment>
+<div className={classes.root}>
+       <CssBaseline />
+       <AppBar position="fixed" className={classes.appBar}>
+         <Toolbar>
+           <IconButton
+             color="inherit"
+             aria-label="open drawer"
+             onClick={handleDrawerToggle}
+             className={classes.menuButton}
+           >
+             <MenuIcon />
+           </IconButton>
+           <Typography variant="h6" noWrap>
+             {course.title}
+           </Typography>
+         </Toolbar>
+       </AppBar>
+       <nav className={classes.drawer} aria-label="mailbox folders">
+         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+         <Hidden smUp implementation="css">
+           <Drawer
+             variant="temporary"
+             anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+             open={mobileOpen}
+             onClose={handleDrawerToggle}
+             classes={{
+               paper: classes.drawerPaper,
+             }}
+             ModalProps={{
+               keepMounted: true, // Better open performance on mobile.
+             }}
+           >
+             {drawer}
+           </Drawer>
+         </Hidden>
+         <Hidden xsDown implementation="css">
+           <Drawer
+             classes={{
+               paper: classes.drawerPaper,
+             }}
+             variant="permanent"
+             open
+           >
+             {drawer}
+           </Drawer>
+         </Hidden>
+       </nav>
+       <main className={classes.content}>
+         <div className={classes.toolbar} />
+
+       </main>
+     </div>
     )
 }
 
