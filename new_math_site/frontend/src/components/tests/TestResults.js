@@ -1,4 +1,4 @@
-import { Box, Container, Typography, Button } from '@material-ui/core';
+import { Box, Container, Typography, Button, makeStyles } from '@material-ui/core';
 import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import { connect, useSelector } from 'react-redux';
@@ -7,6 +7,11 @@ import { removeHTMLTags } from '../../helpers/editContentHelper';
 import { tryTestAgain } from '../../actions/tests';
 import { useHistory, useParams } from 'react-router';
 
+const useStyles = makeStyles((theme) => ({
+    resultContainer:{
+        marginTop: theme.spacing(10)
+    }
+}))
 
 export function TestResults(props){
     const { correct_answers, result, test} = useSelector(state => state.tests)
@@ -17,9 +22,10 @@ export function TestResults(props){
         props.tryTestAgain(test_id)
         history.push(`/${slug}/${lesson_slug}/${test_id}/${test.questions_on_test[0].id}`)
     }
+    const styles = useStyles();
     return(
         <Fragment>
-            <Container>
+            <Container className={styles.resultContainer}>
                 <h3>Результаты теста</h3>
                 <Box>
                     <Typography>

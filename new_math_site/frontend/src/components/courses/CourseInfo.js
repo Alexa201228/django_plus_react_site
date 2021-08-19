@@ -8,7 +8,7 @@ import { Container, Typography } from '@material-ui/core';
 
 import { removeHTMLTags } from '../../helpers/editContentHelper';
 import { enrollCourse } from '../../actions/courses';
-
+import { useStyles } from './CourseLessons';
 
 export function CourseInfo(props){
     const { course } = props;
@@ -27,10 +27,10 @@ export function CourseInfo(props){
         }
         props.enrollCourse(enrollData)
     }
-
+    const styles = useStyles();
     return(
         <Fragment>
-            <Container>
+            <Container className={styles.contentContainer}>
                 <h3>{course.title}</h3>
                     <Typography>
                         {removeHTMLTags(course.description)}

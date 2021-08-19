@@ -1,13 +1,13 @@
-import { Button, Checkbox, Container, FormControlLabel, FormGroup, Typography } from '@material-ui/core';
+import { Button, Checkbox, Container, FormControlLabel, FormGroup, makeStyles, Typography } from '@material-ui/core';
 import { Box } from '@material-ui/core';
-import React, { useLayoutEffect } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { Fragment } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
 import { getQuestion, testResults } from '../../actions/tests';
 import { removeHTMLTags } from '../../helpers/editContentHelper';
-import { useStyles } from './QuestionList';
 import PropTypes from 'prop-types';
+import { useStyles } from '../courses/CourseLessons';
 
 
 export function QuestionBody(props){
@@ -15,13 +15,11 @@ export function QuestionBody(props){
     const { slug, lesson_slug, test_id, question_id } = useParams();
     const dispatch = useDispatch();
     const { question, chosen_answers, finished } = useSelector(state => state.tests);
-
+    const styles = useStyles();
     useLayoutEffect(() => {
         dispatch(getQuestion(question_id))
     },[question_id])
 
-
-    const styles = useStyles();
     const history = useHistory();
 
     //Получение результатов тестирования
