@@ -22,8 +22,8 @@ import { PersistGate } from "redux-persist/integration/react";
 
 //Alert options
 const alertOptions = {
-  position: positions.TOP_CENTER,
-  timeout: 5000,
+  position: positions.BOTTOM_CENTER,
+  timeout: 3000,
   offset: "30px"
 };
 

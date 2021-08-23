@@ -25,12 +25,11 @@ export function CourseLesson(){
     }, [lesson_slug])
     
     const styles = useStyles();
-    return(
-        
+    return(    
         <Fragment>
             {lesson ?
             <Fragment>
-                <Container className={styles.courseContainer}>
+                <Container className={styles.contentContainer}>
                     <Typography>
                         {lesson.lesson_name}
                     </Typography>
