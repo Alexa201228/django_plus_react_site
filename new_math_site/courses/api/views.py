@@ -23,7 +23,7 @@ class CourseViewSet(viewsets.ReadOnlyModelViewSet):
     @action(
         methods=['post'],
         detail=True,
-        permission_classes=[permissions.IsAuthenticated,])
+        permission_classes=[permissions.IsAuthenticated, ])
     def enroll(self, request, *args, **kwargs):
         try:
             course = self.get_object()
@@ -63,5 +63,6 @@ class ModuleDetailApiView(generics.RetrieveAPIView):
         lesson_slug = self.kwargs.get('lesson_slug')
 
         course = Course.objects.get(slug=course_slug)
-        lesson = Lesson.objects.get(course_id=course.id, lesson_slug=lesson_slug)
+        lesson = Lesson.objects.get(
+            course_id=course.id, lesson_slug=lesson_slug)
         return lesson

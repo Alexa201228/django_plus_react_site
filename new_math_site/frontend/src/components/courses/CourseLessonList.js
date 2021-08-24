@@ -1,7 +1,7 @@
 import React from 'react';
-import { Drawer, List, ListItem, Toolbar, Typography } from '@material-ui/core';
-import { Link, NavLink, useParams } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+import { Drawer, List, ListItem, Toolbar, Typography, Slide } from '@material-ui/core';
+import { Link, useParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,6 +10,8 @@ import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
 
 import MenuIcon from '@material-ui/icons/Menu';
+import Zoom from '@material-ui/core/Zoom';
+import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 
 const drawerWidth = 150;
 const useStyles = makeStyles((theme) => ({
@@ -60,7 +62,27 @@ const useStyles = makeStyles((theme) => ({
    },
  }));
 
-export function CourseLessonsList({lessons, course}){
+  
+function HideOnScroll(props) {
+	const { children, window } = props;
+	// Note that you normally won't need to set the window ref as useScrollTrigger
+	// will default to window.
+	// This is only being set here because the demo is in an iframe.
+	const trigger = useScrollTrigger({ target: window ? window() : undefined });
+  
+	return (
+	  <Slide appear={false} direction="down" in={!trigger}>
+		{children}
+	  </Slide>
+	);
+  }
+
+  HideOnScroll.propTypes = {
+	children: PropTypes.element.isRequired,
+};
+  
+
+export function CourseLessonsList({lessons, course}, props){
     const { slug } = useParams();
     const classes = useStyles();
     const theme = useTheme();
@@ -100,7 +122,8 @@ export function CourseLessonsList({lessons, course}){
       );
     return(
 <div className={classes.root}>
-       <CssBaseline />
+        <CssBaseline />
+        <HideOnScroll {...props}>
        <AppBar position="fixed" className={classes.appBar}>
          <Toolbar>
            <IconButton
@@ -115,7 +138,8 @@ export function CourseLessonsList({lessons, course}){
              {course.title}
            </Typography>
          </Toolbar>
-       </AppBar>
+          </AppBar>
+          </HideOnScroll>
        <nav className={classes.drawer} aria-label="mailbox folders">
          {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
          <Hidden smUp implementation="css">
@@ -149,7 +173,8 @@ export function CourseLessonsList({lessons, course}){
        <main className={classes.content}>
          <div className={classes.toolbar} />
 
-       </main>
+          </main>
+
      </div>
     )
 }

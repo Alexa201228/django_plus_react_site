@@ -1,5 +1,6 @@
 import axios from "axios";
 import createAuthRefreshInterceptor from 'axios-auth-refresh';
+import { useHistory } from "react-router";
 
 import { createMessage, returnErrorMessages } from "./messages";
 import {
@@ -62,6 +63,7 @@ export const loadUser = () => (dispatch, getState) => {
 
 //Login
 export const login = (email, password) => dispatch => {
+
 
     const config = {
         headers: {

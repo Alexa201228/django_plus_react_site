@@ -24,7 +24,8 @@ class Lesson(models.Model):
     course_id = models.ForeignKey(Course,
                                   related_name='course_lessons',
                                   on_delete=models.CASCADE)
-    lesson_name = models.CharField(max_length=200, verbose_name='Название урока')
+    lesson_name = models.CharField(
+        max_length=200, verbose_name='Название урока')
     theme = models.CharField(max_length=250, blank=True, null=True)
     body = RichTextField(verbose_name='Содержание урока')
     lesson_slug = models.SlugField(max_length=150)

@@ -6,7 +6,7 @@ import { Fragment } from 'react';
 import Button from '@material-ui/core/Button';
 import { Container, Typography } from '@material-ui/core';
 
-import { removeHTMLTags } from '../../helpers/editContentHelper';
+import renderHTML from 'react-render-html';
 import { enrollCourse } from '../../actions/courses';
 import { useStyles } from './CourseLessons';
 
@@ -33,7 +33,7 @@ export function CourseInfo(props){
             <Container className={styles.contentContainer}>
                 <h3>{course.title}</h3>
                     <Typography>
-                        {removeHTMLTags(course.description)}
+                        {renderHTML(course.description)}
                     </Typography>
                     <Button
                     type='submit'

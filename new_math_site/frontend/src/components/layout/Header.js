@@ -11,13 +11,23 @@ import PropTypes from 'prop-types';
 import { logout } from '../../actions/auth';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Container } from '@material-ui/core';
+import Fab from '@material-ui/core/Fab';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import Zoom from '@material-ui/core/Zoom';
+import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 
- const useStyles = makeStyles((theme) => ({
+
+const useStyles = makeStyles((theme) => ({
+	root: {
+		position: 'fixed',
+		bottom: theme.spacing(2),
+		right: theme.spacing(2),
+	  },
 	appBar: {
 		borderBottom: `1px solid ${theme.palette.divider}`,
 	},
 	link: {
-		margin: theme.spacing(1, 1.5),
+		margin: theme.spacing(1, 0, 1, 0),
 	},
 	toolbarTitle: {
 		flexGrow: 1,
@@ -53,6 +63,35 @@ import { Box, Container } from '@material-ui/core';
 	toolbar: theme.mixins.toolbar,
  }));
 
+ function ScrollTop(props) {
+	const { children } = props;
+	const classes = useStyles();
+	const trigger = useScrollTrigger({
+	  disableHysteresis: true,
+	  threshold: 100,
+	});
+  
+	const handleClick = (event) => {
+	  const anchor = (event.target.ownerDocument || document).querySelector('#back-to-top-anchor');
+  
+	  if (anchor) {
+		anchor.scrollIntoView({ behavior: 'smooth', block: 'center' });
+	  }
+	};
+  
+	return (
+	  <Zoom in={trigger}>
+		<div onClick={handleClick} role="presentation" className={classes.root}>
+		  {children}
+		</div>
+	  </Zoom>
+	);
+  }
+  
+  ScrollTop.propTypes = {
+	children: PropTypes.element.isRequired,
+  };
+
 
 export function Header(props) {
 
@@ -67,25 +106,27 @@ export function Header(props) {
 	const authLinks = (
 		<Fragment>
 			<Box
-				p={1}>
+				px={1}>
 			<Button
 				href=""
 				color="primary"
 				variant="outlined"
 				component={NavLink}
-				to={`${location}`}
+				className={classes.link}
+				to={`${location.pathname}`}
 				onClick={props.logout}
 				>
 				Logout
 			</Button>
 			</Box>
 			<Box
-				p={1}>
+				px={1}>
 			{user && 
 				<Button
 					href=""
 					color="primary"
 					variant="outlined"
+					className={classes.link}
 					component={NavLink}
 					to={`/profile/${user.id}`}
 				>
@@ -103,7 +144,7 @@ export function Header(props) {
 	const guessLinks = (
 		<Fragment>
 			<Box
-				p={1}>
+				px={1}>
 				<Button
 					color="primary"
 					href="#"
@@ -116,7 +157,7 @@ export function Header(props) {
 				</Button>
 			</Box>
 				<Box
-					p={1}>
+					px={1}>
 					<Button
 						href=""
 						color="primary"
@@ -135,7 +176,7 @@ export function Header(props) {
 		<Fragment>	
 			<CssBaseline />
 				<AppBar
-					position="static"
+					position="fixed"
 					color="default"
 					elevation={0}
 					className={classes.appBar}
@@ -163,7 +204,13 @@ export function Header(props) {
 						</Container>
 					</Container>		
 				</Toolbar>
-			</AppBar>
+				</AppBar>
+			<Toolbar id="back-to-top-anchor" />
+			<ScrollTop {...props}>
+        		<Fab color="secondary" size="small" aria-label="scroll back to top">
+          			<KeyboardArrowUpIcon />
+        		</Fab>
+      		</ScrollTop>
 		</Fragment>
 	);
 }

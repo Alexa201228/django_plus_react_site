@@ -42,16 +42,21 @@
     "@material-ui/icons": "^4.11.2",
     "axios": "^0.21.1",
     "axios-auth-refresh": "^3.1.0",
+    "process": "^0.11.10",
     "react-alert": "^7.0.3",
     "react-alert-template-mui": "^1.0.7",
     "react-alert-template-snackbar-material-ui": "^1.0.6",
     "react-bootstrap": "^1.6.1",
     "react-hook-form": "^7.11.0",
     "react-redux": "^7.2.4",
+    "react-render-html": "^0.6.0",
     "react-router-dom": "^5.2.0",
     "redux": "^4.1.0",
     "redux-devtools-extension": "^2.13.9",
     "redux-persist": "^6.0.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "stream": "0.0.2",
+    "stream-browserify": "^3.0.0",
+    "util": "^0.12.4"
   }
 }

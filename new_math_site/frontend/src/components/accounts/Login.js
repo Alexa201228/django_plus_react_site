@@ -33,7 +33,6 @@ export function Login(props) {
   const onSubmit = (e) => {
     e.preventDefault();
     props.login(userCredentials.email, userCredentials.password);
-    history.goBack();
   };
 
   const onChange = (e) => {

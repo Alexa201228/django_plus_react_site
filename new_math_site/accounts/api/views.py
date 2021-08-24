@@ -21,15 +21,6 @@ class RegisterApiView(generics.GenericAPIView):
             serializer.is_valid(raise_exception=True)
             user = serializer.save()
             tokens = user.tokens()
-            current_site = get_current_site(request).domain
-            relative_link = reverse('email-verify')
-            absolute_url = f'http://{current_site}{relative_link}?token=' + tokens['access']
-            email_body = 'Привет, ' + user.first_name + \
-                         'Используйте ссылку ниже для подтверждения вашего email адреса' +\
-                             absolute_url
-
-            data = {'email_body': email_body, 'user_email': user.email, 'email_subject': 'Подтверждение аккаунта'}
-            EmailManager.send_email(data)
             return Response(
                 {
                     'user': UserSerializer(
@@ -41,7 +32,7 @@ class RegisterApiView(generics.GenericAPIView):
             )
         except ValidationError as e:
             return Response(
-                {'errors': e.messages},
+                e.messages,
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -67,7 +58,7 @@ class LoginApiView(generics.GenericAPIView):
             )
         except ValidationError as e:
             return Response(
-                {'errors': e.messages},
+                e.messages,
                 status=status.HTTP_400_BAD_REQUEST
             )
 

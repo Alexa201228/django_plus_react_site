@@ -5,9 +5,9 @@ import { Fragment } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
 import { getQuestion, testResults } from '../../actions/tests';
-import { removeHTMLTags } from '../../helpers/editContentHelper';
 import PropTypes from 'prop-types';
 import { useStyles } from '../courses/CourseLessons';
+import renderHTML from 'react-render-html';
 
 
 export function QuestionBody(props){
@@ -72,7 +72,7 @@ export function QuestionBody(props){
             <Fragment>
                 <Container className={styles.contentContainer}>
                     <Typography>
-                        {removeHTMLTags(question.question_body)}
+                        {renderHTML(question.question_body)}
                     </Typography>
                     <FormGroup>
                         {question.answer_to_question.map((answer, index) => (

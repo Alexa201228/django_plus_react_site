@@ -1,6 +1,13 @@
 const path = require('path');
+const webpack = require('webpack');
+
 
 module.exports = {
+    plugins: [
+        new webpack.ProvidePlugin({
+               process: 'process/browser',
+        }),
+    ],
     mode:'development',
     entry:  { main:'/new_math_site/frontend/src/index.js'},
     output:  {
@@ -24,4 +31,6 @@ module.exports = {
     devServer: {
         historyApiFallback: true,
     },
+
+
 };

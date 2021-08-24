@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Button, Container, Typography } from '@material-ui/core';
 import { Fragment } from 'react';
-import { removeHTMLTags } from '../../helpers/editContentHelper';
+import renderHTML from 'react-render-html';
 import { useParams } from 'react-router';
 import { getLesson } from '../../actions/courses';
 import {  NavLink } from 'react-router-dom';
@@ -34,7 +34,7 @@ export function CourseLesson(){
                         {lesson.lesson_name}
                     </Typography>
                     <Typography>
-                        {removeHTMLTags(lesson.body)}
+                        {renderHTML(lesson.body)}
                     </Typography>
                     {lesson.module_test ?
                     lesson.module_test.map((test, index) => (
