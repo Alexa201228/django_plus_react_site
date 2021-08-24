@@ -37,15 +37,18 @@ export function QuestionBody(props){
         //отчистить ответы. Так как при новой попытке 
         //вызывается метод history.push, то используем
         //данное свойство для отчистки выбранных ранее ответов
-        if(history.action === 'PUSH'){
-            return false
+        console.log(history)
+        if(history.location.state == 'done'){
+            return false;
         }
         return chosen_answers[question_id].some(a => a == ans)
     }
 
     //Управление выбранными ответами при изменении состояния checkbox'ов
     const onChoiceChange = (e, answer, index) => {
-
+        if(history.location.state == 'done'){
+            history.location.state = 'undone'
+        }
         if(e.target.checked && !chosen_answers[index].some(el => el == answer)){
             chosen_answers[index].push(answer)
         }
@@ -67,7 +70,7 @@ export function QuestionBody(props){
         <Fragment>
             {question ?
             <Fragment>
-                <Container className={styles.questionContainer}>
+                <Container className={styles.contentContainer}>
                     <Typography>
                         {removeHTMLTags(question.question_body)}
                     </Typography>

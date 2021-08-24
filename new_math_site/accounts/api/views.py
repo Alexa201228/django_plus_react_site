@@ -1,4 +1,6 @@
 from django.core.exceptions import ValidationError
+from django.contrib.sites.shortcuts import get_current_site
+from django.urls import reverse
 
 from rest_framework import generics, permissions
 from rest_framework_simplejwt.tokens import RefreshToken, OutstandingToken, BlacklistedToken
@@ -6,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from .serializers import LoginSerializer, RegisterSerializer, UserSerializer
+from ..utils import EmailManager
 
 
 class RegisterApiView(generics.GenericAPIView):
@@ -18,6 +21,15 @@ class RegisterApiView(generics.GenericAPIView):
             serializer.is_valid(raise_exception=True)
             user = serializer.save()
             tokens = user.tokens()
+            current_site = get_current_site(request).domain
+            relative_link = reverse('email-verify')
+            absolute_url = f'http://{current_site}{relative_link}?token=' + tokens['access']
+            email_body = 'Привет, ' + user.first_name + \
+                         'Используйте ссылку ниже для подтверждения вашего email адреса' +\
+                             absolute_url
+
+            data = {'email_body': email_body, 'user_email': user.email, 'email_subject': 'Подтверждение аккаунта'}
+            EmailManager.send_email(data)
             return Response(
                 {
                     'user': UserSerializer(
@@ -84,3 +96,8 @@ class LogoutView(generics.GenericAPIView):
         token = RefreshToken(token=refresh_token)
         token.blacklist()
         return Response(status=status.HTTP_200_OK)
+
+
+class VerifyEmail(generics.GenericAPIView):
+    def get(self):
+        pass
