@@ -10,7 +10,10 @@ import { makeStyles } from '@material-ui/core';
 
 export const useStyles = makeStyles((theme) => ({
     contentContainer:{
-        marginTop:theme.spacing(10)
+        marginTop: theme.spacing(11),
+        [theme.breakpoints.down('xs')]: {
+            marginTop: theme.spacing(20)
+        },
     }
 }))
 

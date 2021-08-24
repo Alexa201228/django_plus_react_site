@@ -50,7 +50,8 @@ import { useSelector } from 'react-redux';
    content: {
      flexGrow: 1,
      padding: theme.spacing(3),
-     [theme.breakpoints.down('xs')]:{
+     [theme.breakpoints.down('xs')]: {
+       margin: theme.spacing(17, 0),
       padding: 0,
      },
    },
@@ -146,7 +147,7 @@ import { useSelector } from 'react-redux';
            </Drawer>
          </Hidden>
        </nav>
-       <main>
+       <main className={classes.content}>
          <div className={classes.toolbar} />
 
        </main>
@@ -155,4 +156,4 @@ import { useSelector } from 'react-redux';
  }
  
 
-export default withRouter(QuestionList);
+export default QuestionList;

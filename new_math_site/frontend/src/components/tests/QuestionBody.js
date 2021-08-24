@@ -84,7 +84,7 @@ export function QuestionBody(props){
                                 value={false}
                                 defaultChecked={setSelectedAnswers(answer.id)}
                                 onChange={e => onChoiceChange(e, answer.id, question_id)}/>}
-                                label={removeHTMLTags(answer.answer_body)}/>
+                                label={renderHTML(answer.answer_body)}/>
                         ))}
                     </FormGroup>
                 </Container>

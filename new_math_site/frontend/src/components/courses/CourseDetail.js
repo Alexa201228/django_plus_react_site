@@ -10,6 +10,7 @@ import CourseInfo from './CourseInfo';
 
 const useStyles = makeStyles((theme) => ({
 	courseContainer: {
+        margin: theme.spacing(3, 0),
         padding: 0,
 		display: 'flex',
         alignContent: 'flex-start',
