@@ -8,4 +8,6 @@ urlpatterns = [
     path('auth/login', views.LoginApiView.as_view(), name='login'),
     path('auth/logout', views.LogoutView.as_view(), name='logout'),
     path('auth/user', views.UserApiView.as_view()),
+    path('auth/activate/',
+         views.VerifyEmailView.as_view(), name='activate'),
 ]

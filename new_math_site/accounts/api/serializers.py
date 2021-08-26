@@ -14,8 +14,8 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'email', 'first_name', 'last_name', 
-        'student_courses', 'succeded_students']
+        fields = ['id', 'email', 'first_name', 'last_name',
+                  'student_courses', 'succeded_students']
         extra_kwargs = {
             'student_courses': {'required': False}
         }
@@ -53,9 +53,13 @@ class LoginSerializer(serializers.Serializer):
 
     def validate(self, attrs):
         user = authenticate(**attrs)
-        if user and user.is_active and not user.is_superuser:
+        print(user)
+        if user and not user.is_verified:
+            raise ValidationError('Пожалуйста, продтвердите свой email')
+        if user and user.is_active and user.is_verified and not user.is_superuser:
             return {
                 'user': user,
                 'tokens': user.tokens()
             }
-        raise ValidationError('Invalid credentials')
+        else:
+            raise ValidationError('Неверны имя пользователя или пароль')

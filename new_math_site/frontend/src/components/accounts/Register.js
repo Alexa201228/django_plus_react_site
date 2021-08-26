@@ -18,6 +18,11 @@ import { Typography } from '@material-ui/core';
 import { register } from '../../actions/auth';
 
 const useStyles = makeStyles((theme) => ({
+  formContainer: {
+    [theme.breakpoints.down('xs')]: {
+      marginTop:theme.spacing(11)
+    }
+  },
   form: {
     width: '100%', 
     marginTop: theme.spacing(3),
@@ -58,14 +63,14 @@ export function Register(props) {
   }
 
   if (props.isAuthenticated) {
-      return <Redirect to='/' />;
+      return <Redirect to='/login' />;
   }
 
 
 
   return (
     <Fragment>
-      <Container>
+      <Container className={classes.formContainer}>
       <CssBaseline />
       <div className='col-md-6 m-auto'>
         <div className='card card-body mt-5'>
@@ -167,7 +172,7 @@ export function Register(props) {
                     pattern: {
                       value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])/,
                       message: "Password should contain at least one uppercase letter, one lowercase "
-                        + "letter, one digit and one special character [!@#$%^&*]"
+                        + "letter, one digit and one special character [!#$%^&*]"
                     },                      
                   }}
                   defaultValue="">

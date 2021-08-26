@@ -32,8 +32,7 @@ export default function (state = initialState, action) {
           isLoading: false,
           user: action.payload,
         };
-      case LOGIN_SUCCESS:
-      case REGISTER_SUCCESS:
+    case LOGIN_SUCCESS:
         localStorage.setItem('access_token', action.payload.access_token);
         localStorage.setItem('refresh_token', action.payload.refresh_token);
         return {
@@ -42,10 +41,16 @@ export default function (state = initialState, action) {
           isAuthenticated: true,
           isLoading: false,
         };
-      case AUTH_ERROR:
-      case LOGIN_FAIL:
-      case LOGOUT_SUCCESS:
-      case REGISTER_FAIL:
+    case REGISTER_SUCCESS:
+        return {
+          ...state,
+          ...action.payload,
+          isLoading: false,
+        };
+    case AUTH_ERROR:
+    case LOGIN_FAIL:
+    case LOGOUT_SUCCESS:
+    case REGISTER_FAIL:
           localStorage.removeItem('access_token');
           localStorage.removeItem('refresh_token');        
         return {
@@ -55,7 +60,7 @@ export default function (state = initialState, action) {
           isAuthenticated: false,
           isLoading: false,
         };
-      default:
+    default:
         return state;
     }
   }

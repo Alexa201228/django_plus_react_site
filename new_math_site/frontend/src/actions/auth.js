@@ -1,6 +1,5 @@
 import axios from "axios";
 import createAuthRefreshInterceptor from 'axios-auth-refresh';
-import { useHistory } from "react-router";
 
 import { createMessage, returnErrorMessages } from "./messages";
 import {
@@ -27,7 +26,7 @@ const refreshAuthToken = failedRequest =>
             failedRequest.response.config.headers['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`
             return Promise.resolve();
     }).catch(err => {
-        if(err.response.data === 400){
+        if (err.response.data === 400) {
             return null;
         }
         
@@ -35,7 +34,7 @@ const refreshAuthToken = failedRequest =>
 
 createAuthRefreshInterceptor(axios, refreshAuthToken,
     {
-    pauseInstanceWhileRefreshing: false
+    pauseInstanceWhileRefreshing: true
 }
 );
 
@@ -53,7 +52,9 @@ export const loadUser = () => (dispatch, getState) => {
 
         }).catch(err => {
             if(err.response.status === 401){
-                return null;
+                dispatch({
+                    type: AUTH_ERROR,
+                });
             }
             else{
                 dispatch(returnErrorMessages(err.response.data, err.response.status))
@@ -63,7 +64,6 @@ export const loadUser = () => (dispatch, getState) => {
 
 //Login
 export const login = (email, password) => dispatch => {
-
 
     const config = {
         headers: {
@@ -101,6 +101,7 @@ export const register = ({ first_name, email, password }) => dispatch => {
     axios
         .post('/api/auth/register', body, config)
         .then(res => {
+            dispatch(createMessage({email_sent: 'Письмо для потдтверждение email адреса отправлено вам на почту!'}))
             dispatch({
                 type: REGISTER_SUCCESS,
                 payload: res.data

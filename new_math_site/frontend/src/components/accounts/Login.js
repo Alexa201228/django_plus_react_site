@@ -12,6 +12,11 @@ import { Typography } from '@material-ui/core';
 
 
 const loginStyles = makeStyles((theme) => ({
+  formContainer: {
+    [theme.breakpoints.down('xs')]: {
+      marginTop:theme.spacing(11)
+    }
+  },
   input: {
     width: '100%'
   },
@@ -46,7 +51,7 @@ export function Login(props) {
   }
   
   return (
-      <Container p={2}>
+      <Container p={2} className={logStyle.formContainer}>
       <div className="col-md-6 m-auto">
         <div className="card card-body mt-5">
           <h2 className="text-center">Login</h2>
