@@ -9,7 +9,7 @@ class UserAdmin(BaseUserAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name')}),
-        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
+        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser', 'is_verified',
                                        'user_permissions')}),
         (_('Important dates'), {'fields': ('date_joined', )}),
     )
@@ -18,6 +18,8 @@ class UserAdmin(BaseUserAdmin):
             'fields': ('email', 'password'),
         }),
     )
-    list_display = ('email', 'is_active', 'is_staff', 'is_superuser',)
-    search_fields = ('email', 'is_active', 'is_staff', 'is_superuser',)
+    list_display = ('email', 'is_active', 'is_staff',
+                    'is_superuser', 'is_verified')
+    search_fields = ('email', 'is_active', 'is_staff',
+                     'is_superuser', 'is_verified')
     ordering = ('email',)
