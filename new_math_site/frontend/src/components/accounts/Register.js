@@ -16,6 +16,7 @@ import Container from '@material-ui/core/Container';
 import { Typography } from '@material-ui/core';
 
 import { register } from '../../actions/auth';
+import { REQUIRED_FIELD } from '../../helpers/editContentHelper';
 
 const useStyles = makeStyles((theme) => ({
   formContainer: {
@@ -93,7 +94,7 @@ export function Register(props) {
                     rules={{
                       required: {
                         value: true,
-                        message: "This field is required"               
+                        message: REQUIRED_FIELD              
                       } 
                     }}
                     defaultValue=""
@@ -127,7 +128,7 @@ export function Register(props) {
                   rules={{
                     required: {
                       value: true,
-                      message: "Email address is required"
+                      message: REQUIRED_FIELD
                     }, 
                     pattern: {
                       value: /^(([^<>()\[\]\.,;:\s@\']+(\.[^<>()\[\]\.,;:\s@\']+)*)|(\'.+\'))@(([^<>()[\]\.,;:\s@\']+\.)+[^<>()[\]\.,;:\s@\']{2,})$/i,
@@ -167,12 +168,12 @@ export function Register(props) {
                     required: true,
                     minLength: {
                       value: 9,
-                      message: "Password should contain at least 9 symbols"
+                      message: "Пароль должен содержать минимум 9 символов"
                     },
                     pattern: {
                       value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])/,
-                      message: "Password should contain at least one uppercase letter, one lowercase "
-                        + "letter, one digit and one special character [!#$%^&*]"
+                      message: "Пароль должен содержать хотя бы одну СТРОЧНУЮ букву, одну прописную, "
+                        + " хотя бы одну цифру и один специальный символ [!#$%^&*]"
                     },                      
                   }}
                   defaultValue="">

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Fragment } from 'react';
@@ -8,7 +8,7 @@ import { Container, Typography } from '@material-ui/core';
 
 import renderHTML from 'react-render-html';
 import { enrollCourse } from '../../actions/courses';
-import { useStyles } from './CourseLessons';
+import { useStyles } from '../App';
 
 export function CourseInfo(props){
     const { course } = props;

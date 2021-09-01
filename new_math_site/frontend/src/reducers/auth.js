@@ -7,6 +7,10 @@ import {
     LOGOUT_SUCCESS,
     REGISTER_SUCCESS,
     REGISTER_FAIL,
+    EMAIL_VERIFIED,
+  PASSWORD_RESET,
+    GET_PASSWORD_RESET_FORM,
+    ACCESS_LINK_EXPIRED
   } from '../actions/types';
   
   const initialState = {
@@ -15,12 +19,12 @@ import {
     isAuthenticated: null,
     isLoading: true,
     user: null,
+    isVerified: false,
   };
   
 export default function (state = initialState, action) {
   switch (action.type) {
       case USER_LOADING:
-        
         return {
           ...state,
           isLoading: true,
@@ -40,13 +44,29 @@ export default function (state = initialState, action) {
           ...action.payload,
           isAuthenticated: true,
           isLoading: false,
-        };
+      };
+    case GET_PASSWORD_RESET_FORM:
+      localStorage.setItem('access_token', action.payload.access_token);
+      localStorage.setItem('refresh_token', action.payload.refresh_token);
+      return {
+        ...state,
+        ...action.payload
+      }
+    
+    case EMAIL_VERIFIED:
+      return {
+        ...state,
+        isVerified: true
+      }
     case REGISTER_SUCCESS:
         return {
           ...state,
           ...action.payload,
           isLoading: false,
-        };
+      };
+    
+    case PASSWORD_RESET:
+    case ACCESS_LINK_EXPIRED:
     case AUTH_ERROR:
     case LOGIN_FAIL:
     case LOGOUT_SUCCESS:

@@ -11,6 +11,10 @@ import {
     LOGOUT_SUCCESS,
     REGISTER_SUCCESS,
     REGISTER_FAIL,
+    EMAIL_VERIFIED,
+    PASSWORD_RESET,
+    GET_PASSWORD_RESET_FORM,
+    ACCESS_LINK_EXPIRED,
 } from "./types";
 
 
@@ -101,7 +105,7 @@ export const register = ({ first_name, email, password }) => dispatch => {
     axios
         .post('/api/auth/register', body, config)
         .then(res => {
-            dispatch(createMessage({email_sent: 'Письмо для потдтверждение email адреса отправлено вам на почту!'}))
+            dispatch(createMessage({email_sent: 'Письмо для потдтверждения email адреса отправлено вам на почту!'}))
             dispatch({
                 type: REGISTER_SUCCESS,
                 payload: res.data
@@ -129,6 +133,89 @@ export const logout = () => (dispatch, getState) => {
         });
 };
 
+//Email verification
+export const emailVerified = (token) => dispatch => {
+    axios.get(`/api/auth/activate/?token=${token}`)
+        .then(res => {
+            dispatch({
+                type: EMAIL_VERIFIED,
+                payload: res.data
+            });
+        }).catch(err => {
+            dispatch(returnErrorMessages(err.response.data, err.response.status));
+        });
+};
+
+//Resend email verification link
+export const resendEmailVerificationLink = (email) => dispatch => {
+    const body = JSON.stringify(email)
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    axios.post('/api/auth/activate/', body, config)
+        .then(res => {
+            dispatch(createMessage({ email_sent: 'Письмо для потдтверждения email адреса повторно отправлено вам на почту!' }))
+        })
+        .catch(err => {
+        dispatch(returnErrorMessages(err.response.data, err.response.status));
+    })
+}
+
+//Get reset password form
+export const getResetPasswordForm = (token) => dispatch => {
+    axios.get(`/api/auth/send-reset-password-link/?token=${token}`)
+    .then(res => {
+        dispatch({
+            type: GET_PASSWORD_RESET_FORM,
+            payload: res.data
+        });
+    }).catch(err => {
+        dispatch(returnErrorMessages(err.response.data, err.response.status));
+        dispatch({
+            type: ACCESS_LINK_EXPIRED
+        })
+    });
+}
+
+//Send reset password email link
+export const resetPasswordEmailLink = (email) => dispatch => {
+    const body = JSON.stringify(email)
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    axios.post('/api/auth/send-reset-password-link/', body, config)
+        .then(res => {
+            dispatch(createMessage({ email_sent: 'Письмо для сброса пароля отправлено вам на почту!' }))
+        })
+        .catch(err => {
+        dispatch(returnErrorMessages(err.response.data, err.response.status));
+    })
+}
+
+//Set new password
+export const setNewPassword = ({ email, new_password, confirm_password }) => dispatch => {
+    const body = JSON.stringify({ email, new_password, confirm_password })
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    axios.patch('/api/auth/reset-password', body, config)
+        .then(res => {
+            dispatch(createMessage({passwordReset: 'Пароль успешно изменен!'}))
+            dispatch({
+                type: PASSWORD_RESET,
+                payload: res.data
+            })
+        })
+        .catch(err => {
+        dispatch(returnErrorMessages(err.response.data, err.response.status))
+    })
+}
 
 //Setup config
 export const tokenConfig = getState => {

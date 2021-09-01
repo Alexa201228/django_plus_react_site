@@ -1,8 +1,18 @@
-
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { CircularProgress } from '@material-ui/core';
+import { Fragment } from 'react';
+
+import { makeStyles } from '@material-ui/core/styles';
+import { CircularProgress, Container } from '@material-ui/core';
+
+
+const useStyles = makeStyles(() => ({
+  spinnerContainer: {
+    alignContent: 'center',
+    justifyContent: 'center'
+  }
+}))
 
 
 const PrivateRoute = ({ component: Component, auth, ...rest }) => (
@@ -10,8 +20,15 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => (
     {...rest}
     render={(props) => {
       if (auth.isLoading) {
-        return <CircularProgress/>;
-      } else if (!auth.isAuthenticated) {
+        const style = useStyles();
+        return (
+          <Fragment>
+            <Container className={style.spinnerContainer}>
+              <CircularProgress/>
+            </Container>
+          </Fragment>
+        );
+      } else if (!auth.isVerified) {
         return <Redirect to="/login" />;
       } else {
         return <Component {...props} />;

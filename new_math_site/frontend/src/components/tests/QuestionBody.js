@@ -6,7 +6,7 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
 import { getQuestion, testResults } from '../../actions/tests';
 import PropTypes from 'prop-types';
-import { useStyles } from '../courses/CourseLessons';
+import { useStyles } from '../App';
 import renderHTML from 'react-render-html';
 
 

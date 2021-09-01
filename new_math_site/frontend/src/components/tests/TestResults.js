@@ -3,10 +3,9 @@ import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import { connect, useSelector } from 'react-redux';
 
-import { removeHTMLTags } from '../../helpers/editContentHelper';
 import { tryTestAgain } from '../../actions/tests';
 import { useHistory, useParams } from 'react-router';
-import { useStyles } from '../courses/CourseLessons';
+import { useStyles } from '../App';
 
 
 export function TestResults(props){
@@ -16,7 +15,6 @@ export function TestResults(props){
 
     const tryAgain = () =>{
         props.tryTestAgain(test_id)
-        history.location.state = 'done';
         history.push(`/${slug}/${lesson_slug}/${test_id}/${test.questions_on_test[0].id}`)
     }
     const styles = useStyles();
@@ -37,7 +35,7 @@ export function TestResults(props){
                     correct_answers[question].map((q, k)=>(
                         <Typography
                         key={k}>
-                           Вопрос { index + 1 }: {removeHTMLTags(q.answer_body)}
+                           Вопрос { index + 1 }: {renderHTML(q.answer_body)}
                     </Typography>
                     )) 
                 ))}

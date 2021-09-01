@@ -10,4 +10,8 @@ urlpatterns = [
     path('auth/user', views.UserApiView.as_view()),
     path('auth/activate/',
          views.VerifyEmailView.as_view(), name='activate'),
+    path('auth/send-reset-password-link/',
+         views.SendResetPasswordEmailView.as_view(), name='send-reset-password-link'),
+     path('auth/reset-password', views.ResetPasswordView.as_view(),
+     name='reset-password'),
 ]

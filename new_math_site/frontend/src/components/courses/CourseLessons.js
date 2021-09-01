@@ -6,22 +6,14 @@ import renderHTML from 'react-render-html';
 import { useParams } from 'react-router';
 import { getLesson } from '../../actions/courses';
 import {  NavLink } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core';
+import { useStyles } from '../App';
 
-export const useStyles = makeStyles((theme) => ({
-    contentContainer:{
-        marginTop: theme.spacing(11),
-        [theme.breakpoints.down('xs')]: {
-            marginTop: theme.spacing(20)
-        },
-    }
-}))
 
 export function CourseLesson(){
     const { slug, lesson_slug } = useParams();
     const dispatch = useDispatch();
     const {lesson} = useSelector(state => state.courses)
-    
+    const {isAuthenticated} = useSelector(state => state.auth)
     //перезапускаем useEffect только если поменялся lesson_slug
     useEffect(() => {
         dispatch(getLesson({slug, lesson_slug}))
@@ -39,16 +31,17 @@ export function CourseLesson(){
                     <Typography>
                         {renderHTML(lesson.body)}
                     </Typography>
-                    {lesson.module_test ?
+                    {lesson.module_test && isAuthenticated  ?
                     lesson.module_test.map((test, index) => (
                         <Button
                         key={index}
                         component={NavLink}
                         to={`${lesson_slug}/${test.id}`}>        
                             {test.title}
-                        </Button>
+                        </Button>          
                 ))
-                : null}
+                : 'Пожалуйста, войдите в свой аккаунт или зарегестрируйтесь'
+                +'для прохождения теста'}
                 </Container>  
             </Fragment>
             : null}

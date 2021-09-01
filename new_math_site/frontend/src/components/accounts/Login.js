@@ -91,6 +91,9 @@ export function Login(props) {
               Login
             </Button>
             <Typography paragraph={true}>
+             <Link to='/reset-password'>Забыли пароль?</Link> 
+            </Typography>
+            <Typography paragraph={true}>
               Don't have an account? <Link to="/register">Register</Link>
             </Typography>
           </form>
