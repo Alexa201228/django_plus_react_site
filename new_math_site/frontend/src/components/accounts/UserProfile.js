@@ -51,7 +51,8 @@ export function UserProfile(props) {
                          <Box
                          key={index}>
                              <Typography
-                             paragraph={true}>
+                                 paragraph={true}>
+                                 {course.title}
                              </Typography>
                          </Box>
                      ))}

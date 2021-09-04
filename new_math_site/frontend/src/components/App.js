@@ -36,7 +36,7 @@ export const useStyles = makeStyles((theme) => ({
   contentContainer:{
       marginTop: theme.spacing(11),
       [theme.breakpoints.down('xs')]: {
-          marginTop: theme.spacing(20)
+          marginTop: theme.spacing(24)
       },
   }
 }))

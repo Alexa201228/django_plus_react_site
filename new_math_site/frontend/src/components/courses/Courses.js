@@ -33,7 +33,7 @@ export function Courses() {
         <Fragment>
             {results && 
                 <Container className={style.coursesContainer}>
-                <h1>Here are Courses</h1>
+                <h1>Курсы</h1>
                 {results.map((course, index) => (        
                 <Box
                     key={index}

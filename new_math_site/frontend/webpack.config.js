@@ -9,9 +9,9 @@ module.exports = {
         }),
     ],
     mode:'development',
-    entry:  { main:'/new_math_site/frontend/src/index.js'},
+    entry:  { main:'/src/index.js'},
     output:  {
-        path: `${__dirname}/new_math_site/frontend/static/frontend`,
+        path: `${__dirname}/static/frontend`,
         filename: 'main.js'
     },
 
