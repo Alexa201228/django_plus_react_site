@@ -1,1 +1,1 @@
-web: gunicorn new_math_site.wsgi
+web: gunicorn new_math_site:app
