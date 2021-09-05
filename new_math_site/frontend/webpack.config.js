@@ -8,11 +8,11 @@ module.exports = {
                process: 'process/browser',
         }),
     ],
-    mode:'development',
     entry:  { main:'/src/index.js'},
     output:  {
         path: `${__dirname}/static/frontend`,
-        filename: 'main.js'
+        filename: 'main.js',
+        publicPath: '/'
     },
 
     module: {
@@ -30,7 +30,7 @@ module.exports = {
 
     devServer: {
         historyApiFallback: true,
+        writeToDisk: true,
     },
-
 
 };

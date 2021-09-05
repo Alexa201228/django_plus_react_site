@@ -5,7 +5,7 @@
   "main": "webpack.config.js",
   "scripts": {
     "dev": "webpack --progress --watch",
-    "build": "webpack --progress --production --optimize-minimize"
+    "build": "webpack --progress"
   },
   "repository": {
     "type": "git",
