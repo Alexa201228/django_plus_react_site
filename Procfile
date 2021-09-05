@@ -1,0 +1,1 @@
+web: gunicorn --pythonpath new_math_site new_math_site:app
