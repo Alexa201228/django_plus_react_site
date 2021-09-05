@@ -1,8 +1,8 @@
 import React from 'react';
-import { Drawer, List, ListItem, Toolbar, Typography, Slide } from '@material-ui/core';
 import { Link, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { makeStyles, useTheme } from '@material-ui/core';
+
+import { Drawer, List, ListItem, Toolbar, Typography, Slide, makeStyles, useTheme } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
