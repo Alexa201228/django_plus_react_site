@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
       display: 'flex',
         alignItems: 'center',
         [theme.breakpoints.down('xs')]: {
-        marginTop: theme.spacing(20)  
+        marginTop: theme.spacing(28)  
       },
     },
     avatar: {
