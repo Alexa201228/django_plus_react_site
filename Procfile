@@ -1,1 +1,1 @@
-web: gunicorn --pythonpath new_math_site new_math_site:app
+web: gunicorn --pythonpath new_math_site new_math_site:app --log-file - --log-level debug
