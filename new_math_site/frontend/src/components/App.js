@@ -57,14 +57,15 @@ export function App(){
               <Header />
               <Alerts/>
             <div className='container'>
-                <Switch>
-                  <PrivateRoute exact path='/profile/:id' component={UserProfile}/>
-                  <Route exact path='/' component={Dashboard} />
+                  <Switch>
+                    <Route exact path='/' component={Dashboard} />
+                  <PrivateRoute exact path='/user/profile/:id' component={UserProfile}/>
+                  
                     <Route path='/register' component={Register} />
                     <Route path='/reset-password/:token' component={ResetPasswordForm} />
                     <Route path='/reset-password' component={ResetPassword} />
                     
-                  <Route path='/confirm/:token' component={EmailVerified}/>
+                  <Route exact path='/confirm/:token' component={EmailVerified}/>
                   <Route path='/login' component={Login} />
                   <PrivateRoute path='/:slug/:lesson_slug/:test_id' component={TestPage}/>
                   <Route path='/:slug' component={CourseDetail} />

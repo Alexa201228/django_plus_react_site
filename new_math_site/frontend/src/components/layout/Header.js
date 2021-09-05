@@ -131,7 +131,7 @@ export function Header(props) {
 					variant="outlined"
 					className={classes.link}
 					component={NavLink}
-					to={`/profile/${user.id}`}
+					to={`/user/profile/${user.id}`}
 				>
 					Profile
 				</Button>

@@ -8,13 +8,16 @@ import { makeStyles } from '@material-ui/core/styles';
 
 
 const useStyles = makeStyles((theme) => ({
+    contentContainer: {
+        [theme.breakpoints.down('xs')]: {
+            marginTop: theme.spacing(28)  
+          },
+    },
     paper: {
       marginTop: theme.spacing(3),
       display: 'flex',
         alignItems: 'center',
-        [theme.breakpoints.down('xs')]: {
-        marginTop: theme.spacing(28)  
-      },
+        
     },
     avatar: {
       margin: theme.spacing(3),
@@ -37,7 +40,7 @@ export function UserProfile(props) {
         return (
         <Fragment>
             {user && 
-            <Container component='main'>
+            <Container className={style.contentContainer}>
                 <CssBaseline/>
                 <div className={style.paper}>
                 <Avatar className={style.avatar}>
