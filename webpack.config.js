@@ -8,13 +8,13 @@ module.exports = {
                process: 'process/browser',
         }),
     ],
-    entry:  { main:'/src/index.js'},
+    entry:  { main:'/new_math_site/frontend/src/index.js'},
     output:  {
-        path: `${__dirname}/static/frontend`,
+        path: `${__dirname}/new_math_site/static/frontend`,
         filename: 'main.js',
         publicPath: '/'
     },
-
+    mode: 'production',
     module: {
         rules: [
             {
