@@ -40,8 +40,9 @@ export function CourseLesson(){
                             {test.title}
                         </Button>          
                 ))
-                : 'Пожалуйста, войдите в свой аккаунт или зарегестрируйтесь'
-                +'для прохождения теста'}
+                : <Typography>
+                    Пожалуйста, войдите в свой аккаунт или зарегестрируйтесь для прохождения теста
+                </Typography>}
                 </Container>  
             </Fragment>
             : null}

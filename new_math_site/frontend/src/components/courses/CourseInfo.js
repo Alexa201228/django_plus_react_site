@@ -13,7 +13,7 @@ export function CourseInfo(props){
     const { course } = props;
 
     //add course to user
-    function onButtonClick(){
+    const onButtonClick = () =>{
         if(!props.isAuthenticated){
             props.history.push('/login');
         }

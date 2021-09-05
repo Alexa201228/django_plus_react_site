@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
 	const classes = useStyles();
 	const trigger = useScrollTrigger({
 	  disableHysteresis: true,
-	  threshold: 100,
+	  threshold: 120,
 	});
   
 	const handleClick = (event) => {

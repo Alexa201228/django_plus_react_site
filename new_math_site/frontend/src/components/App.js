@@ -1,4 +1,4 @@
-import React, { Fragment, useLayoutEffect } from "react";
+import React, { Fragment, useEffect } from "react";
 import { render } from "react-dom";
 import { HashRouter as Router, Route, Switch} from "react-router-dom";
 import { positions, Provider as AlertProvider } from "react-alert";
@@ -44,7 +44,7 @@ export const useStyles = makeStyles((theme) => ({
 
 export function App(){
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     store.dispatch(loadUser());
   })
 

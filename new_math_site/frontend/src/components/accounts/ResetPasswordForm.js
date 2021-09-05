@@ -25,7 +25,7 @@ export function ResetPasswordForm(props) {
     
     const dispatch = useDispatch();
 
-    const { user, passwordReset } = useSelector(state => state.auth);
+    const { user } = useSelector(state => state.auth);
 
     useEffect(() => {
         dispatch(getResetPasswordForm(props.match.params.token))
