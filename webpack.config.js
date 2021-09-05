@@ -14,7 +14,7 @@ module.exports = {
         filename: 'main.js',
         publicPath: '/'
     },
-    mode: 'production',
+    mode: 'development',
     module: {
         rules: [
             {
