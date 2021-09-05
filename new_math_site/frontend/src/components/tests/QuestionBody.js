@@ -1,14 +1,14 @@
-import { Button, Checkbox, Container, FormControlLabel, FormGroup, makeStyles, Typography } from '@material-ui/core';
-import { Box } from '@material-ui/core';
-import React, { useLayoutEffect, useState } from 'react';
-import { Fragment } from 'react';
+import React, { useLayoutEffect, Fragment } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
-import { getQuestion, testResults } from '../../actions/tests';
 import PropTypes from 'prop-types';
-import { useStyles } from '../App';
 import renderHTML from 'react-render-html';
 
+import { Button, Checkbox, Container, FormControlLabel, FormGroup, Typography } from '@material-ui/core';
+import { Box } from '@material-ui/core';
+
+import { getQuestion, testResults } from '../../actions/tests';
+import { useStyles } from '../App';
 
 export function QuestionBody(props){
 

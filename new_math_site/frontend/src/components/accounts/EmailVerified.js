@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { Fragment } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useForm, Controller } from 'react-hook-form';

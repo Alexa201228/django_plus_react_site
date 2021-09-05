@@ -1,10 +1,11 @@
-import { Box, Container, Typography, Button, makeStyles } from '@material-ui/core';
+import { useHistory, useParams } from 'react-router';
 import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import { connect, useSelector } from 'react-redux';
 
+import { Box, Container, Typography, Button } from '@material-ui/core';
+
 import { tryTestAgain } from '../../actions/tests';
-import { useHistory, useParams } from 'react-router';
 import { useStyles } from '../App';
 
 

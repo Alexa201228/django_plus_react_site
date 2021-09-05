@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Button, Container, Typography } from '@material-ui/core';
-import { Fragment } from 'react';
-import renderHTML from 'react-render-html';
 import { useParams } from 'react-router';
+import { NavLink } from 'react-router-dom';
+
+import { Button, Container, Typography } from '@material-ui/core';
+import renderHTML from 'react-render-html';
 import { getLesson } from '../../actions/courses';
-import {  NavLink } from 'react-router-dom';
 import { useStyles } from '../App';
 
 

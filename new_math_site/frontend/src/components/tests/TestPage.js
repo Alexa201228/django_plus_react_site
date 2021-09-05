@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
-import { Fragment } from 'react';
-import Switch from 'react-bootstrap/esm/Switch';
+import React, { useEffect, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useParams, withRouter } from 'react-router';
+
+import { Container } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
+import Switch from 'react-bootstrap/esm/Switch';
+
 import { getTest } from '../../actions/tests';
 import QuestionBody from './QuestionBody';
 import QuestionList from './QuestionList';
 import TestResults from './TestResults';
-import PrivateRoute
- from '../common/PrivateRoute';
-import { Container } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core';
+import PrivateRoute from '../common/PrivateRoute';
 
 
 const useStyles = makeStyles((theme) =>({

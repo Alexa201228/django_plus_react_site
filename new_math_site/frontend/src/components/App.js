@@ -4,6 +4,7 @@ import { HashRouter as Router, Route, Switch} from "react-router-dom";
 import { positions, Provider as AlertProvider } from "react-alert";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
+
 import { makeStyles } from '@material-ui/core/styles';
 import AlertTemplate from "react-alert-template-snackbar-material-ui";
 

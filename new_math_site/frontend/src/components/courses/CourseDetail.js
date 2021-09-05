@@ -1,11 +1,13 @@
 import React, { Fragment, useEffect } from 'react';
-import { courseDetails } from '../../actions/courses';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch, useParams } from 'react-router';
-import CourseLesson from './CourseLessons';
+
 import { Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+
+import { courseDetails } from '../../actions/courses';
 import CourseLessonsList from './CourseLessonList';
+import CourseLesson from './CourseLessons';
 import CourseInfo from './CourseInfo';
 
 const useStyles = makeStyles((theme) => ({

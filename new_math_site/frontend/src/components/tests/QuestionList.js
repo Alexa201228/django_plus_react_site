@@ -1,15 +1,16 @@
-import { Drawer, List, ListItem, Toolbar, Typography } from '@material-ui/core';
 import React from 'react';
-import { Link, useParams, withRouter } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
- import AppBar from '@material-ui/core/AppBar';
- import CssBaseline from '@material-ui/core/CssBaseline';
- import Divider from '@material-ui/core/Divider';
- import Hidden from '@material-ui/core/Hidden';
- import IconButton from '@material-ui/core/IconButton';
 
- import MenuIcon from '@material-ui/icons/Menu';
- import { makeStyles, useTheme } from '@material-ui/core';
+import AppBar from '@material-ui/core/AppBar';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Divider from '@material-ui/core/Divider';
+import Hidden from '@material-ui/core/Hidden';
+import IconButton from '@material-ui/core/IconButton';
+import { Drawer, List, ListItem, Toolbar, Typography } from '@material-ui/core';
+
+import MenuIcon from '@material-ui/icons/Menu';
+import { makeStyles, useTheme } from '@material-ui/core';
  
  const drawerWidth = 150;
  const useStyles = makeStyles((theme) => ({

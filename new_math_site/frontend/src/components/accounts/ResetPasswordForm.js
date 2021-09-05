@@ -2,6 +2,8 @@ import React, { Fragment, useEffect } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router';
+
 import { getResetPasswordForm, resetPasswordEmailLink, setNewPassword } from '../../actions/auth';
 import { useStyles } from '../App';
 import { Container, makeStyles, Typography } from '@material-ui/core';
@@ -10,7 +12,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
 import { EMAIL_TEXTFIELD_VALIDATOR, REQUIRED_FIELD } from '../../helpers/editContentHelper';
-import { useHistory } from 'react-router';
+
 
 
 const useStyle = makeStyles((theme) => ({
