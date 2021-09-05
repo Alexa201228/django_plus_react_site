@@ -1,1 +1,1 @@
-web: gunicorn new_math_site.wsgi:application --log-file
+web: gunicorn new_math_site.wsgi
