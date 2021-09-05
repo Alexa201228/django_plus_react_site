@@ -11,7 +11,10 @@ const useStyles = makeStyles((theme) => ({
     paper: {
       marginTop: theme.spacing(3),
       display: 'flex',
-      alignItems: 'center'
+        alignItems: 'center',
+        [theme.breakpoints.down('xs')]: {
+        marginTop: theme.spacing(20)  
+      },
     },
     avatar: {
       margin: theme.spacing(3),
