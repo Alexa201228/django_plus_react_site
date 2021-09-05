@@ -60,8 +60,6 @@ soupsieve==2.2.1
 sqlparse==0.4.1
 toml==0.10.2
 tqdm==4.61.1
-Twisted==21.2.0
-twisted-iocpsupport==1.0.1
 urllib3==1.26.5
 virtualenv==20.4.6
 w3lib==1.22.0
