@@ -5,6 +5,7 @@
   "main": "webpack.config.js",
   "scripts": {
     "dev": "webpack --progress --watch",
+    "start": "webpack --watch",
     "build": "webpack --progress"
   },
   "repository": {
