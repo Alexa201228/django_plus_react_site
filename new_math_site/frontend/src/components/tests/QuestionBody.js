@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, Fragment } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
 import PropTypes from 'prop-types';
@@ -16,7 +16,7 @@ export function QuestionBody(props){
     const dispatch = useDispatch();
     const { question, chosen_answers, finished } = useSelector(state => state.tests);
     const styles = useStyles();
-    useLayoutEffect(() => {
+    useEffect(() => {
         dispatch(getQuestion(question_id))
     },[question_id])
 
@@ -38,17 +38,10 @@ export function QuestionBody(props){
         //вызывается метод history.push, то используем
         //данное свойство для отчистки выбранных ранее ответов
         console.log(history)
-        if(history.location.state == 'done'){
-            return false;
-        }
-        return chosen_answers[question_id].some(a => a == ans)
     }
 
     //Управление выбранными ответами при изменении состояния checkbox'ов
     const onChoiceChange = (e, answer, index) => {
-        if(history.location.state == 'done'){
-            history.location.state = 'undone'
-        }
         if(e.target.checked && !chosen_answers[index].some(el => el == answer)){
             chosen_answers[index].push(answer)
         }

@@ -7,6 +7,7 @@ import { Box, Container, Typography, Button } from '@material-ui/core';
 
 import { tryTestAgain } from '../../actions/tests';
 import { useStyles } from '../App';
+import renderHTML from "react-render-html";
 
 
 export function TestResults(props){

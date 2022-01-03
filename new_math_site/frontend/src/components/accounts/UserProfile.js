@@ -1,10 +1,11 @@
-import React, { Fragment } from 'react';
-import { connect } from 'react-redux';
+import React, { Fragment, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Avatar, Box, CssBaseline, Typography } from '@material-ui/core';
-import PropTypes from 'prop-types';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
+
+import { loadUser } from "../../actions/auth";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -36,10 +37,15 @@ export function UserProfile(props) {
     
     const style = useStyles();
 
-    const { user } = props;
+    const { user } = useSelector(state => state.auth);
+    console.log(props)
+
+    
+    if (!user) {
+        return null;
+    }
         return (
         <Fragment>
-            {user && 
             <Container className={style.contentContainer}>
                 <CssBaseline/>
                 <div className={style.paper}>
@@ -64,16 +70,10 @@ export function UserProfile(props) {
                      ))}
                  </Box>
              </Box>
-             </Container>}
+             </Container>
             </Fragment>
         );
     }
-UserProfile.propTypes = {
-    courses: PropTypes.array,
-    user: PropTypes.object.isRequired
-}
-const mapStateToProps = (state) => ({
-    courses: state.courses.courses.results,
-    user: state.auth.user
-});
-export default connect(mapStateToProps)(UserProfile);
+
+
+export default UserProfile;

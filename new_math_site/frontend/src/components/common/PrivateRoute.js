@@ -17,7 +17,7 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => (
             </Container>
           </Fragment>
         );
-      } else if (!auth.isVerified) {
+      } if (!auth.isAuthenticated) {
         return <Redirect to="/login" />;
       } else {
         return <Component {...props} />;
