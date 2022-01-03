@@ -15,8 +15,7 @@ from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
 import django_heroku
-import dj_database_url
-from decouple import config
+
 
 
 load_dotenv()
@@ -200,8 +199,8 @@ REST_FRAMEWORK = {
 
 # simple JWT settings
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=3),
-    'REFRESH_TOKEN_LIFETIME': timedelta(minutes=10),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=10),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': True,
     'UPDATE_LAST_LOGIN': False,

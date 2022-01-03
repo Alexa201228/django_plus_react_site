@@ -50,7 +50,7 @@ export function App(){
 
     return (
       <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
+        <PersistGate persistor={persistor}>
         <AlertProvider template={AlertTemplate} {...alertOptions}>
           <Router basename='/'>
             <Fragment>
@@ -58,8 +58,9 @@ export function App(){
               <Alerts/>
             <div className='container'>
                   <Switch>
+                      <PrivateRoute exact path='/user/profile/:id' component={UserProfile}/>
                     <Route exact path='/' component={Dashboard} />
-                  <PrivateRoute exact path='/user/profile/:id' component={UserProfile}/>
+
                   
                     <Route path='/register' component={Register} />
                     <Route path='/reset-password/:token' component={ResetPasswordForm} />

@@ -35,7 +35,7 @@ export function Courses() {
                 {results.map((course, index) => (        
                 <Box
                     key={index}
-                    m={3}>                    
+                    my={3}>                    
                     <Link
                         to={`/${course.slug}`}
                     >

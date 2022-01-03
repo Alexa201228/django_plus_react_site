@@ -8,7 +8,7 @@ import {
     REGISTER_SUCCESS,
     REGISTER_FAIL,
     EMAIL_VERIFIED,
-  PASSWORD_RESET,
+    PASSWORD_RESET,
     GET_PASSWORD_RESET_FORM,
     ACCESS_LINK_EXPIRED
   } from '../actions/types';
