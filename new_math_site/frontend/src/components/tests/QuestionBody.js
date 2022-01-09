@@ -33,21 +33,18 @@ export function QuestionBody(props){
     }
 
     const setSelectedAnswers = (ans) => {
-        //При новой попытке прохождения теста необходимо 
-        //отчистить ответы. Так как при новой попытке 
-        //вызывается метод history.push, то используем
-        //данное свойство для отчистки выбранных ранее ответов
-        console.log(history)
+        if(chosen_answers[question_id].some(answer => answer == ans))
+            return true
     }
 
     //Управление выбранными ответами при изменении состояния checkbox'ов
-    const onChoiceChange = (e, answer, index) => {
-        if(e.target.checked && !chosen_answers[index].some(el => el == answer)){
-            chosen_answers[index].push(answer)
+    const onChoiceChange = (e, answer) => {
+        if(e.target.checked && !chosen_answers[question_id].some(el => el == answer)){
+            chosen_answers[question_id].push(answer)
         }
-        else if(!e.target.checked && chosen_answers[index].some(el => el == answer)){
-            const newAnswerArray = chosen_answers[index].filter(ans => ans != answer)
-            chosen_answers[index] = newAnswerArray;
+        else if(!e.target.checked && chosen_answers[question_id].some(el => el == answer)){
+            const newAnswerArray = chosen_answers[question_id].filter(ans => ans != answer)
+            chosen_answers[question_id] = newAnswerArray;
         }
     }
 
@@ -76,7 +73,7 @@ export function QuestionBody(props){
                                 key={answer.id}
                                 value={false}
                                 defaultChecked={setSelectedAnswers(answer.id)}
-                                onChange={e => onChoiceChange(e, answer.id, question_id)}/>}
+                                onChange={e => onChoiceChange(e, answer.id)}/>}
                                 label={renderHTML(answer.answer_body)}/>
                         ))}
                     </FormGroup>

@@ -75,7 +75,7 @@ export function Login(props) {
                 className={logStyle.input}
                 type="password"
                 name="password"
-                label="Password"
+                label="Пароль"
                 onChange={onChange}
                 value={userCredentials.password}
                 variant="filled"
@@ -94,7 +94,7 @@ export function Login(props) {
              <Link to='/reset-password'>Забыли пароль?</Link> 
             </Typography>
             <Typography paragraph={true}>
-              Don't have an account? <Link to="/register">Register</Link>
+              Don't have an account? <Link to="/register">Зарегистрироваться</Link>
             </Typography>
           </form>
         </div>

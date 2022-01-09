@@ -92,6 +92,7 @@ class UserApiView(generics.RetrieveAPIView):
     serializer_class = UserSerializer
 
     def get_object(self):
+        print(self.request.user.student_courses.all())
         return self.request.user
 
 

@@ -78,7 +78,7 @@ export const login = (email, password) => dispatch => {
     axios
         .post('/api/auth/login', body, config)
         .then(res => {
-            dispatch(createMessage({successfullLogin: 'You have been successfully logged in!'}))
+            dispatch(createMessage({successfullLogin: `Добро пожаловать, ${res.data.user.first_name}`}))
             dispatch({
                 type: LOGIN_SUCCESS,
                 payload: res.data

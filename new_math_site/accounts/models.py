@@ -53,7 +53,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         related_name='accounts',
         blank=True
     )
-
+    student_tests = models.ManyToManyField(
+        to='testsApp.Test',
+        related_name='accounts',
+        blank=True
+    )
     objects = UserManager()
 
     USERNAME_FIELD = 'email'

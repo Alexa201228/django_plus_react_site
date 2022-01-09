@@ -12,7 +12,7 @@ class ModuleSerializer(serializers.ModelSerializer):
             'url': {'lookup_field': 'lesson_slug'}
         }
         lookup_field = 'lesson_slug'
-        fields = ['id', 'lesson_name', 'body', 'course_id', 'lesson_slug','module_test']
+        fields = ['id', 'lesson_name', 'body', 'course_id', 'lesson_slug', 'module_test']
 
 
 class CourseSerializer(serializers.ModelSerializer):

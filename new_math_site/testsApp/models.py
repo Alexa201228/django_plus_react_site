@@ -11,6 +11,8 @@ ps: not both at the same time!)
 2) Question model (connected with test by foreign key)
 3) Answer model (connected with question by foreign key)
 """
+
+
 class Test(models.Model):
     title = models.CharField(
         max_length=100,
@@ -67,6 +69,7 @@ class Question(models.Model):
 
     def __str__(self):
         return f'{self.question_body[:50]}...'
+
 
 class Answer(models.Model):
     question = models.ForeignKey(

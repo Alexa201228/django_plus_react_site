@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';
-import { connect } from 'react-redux';
+import React, {Fragment, useEffect} from 'react';
+import {connect, useDispatch, useSelector} from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Button from '@material-ui/core/Button';
@@ -11,20 +11,24 @@ import { useStyles } from '../App';
 
 export function CourseInfo(props){
     const { course } = props;
+    const user = useSelector(state => state.auth);
+    const dispatch = useDispatch();
 
     //add course to user
     const onButtonClick = () =>{
-        if(!props.isAuthenticated){
+        if(!user.isAuthenticated){
             props.history.push('/login');
         }
         const { title, slug } = course;
-        const token = props.access_token;
+        const token = user.access_token;
         const enrollData = {
             token,
             title,
             slug
         }
-        props.enrollCourse(enrollData)
+        useEffect(() => {
+            dispatch(enrollCourse(enrollData))
+        }, [])
     }
     const styles = useStyles();
     return(
@@ -34,6 +38,7 @@ export function CourseInfo(props){
                     <Typography>
                         {renderHTML(course.description)}
                     </Typography>
+                {!user.user.student_courses.some(c => c.id == course.id) ?
                     <Button
                     type='submit'
                     color='primary'
@@ -41,22 +46,16 @@ export function CourseInfo(props){
                     onClick={onButtonClick}>
                     Enroll course
                     </Button>
+                : null}
                 </Container>
         </Fragment>
         
     )
 }
 
-CourseInfo.propTypes = {
-    enrollCourse: PropTypes.func,
-    isAuthenticated: PropTypes.bool,
-    access_token: PropTypes.string
-}
 
 const mapStateToProps = (state) =>({
     course: state.courses.course,
-    isAuthenticated: state.auth.isAuthenticated,
-    access_token: state.auth.access_token
 })
 
-export default connect(mapStateToProps, { enrollCourse })(CourseInfo);
+export default connect(mapStateToProps)(CourseInfo);

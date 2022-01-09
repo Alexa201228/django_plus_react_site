@@ -1,11 +1,11 @@
-import React, { Fragment, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { Fragment } from 'react';
+import { useSelector } from 'react-redux';
 import { Avatar, Box, CssBaseline, Typography } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { loadUser } from "../../actions/auth";
+import {Link, Redirect} from "react-router-dom";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -38,12 +38,26 @@ export function UserProfile(props) {
     const style = useStyles();
 
     const { user } = useSelector(state => state.auth);
-    console.log(props)
 
-    
     if (!user) {
-        return null;
+        return <Redirect to={'/login'}/>;
     }
+
+    const findLesson = (test_id) => {
+        var slug = "";
+        user.student_courses.forEach((course, _) => {
+            course.course_lessons.forEach((lesson, _) => {
+
+                if(lesson.module_test.some(t => t.id == test_id))
+                    {
+                        slug = `${course.slug}/${lesson.lesson_slug}`
+                    }
+                }
+            )}
+        )
+        return slug
+    }
+    console.log(user)
         return (
         <Fragment>
             <Container className={style.contentContainer}>
@@ -54,7 +68,7 @@ export function UserProfile(props) {
                 </Avatar>
                 <Typography>
                  {
-                     `Welcome ${user.first_name}`}
+                     `Привет, ${user.first_name}!`}
                  </Typography>
                 </div>               
                 <Box p={4}>
@@ -62,13 +76,32 @@ export function UserProfile(props) {
                      {user.student_courses.map((course, index) => (
                          <Box
                          key={index}>
-                             <Typography
+                             <Link
+                             to={`/${course.slug}`}>
+                                <Typography
                                  paragraph={true}>
                                  {course.title}
                              </Typography>
+                             </Link>
                          </Box>
                      ))}
                  </Box>
+                    <Box>
+                        <Typography>Пройденные тесты:</Typography>
+                        {user.student_tests.map((test, index) => (
+                         <Box
+                         key={index}>
+                             <Link
+                             to={`/${findLesson(test.id)}/${test.id}`}>
+                                <Typography
+                                     paragraph={true}>
+                                    {test.title}
+                                </Typography>
+                             </Link>
+                         </Box>
+
+                     ))}
+                    </Box>
              </Box>
              </Container>
             </Fragment>

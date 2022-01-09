@@ -30,8 +30,7 @@ class TestViewSet(viewsets.ReadOnlyModelViewSet):
             test_checker = TestChecker(test, request.data)
             result = test_checker.get_test_result()
             if result[2]:
-                request.user.succeded_students.add(test)
-                test.students.add(request.user)
+                request.user.student_tests.add(test)
             return Response(
                 {
                     'result': result[0],
@@ -45,6 +44,7 @@ class TestViewSet(viewsets.ReadOnlyModelViewSet):
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         except Exception:
             raise Exception
+
 
 class QuestionViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = QuestionSerializer

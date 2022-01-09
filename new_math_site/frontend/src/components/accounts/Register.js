@@ -82,7 +82,7 @@ export function Register(props) {
                   render={({ field }) =>
                     <TextField
                       {...field}
-                    label="First Name"
+                    label="Имя"
                     fullWidth
                         variant="filled"
                         autoComplete="on"
@@ -159,7 +159,7 @@ export function Register(props) {
                       {...field}
                       fullWidth
                       variant="filled"
-                        label="Password"
+                        label="Пароль"
                       type="Password"/>}
                   control={control}
                   name="password"

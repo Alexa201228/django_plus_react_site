@@ -6,21 +6,21 @@ from rest_framework import serializers
 
 from ..models import User
 from courses.api.serializers import CourseSerializer
+from testsApp.api.serializers import TestSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
-    student_courses = CourseSerializer(many=True, read_only=True)
+    student_courses = CourseSerializer(many=True, read_only=True, required=False)
+    student_tests = TestSerializer(many=True, read_only=True, required=False)
 
     class Meta:
         model = User
         fields = ['id', 'email', 'first_name', 'last_name',
-                  'student_courses', 'succeded_students']
-        extra_kwargs = {
-            'student_courses': {'required': False}
-        }
+                  'student_courses', 'student_tests']
 
 
 class RegisterSerializer(serializers.HyperlinkedModelSerializer):
+
     class Meta:
         model = User
         fields = ['email', 'password', 'first_name', 'last_name']
@@ -40,6 +40,7 @@ class RegisterSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class LoginSerializer(serializers.Serializer):
+
     email = serializers.EmailField(error_messages={
         'blank': 'Пожалуйста введите свой email',
     },)
