@@ -54,7 +54,7 @@ export function Login(props) {
       <Container p={2} className={logStyle.formContainer}>
       <div className="col-md-6 m-auto">
         <div className="card card-body mt-5">
-          <h2 className="text-center">Login</h2>
+          <h2 className="text-center">Вход</h2>
           <form onSubmit={onSubmit}>
             <Box my={2}>
               <TextField
@@ -88,13 +88,13 @@ export function Login(props) {
               className={logStyle.submit}
               size="large"
             >
-              Login
+              Войти
             </Button>
             <Typography paragraph={true}>
              <Link to='/reset-password'>Забыли пароль?</Link> 
             </Typography>
             <Typography paragraph={true}>
-              Don't have an account? <Link to="/register">Зарегистрироваться</Link>
+              Ещё не зарегистрированы? <Link to="/register">Зарегистрироваться</Link>
             </Typography>
           </form>
         </div>
