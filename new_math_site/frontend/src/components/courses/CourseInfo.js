@@ -38,15 +38,16 @@ export function CourseInfo(props){
                     <Typography>
                         {renderHTML(course.description)}
                     </Typography>
-                {!user.user.student_courses.some(c => c.id == course.id) ?
-                    <Button
+                {user.user && user.user.student_courses.some(c => c.id == course.id) ?
+                null
+                :<Button
                     type='submit'
                     color='primary'
                     variant="contained"
                     onClick={onButtonClick}>
                     Enroll course
                     </Button>
-                : null}
+                }
                 </Container>
         </Fragment>
         
