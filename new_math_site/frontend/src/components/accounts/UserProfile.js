@@ -31,6 +31,10 @@ const useStyles = makeStyles((theme) => ({
     submit: {
       margin: theme.spacing(3, 0, 2),
     },
+    coursesContainer: {
+        display: 'flex',
+        justifyContent: 'space-between'
+    },
   }));
 
 export function UserProfile(props) {
@@ -57,7 +61,26 @@ export function UserProfile(props) {
         )
         return slug
     }
-    console.log(user)
+
+    const userProgress = (course) => {
+        var allTestsCount = course.course_test.length;
+        var passedTests = 0
+        for(var i = 0; i < course.course_lessons.length; i++){
+
+            allTestsCount += course.course_lessons[i].module_test.length;
+            for(var j = 0; j < course.course_lessons[i].module_test.length; j++){
+                if(course.course_lessons[i].module_test[j].students.some(s => s === user.id)){
+                    passedTests++;
+                }
+            }
+
+        }
+        if(allTestsCount === 0){
+            return null;
+        }
+        return `${passedTests / allTestsCount * 100}%`
+    }
+
         return (
         <Fragment>
             <Container className={style.contentContainer}>
@@ -72,24 +95,35 @@ export function UserProfile(props) {
                  </Typography>
                 </div>               
                 <Box p={4}>
-                 <Box>
+                    <Typography >
+                        Твои курсы:
+                    </Typography>
+                 <Box m={4}>
                      {user.student_courses.map((course, index) => (
-                         <Box
-                         key={index}>
-                             <Link
-                             to={`/${course.slug}`}>
-                                <Typography
-                                 paragraph={true}>
-                                 {course.title}
-                             </Typography>
-                             </Link>
+                         <Box className={style.coursesContainer}>
+                             <Box my={3}
+                             key={index}>
+                                 <Link
+                                 to={`/${course.slug}`}>
+                                    <Typography
+                                     paragraph={true}>
+                                     {course.title}
+                                 </Typography>
+                                 </Link>
+                             </Box>
+                             <Box my={3}
+                             key={`${course.title}${index}`}>
+                                     {userProgress(course) ?
+                                         <Typography>Прогресс курса: {userProgress(course)}</Typography>
+                                         : null}
+                             </Box>
                          </Box>
                      ))}
                  </Box>
-                    <Box>
-                        <Typography>Пройденные тесты:</Typography>
+                    <Typography>Пройденные тесты:</Typography>
+                    <Box m={4}>
                         {user.student_tests.map((test, index) => (
-                         <Box
+                         <Box my={3}
                          key={index}>
                              <Link
                              to={`/${findLesson(test.id)}/${test.id}`}>

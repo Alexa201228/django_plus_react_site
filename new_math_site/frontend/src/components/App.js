@@ -58,18 +58,18 @@ export function App(){
               <Alerts/>
             <div className='container'>
                   <Switch>
-                      <PrivateRoute exact path='/user/profile/:id' component={UserProfile}/>
-                    <Route exact path='/' component={Dashboard} />
+                      <PrivateRoute exact path='/user/profile/:id' component={UserProfile} key={window.location.pathname}/>
+                    <Route exact path='/' component={Dashboard} key={window.location.pathname}/>
 
                   
-                    <Route path='/register' component={Register} />
-                    <Route path='/reset-password/:token' component={ResetPasswordForm} />
-                    <Route path='/reset-password' component={ResetPassword} />
+                    <Route path='/register' component={Register} key={window.location.pathname}/>
+                    <Route path='/reset-password/:token' component={ResetPasswordForm} key={window.location.pathname}/>
+                    <Route path='/reset-password' component={ResetPassword} key={window.location.pathname}/>
                     
-                  <Route exact path='/confirm/:token' component={EmailVerified}/>
+                  <Route exact path='/confirm/:token' component={EmailVerified} key={window.location.pathname}/>
                   <Route path='/login' component={Login} />
-                  <PrivateRoute path='/:slug/:lesson_slug/:test_id' component={TestPage}/>
-                  <Route path='/:slug' component={CourseDetail} />
+                  <PrivateRoute path='/:slug/:lesson_slug/:test_id' component={TestPage} key={window.location.pathname}/>
+                  <Route path='/:slug' component={CourseDetail} key={window.location.pathname}/>
               </Switch>
             </div>
             </Fragment>
