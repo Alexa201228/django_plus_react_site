@@ -9,6 +9,7 @@ import { courseDetails } from '../../actions/courses';
 import CourseLessonsList from './CourseLessonList';
 import CourseLesson from './CourseLessons';
 import CourseInfo from './CourseInfo';
+import {TestPage} from "../tests/TestPage";
 
 const useStyles = makeStyles((theme) => ({
 	courseContainer: {
@@ -36,6 +37,7 @@ export function CourseDetail(){
                     <Container className={styles.courseContainer}>
                         <CourseLessonsList lessons={course.course_lessons} course={course}/>
                         <Switch>
+                            <Route exact path='/:slug/test/:test_id' component={TestPage}/>
                             <Route exact path='/:slug/:lesson_slug' component={CourseLesson}/>
                             <Route path='/:slug' component={CourseInfo} />          
                         </Switch>

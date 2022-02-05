@@ -1,3 +1,5 @@
+from django.http.response import HttpResponseBadRequest
+
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.response import Response
 from ..services import TestChecker
@@ -27,6 +29,7 @@ class TestViewSet(viewsets.ReadOnlyModelViewSet):
     def test_results(self, request, *args, **kwargs):
         try:
             test = self.get_object()
+            print(request.data)
             test_checker = TestChecker(test, request.data)
             result = test_checker.get_test_result()
             if result[2]:
@@ -42,8 +45,8 @@ class TestViewSet(viewsets.ReadOnlyModelViewSet):
             )
         except AuthenticationFailed:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
-        except Exception:
-            raise Exception
+        except Exception as e:
+            return HttpResponseBadRequest(f'Error type: {type(e).__name__}. Error message: {e}')
 
 
 class QuestionViewSet(viewsets.ReadOnlyModelViewSet):

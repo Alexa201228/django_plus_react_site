@@ -4,11 +4,12 @@ import { useHistory, useParams } from 'react-router';
 import PropTypes from 'prop-types';
 import renderHTML from 'react-render-html';
 
-import { Button, Checkbox, Container, FormControlLabel, FormGroup, Typography } from '@material-ui/core';
+import {Button, Checkbox, Container, FormControlLabel, FormGroup, Radio, Typography} from '@material-ui/core';
 import { Box } from '@material-ui/core';
 
 import { getQuestion, testResults } from '../../actions/tests';
 import { useStyles } from '../App';
+import {RadioButtonCheckedRounded} from "@material-ui/icons";
 
 export function QuestionBody(props){
 
@@ -33,8 +34,20 @@ export function QuestionBody(props){
     }
 
     const setSelectedAnswers = (ans) => {
-        if(chosen_answers[question_id].some(answer => answer == ans))
+        if(question_id in chosen_answers && chosen_answers[question_id].some(answer => answer == ans))
+        {
+            console.log(ans)
             return true
+        }
+
+    }
+
+    //Подсчет правильных ответов.
+    // Необходимо для определения типа выбора правильного ответа:
+    // Для множественного ответа - генерация чекбоксов,
+    // для вопроса с одним ответом - радиобаттоны
+    const countAnswersNumber = (cur_question) => {
+        return cur_question.answer_to_question.filter(ans => ans.is_correct === true).length;
     }
 
     //Управление выбранными ответами при изменении состояния checkbox'ов
@@ -66,15 +79,17 @@ export function QuestionBody(props){
                     </Typography>
                     <FormGroup>
                         {question.answer_to_question.map((answer, index) => (
-                            <FormControlLabel
-                            key={index}
-                                control={
-                                <Checkbox
-                                key={answer.id}
-                                value={false}
-                                defaultChecked={setSelectedAnswers(answer.id)}
-                                onChange={e => onChoiceChange(e, answer.id)}/>}
-                                label={renderHTML(answer.answer_body)}/>
+
+                                <FormControlLabel
+                                    key={`${index}-${answer.id}`}
+                                    control={
+                                    <Checkbox
+                                        key={answer.id}
+                                        value={false}
+                                        defaultChecked={setSelectedAnswers(answer.id)}
+                                        onChange={e => onChoiceChange(e, answer.id)}/>}
+                                        label={renderHTML(answer.answer_body)}/>
+
                         ))}
                     </FormGroup>
                 </Container>

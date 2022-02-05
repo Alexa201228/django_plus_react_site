@@ -49,7 +49,7 @@ export const getQuestion = (id) =>(dispatch, getState) => {
 
 //Get Test results
 export const testResults = ({test_id, chosen_answers}) => (dispatch, getState) =>{
-
+    console.log(chosen_answers)
     axios.post(`/api/tests/${test_id}/test_results/`, chosen_answers, tokenConfig(getState))
     .then(res =>{
         dispatch(createMessage({test_finished:'Вы завершили тест!'}));
@@ -63,7 +63,7 @@ export const testResults = ({test_id, chosen_answers}) => (dispatch, getState) =
             return null;
         }
         else{
-            dispatch(returnErrorMessages(err.response.data, err.response.status))
+            dispatch(returnErrorMessages({error: err.response.data}, {status: err.response.status}))
         }
     })
 }
@@ -85,7 +85,7 @@ export const tryTestAgain = (test_id) => (dispatch, getState) => {
             return null;
         }
         else{
-            dispatch(returnErrorMessages(err.response.data, err.response.status))
+            dispatch(returnErrorMessages({error: err.response.data}, {status: err.response.status}))
         }
     });
 }

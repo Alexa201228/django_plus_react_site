@@ -38,8 +38,8 @@ export function TestPage(){
                     <Redirect 
                     from={`/${slug}/${lesson_slug}/${test_id}/`} 
                     to={`/${slug}/${lesson_slug}/${test_id}/${test.questions_on_test[0].id}`}/>
-                    <PrivateRoute exact path='/:slug/:lesson_slug/:test_id/results/test_results' component={TestResults}/>
-                    <PrivateRoute key='question' exact path='/:slug/:lesson_slug/:test_id/:question_id' component={QuestionBody}/>
+                    <PrivateRoute exact path='/:slug/:lesson_slug/:test_id/results/test_results' component={TestResults} key={window.location.pathname}/>
+                    <PrivateRoute exact path='/:slug/:lesson_slug/:test_id/:question_id' component={QuestionBody} key={window.location.pathname}/>
                 </Switch>
                 </Container>
             </Fragment>

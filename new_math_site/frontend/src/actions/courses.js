@@ -13,7 +13,7 @@ export const getCourses = () => dispatch => {
                 payload: res.data
             });
         }).catch(err => {
-            dispatch(returnErrorMessages(err.response.data, err.response.status))
+            dispatch(returnErrorMessages({error: err.response.data}, {status: err.response.status}))
         });
 };
 
@@ -28,7 +28,8 @@ export const courseDetails = (slug) => dispatch => {
             });
         })
         .catch(err => {
-            dispatch(returnErrorMessages(err.response.data, err.response.status));
+            console.log(err)
+            dispatch(returnErrorMessages({error: err.response.data}, {status: err.response.status}))
         });
 }
 
@@ -43,7 +44,8 @@ export const getLesson = ({slug, lesson_slug}) => dispatch =>{
         })
     })
     .catch(err => {
-        dispatch(returnErrorMessages(err.response.data, err.response.status))
+        console.log(err)
+        dispatch(returnErrorMessages({error: err.response.data}, {status: err.response.status}))
     })
 }
 
@@ -68,7 +70,7 @@ export const enrollCourse = ({token, title, slug}) => dispatch => {
             dispatch(createMessage({requestToLogin: 'Пожалуйста, зарегистрируйтесь для записи на курс'}));
         }
         else{
-            dispatch(returnErrorMessages(err.response.data, err.response.status))
+            dispatch(returnErrorMessages({error: err.response.data}, {status: err.response.status}))
         }
         
     })

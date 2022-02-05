@@ -40,7 +40,7 @@ export function CourseLesson(){
                             {test.title}
                         </Button>          
                 ))
-                : <Typography>
+                : <Typography m={4}>
                     Пожалуйста, войдите в свой аккаунт или зарегестрируйтесь для прохождения теста
                 </Typography>}
                 </Container>  

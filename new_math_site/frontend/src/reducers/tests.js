@@ -20,9 +20,8 @@ export default function(state = initialState, action) {
                 ...state,
                 test: action.payload,
                 questions: action.payload.questions_on_test,
-                chosen_answers:{
-                    ...state.chosen_answers, ...clearChosenAnswers(action.payload.questions_on_test)
-                }
+                chosen_answers: clearChosenAnswers(action.payload.questions_on_test),
+                correct_answers: {}
             }
         case GET_QUESTION:
             return{
@@ -45,9 +44,8 @@ export default function(state = initialState, action) {
             return{
                 ...state, 
                 finished: false,
-                chosen_answers:{
-                    ...state.chosen_answers, ...clearChosenAnswers(action.payload.questions_on_test)
-                }
+                chosen_answers: clearChosenAnswers(action.payload.questions_on_test),
+                correct_answers: {}
             }
         default:
             return state;

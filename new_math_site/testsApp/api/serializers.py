@@ -24,7 +24,7 @@ class TestSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'questions_on_test', 'lesson', 'course', 'students')
         extra_kwargs = {
             'questions_on_test': {'required': False},
-            'title':{'required': False, 'read_only': True},
-            'lesson':{'required': False, 'read_only': True},
-            'course':{'required': False, 'read_only': True}
+            'title': {'required': False, 'read_only': True},
+            'lesson': {'required': False, 'read_only': True},
+            'course': {'required': False, 'read_only': True}
         }

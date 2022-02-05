@@ -19,6 +19,8 @@ export function TestResults(props){
         props.tryTestAgain(test_id)
         history.push(`/${slug}/${lesson_slug}/${test_id}/${test.questions_on_test[0].id}`)
     }
+
+    console.log(correct_answers)
     const styles = useStyles();
     return(
         <Fragment>
@@ -30,7 +32,8 @@ export function TestResults(props){
                     </Typography>
                 </Box>
                 <Typography
-                paragraph={true}>
+                paragraph={true}
+                my={4}>
                     Ответы
                 </Typography>
                 {Object.keys(correct_answers).map((question, index) => (

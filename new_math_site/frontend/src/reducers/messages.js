@@ -1,4 +1,4 @@
-import { CREATE_MESSAGES } from "../actions/types";
+import {CREATE_MESSAGES} from "../actions/types";
 
 const initialState = {};
 

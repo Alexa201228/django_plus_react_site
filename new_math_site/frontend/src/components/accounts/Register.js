@@ -74,7 +74,7 @@ export function Register(props) {
       <CssBaseline />
       <div className='col-md-6 m-auto'>
         <div className='card card-body mt-5'>
-          <h2 className='text-center'>Register</h2>
+          <h2 className='text-center'>Зарегистрироваться</h2>
           <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
             <div className="container">
               <Box my={2}>
@@ -196,10 +196,10 @@ export function Register(props) {
               </Box>
                 <Button variant="contained" type='submit' color="primary" className={classes.submit}
                 disabled={!formState.isValid}>
-                Register
+                Зарегистрироваться
               </Button>
             <Typography paragraph={true}>
-              Already have an account? <Link to='/login'>Login</Link>
+              Уже зарегистрированы? <Link to='/login'>Login</Link>
             </Typography>
             </div>
           </form>

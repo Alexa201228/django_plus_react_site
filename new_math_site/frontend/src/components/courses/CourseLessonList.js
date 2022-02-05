@@ -91,6 +91,10 @@ export function CourseLessonsList({lessons, course}, props){
         setMobileOpen(!mobileOpen);
       };
 
+    const checkCourseTest = () => {
+        return typeof course.course_test[0] != "undefined"
+    }
+
     const drawer = (
         <div>
           <div className={classes.toolbar}>
@@ -115,7 +119,16 @@ export function CourseLessonsList({lessons, course}, props){
                            {lesson.lesson_name}
                               </Typography>
                        </ListItem>
-                       ))}   
+                       ))}
+                   {checkCourseTest() &&
+                   <ListItem
+                           button
+                           component={Link}
+                           to={`/${slug}/test/${course.course_test[0].id}`}>
+                               <Typography>
+                           {course.course_test[0].title}
+                              </Typography>
+                       </ListItem>}
                </List>
         </div>
       );
