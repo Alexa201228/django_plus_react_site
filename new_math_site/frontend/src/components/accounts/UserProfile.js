@@ -56,6 +56,10 @@ export function UserProfile(props) {
                     {
                         slug = `${course.slug}/${lesson.lesson_slug}`
                     }
+                else if(course.course_test.some(t => t.id == test_id))
+                    {
+                        slug = `${course.slug}/test`
+                    }
                 }
             )}
         )
@@ -64,16 +68,9 @@ export function UserProfile(props) {
 
     const userProgress = (course) => {
         var allTestsCount = course.course_test.length;
-        var passedTests = 0
+        var passedTests = user.student_tests.length;
         for(var i = 0; i < course.course_lessons.length; i++){
-
             allTestsCount += course.course_lessons[i].module_test.length;
-            for(var j = 0; j < course.course_lessons[i].module_test.length; j++){
-                if(course.course_lessons[i].module_test[j].students.some(s => s === user.id)){
-                    passedTests++;
-                }
-            }
-
         }
         if(allTestsCount === 0){
             return null;
