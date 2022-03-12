@@ -94,7 +94,15 @@ import { makeStyles, useTheme } from '@material-ui/core';
                         <Typography>
                             Результаты теста
                         </Typography>
-                </ListItem>}    
+                </ListItem>}
+                <ListItem
+                    button
+                    component={Link}
+                    to={`/${slug}`}>
+                    <Typography>
+                        Вернуться к изучению материала
+                    </Typography>
+                </ListItem>
             </List>
      </div>
    );
