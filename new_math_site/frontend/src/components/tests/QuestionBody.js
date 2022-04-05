@@ -4,12 +4,20 @@ import { useHistory, useParams } from 'react-router';
 import PropTypes from 'prop-types';
 import renderHTML from 'react-render-html';
 
-import {Button, Checkbox, Container, FormControlLabel, FormGroup, Radio, Typography} from '@material-ui/core';
+import {
+    Button,
+    Checkbox,
+    Container,
+    FormControlLabel,
+    FormGroup,
+    Radio,
+    RadioGroup,
+    Typography
+} from '@material-ui/core';
 import { Box } from '@material-ui/core';
 
 import { getQuestion, testResults } from '../../actions/tests';
 import { useStyles } from '../App';
-import {RadioButtonCheckedRounded} from "@material-ui/icons";
 
 export function QuestionBody(props){
 
@@ -51,15 +59,61 @@ export function QuestionBody(props){
     }
 
     //Управление выбранными ответами при изменении состояния checkbox'ов
-    const onChoiceChange = (e, answer) => {
-        if(e.target.checked && !chosen_answers[question_id].some(el => el == answer)){
-            chosen_answers[question_id].push(answer)
+    const onChoiceChange = (e) => {
+        console.log('choice changed')
+
+        if(e.target.checked && !chosen_answers[question_id].some(el => el === e.target.value)){
+            chosen_answers[question_id].push(e.target.value)
         }
-        else if(!e.target.checked && chosen_answers[question_id].some(el => el == answer)){
-            const newAnswerArray = chosen_answers[question_id].filter(ans => ans != answer)
-            chosen_answers[question_id] = newAnswerArray;
+        else if(!e.target.checked && chosen_answers[question_id].some(el => el === e.target.value)){
+            chosen_answers[question_id] = chosen_answers[question_id].filter(ans => ans !== e.target.value);
         }
     }
+    const handleRadioButtonChange = (e) => {
+        console.log(e.target.value)
+        chosen_answers[question_id] = [parseInt(e.target.value)];
+        console.log(chosen_answers[question_id].some(el => el === e.target.value))
+        console.log(chosen_answers[question_id])
+        console.log(chosen_answers[question_id][0] === e.target.value)
+    }
+
+
+    const oneAnswerContainer = (
+        <FormGroup>
+            <RadioGroup>
+                {question.answer_to_question.map((answer, index) => (
+                <FormControlLabel
+                    key={`${index}-${answer.id}`}
+                    control={
+                        <Radio
+                            checked={chosen_answers[question_id][0] === answer.id}
+                            key={answer.id}
+                            value={answer.id}
+                            onClick={e => handleRadioButtonChange(e)}
+                            />}
+                            label={renderHTML(answer.answer_body)}/>
+
+                        ))}
+            </RadioGroup>
+        </FormGroup>
+    );
+
+    const manyAnswersContainer = (
+        <FormGroup>
+            {question.answer_to_question.map((answer, index) => (
+                <FormControlLabel
+                    key={`${index}-${answer.id}`}
+                    control={
+                        <Checkbox
+                            key={answer.id}
+                            value={answer.id}
+                            defaultChecked={setSelectedAnswers(answer.id)}
+                            onChange={e => onChoiceChange(e)}/>}
+                    label={renderHTML(answer.answer_body)}/>
+
+                        ))}
+        </FormGroup>
+    );
 
     const testNotFinished = (
         <Box>
@@ -77,21 +131,7 @@ export function QuestionBody(props){
                     <Typography>
                         {renderHTML(question.question_body)}
                     </Typography>
-                    <FormGroup>
-                        {question.answer_to_question.map((answer, index) => (
-
-                                <FormControlLabel
-                                    key={`${index}-${answer.id}`}
-                                    control={
-                                    <Checkbox
-                                        key={answer.id}
-                                        value={false}
-                                        defaultChecked={setSelectedAnswers(answer.id)}
-                                        onChange={e => onChoiceChange(e, answer.id)}/>}
-                                        label={renderHTML(answer.answer_body)}/>
-
-                        ))}
-                    </FormGroup>
+                    {countAnswersNumber(question) > 1 ? manyAnswersContainer: oneAnswerContainer}
                 </Container>
                     <Container>
                         {!finished && testNotFinished }
