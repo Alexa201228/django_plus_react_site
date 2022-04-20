@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 		borderBottom: `1px solid ${theme.palette.divider}`,
 	},
 	link: {
+		background: '#E7D9EA',
 		margin: theme.spacing(1, 0, 1, 0),
 	},
 	toolbarTitle: {

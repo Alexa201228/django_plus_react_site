@@ -14,8 +14,8 @@ class TestChecker():
     Также возвращает boolean пройден или не пройден тест
     """
     def __init__(self,
-                test: Test,
-                user_answers: Dict[Question, List[Answer]]):
+                 test: Test,
+                 user_answers: Dict[Question, List[Answer]]):
         self.test = test
         self.answers = user_answers
 
@@ -44,7 +44,7 @@ class TestChecker():
             #Проверка ответов пользователя
             for answer in self.answers:
                 print(self.answers, answer, correct_answers)
-                if correct_answers[answer] == self.answers[answer]:
+                if correct_answers[answer] == list(map(int, self.answers[answer])):
                     user_points += 1
             user_result: float = round(user_points/len(questions), 2) * 100
             #Проверка на прохождение теста по резултатам

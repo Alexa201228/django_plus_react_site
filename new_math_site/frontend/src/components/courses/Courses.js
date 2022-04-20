@@ -14,6 +14,16 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('xs')]: {
             marginTop: theme.spacing(15)
         }
+    },
+    singleCourseContainer: {
+        paddingBottom: '10em',
+        paddingTop: '10em',
+        paddingLeft: '5em',
+        marginBottom: '1em',
+        background: "#D8E3E7"
+    },
+    courseLink: {
+        fontSize: "larger"
     }
 })) 
 
@@ -33,15 +43,15 @@ export function Courses() {
                 <Container className={style.coursesContainer}>
                 <h1>Курсы</h1>
                 {results.map((course, index) => (        
-                <Box
-                    key={index}
-                    my={3}>                    
-                    <Link
-                        to={`/${course.slug}`}
+                <Link
+                    className={style.courseLink}
+                    to={`/${course.slug}`}
                     >
-                        {course.title}
-                    </Link>
-                </Box>         
+                <Container className={style.singleCourseContainer}
+                    key={index}
+                    my={3}>{course.title}
+                </Container>
+                </Link>
                 ))}
         </Container>
         }

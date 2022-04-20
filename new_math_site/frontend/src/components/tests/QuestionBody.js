@@ -7,7 +7,7 @@ import renderHTML from 'react-render-html';
 import {
     Button,
     Checkbox,
-    Container,
+    Container, FormControl,
     FormControlLabel,
     FormGroup,
     Radio,
@@ -28,8 +28,6 @@ export function QuestionBody(props){
     useEffect(() => {
         dispatch(getQuestion(question_id))
     },[question_id])
-
-    const history = useHistory();
 
     //Получение результатов тестирования
     const getTestResult = () => {
@@ -71,31 +69,33 @@ export function QuestionBody(props){
     }
     const handleRadioButtonChange = (e) => {
         console.log(e.target.value)
-        chosen_answers[question_id] = [parseInt(e.target.value)];
-        console.log(chosen_answers[question_id].some(el => el === e.target.value))
+        e.target.checked = true;
+        chosen_answers[question_id] = [e.target.value];
         console.log(chosen_answers[question_id])
+    }
+
+    const checkedAnswer = (e) => {
+        console.log(e.target)
         console.log(chosen_answers[question_id][0] === e.target.value)
+        console.log(e.target.checked)
+        return chosen_answers[question_id][0] === e.target.value;
+
     }
 
 
     const oneAnswerContainer = (
-        <FormGroup>
-            <RadioGroup>
+        <RadioGroup>
                 {question.answer_to_question.map((answer, index) => (
                 <FormControlLabel
-                    key={`${index}-${answer.id}`}
                     control={
                         <Radio
-                            checked={chosen_answers[question_id][0] === answer.id}
-                            key={answer.id}
+                            key={`${index}-${answer.id}`}
                             value={answer.id}
-                            onClick={e => handleRadioButtonChange(e)}
-                            />}
-                            label={renderHTML(answer.answer_body)}/>
-
-                        ))}
-            </RadioGroup>
-        </FormGroup>
+                        onChange={handleRadioButtonChange}/>
+                    }
+                    label={renderHTML(answer.answer_body)}/>
+                ))}
+        </RadioGroup>
     );
 
     const manyAnswersContainer = (
@@ -131,7 +131,9 @@ export function QuestionBody(props){
                     <Typography>
                         {renderHTML(question.question_body)}
                     </Typography>
-                    {countAnswersNumber(question) > 1 ? manyAnswersContainer: oneAnswerContainer}
+                    <FormControl>
+                        {manyAnswersContainer}
+                    </FormControl>
                 </Container>
                     <Container>
                         {!finished && testNotFinished }
