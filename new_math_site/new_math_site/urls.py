@@ -44,7 +44,6 @@ urlpatterns = [
     path('api/token/refresh', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify', TokenVerifyView.as_view(), name='token_verify'),
     path('admin/', admin.site.urls),
-    path('', include('frontend.urls')),
     path('api/', include('courses.api.urls', namespace='api')),
     path('api/', include('accounts.api.urls', namespace='accounts')),
     path('api/', include('testsApp.api.urls', namespace='tests')),

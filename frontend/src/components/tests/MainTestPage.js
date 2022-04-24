@@ -1,10 +1,10 @@
 import React, { useEffect, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect, useParams, withRouter } from 'react-router';
+import {Outlet, useParams} from 'react-router';
+import {Routes, Route} from "react-router-dom"
 
 import { Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
-import Switch from 'react-bootstrap/esm/Switch';
 
 import { getTest } from '../../actions/tests';
 import QuestionBody from './QuestionBody';
@@ -20,13 +20,14 @@ const useStyles = makeStyles((theme) =>({
 }));
 
 export function TestPage(){
-    const { slug, lesson_slug, test_id } = useParams();
+    const { test_id } = useParams();
+    const params = useParams();
     const { test } = useSelector(state => state.tests);
     const dispatch = useDispatch();
-
+    console.log(params)
     useEffect(()=>{
         dispatch(getTest(test_id))
-    }, [])
+    }, [test_id])
     const styles = useStyles();
     return(
         <Fragment>
@@ -34,13 +35,7 @@ export function TestPage(){
             <Fragment>
                 <Container className={styles.testContainer}>
                 <QuestionList questions={test.questions_on_test}/>
-                <Switch>
-                    <Redirect 
-                    from={`/${slug}/${lesson_slug}/${test_id}/`} 
-                    to={`/${slug}/${lesson_slug}/${test_id}/${test.questions_on_test[0].id}`}/>
-                    <PrivateRoute exact path='/:slug/:lesson_slug/:test_id/results/test_results' component={TestResults} key={window.location.pathname}/>
-                    <PrivateRoute exact path='/:slug/:lesson_slug/:test_id/:question_id' component={QuestionBody} key={window.location.pathname}/>
-                </Switch>
+                    <Outlet/>
                 </Container>
             </Fragment>
             :null}
@@ -48,4 +43,4 @@ export function TestPage(){
     )
 }
 
-export default withRouter(TestPage);
+export default TestPage;
