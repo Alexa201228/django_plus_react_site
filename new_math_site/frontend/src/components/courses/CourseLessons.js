@@ -40,8 +40,8 @@ export function CourseLesson(){
                             {test.title}
                         </Button>          
                 ))
-                : <Typography m={4}>
-                    Пожалуйста, войдите в свой аккаунт или зарегестрируйтесь для прохождения теста
+                : <Typography m={4} style={{fontSize: '20px'}}>
+                    Пожалуйста, войдите в свой аккаунт или зарегистрируйтесь для прохождения теста
                 </Typography>}
                 </Container>  
             </Fragment>

@@ -12,7 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 
-const drawerWidth = 150;
+const drawerWidth = 175;
 const useStyles = makeStyles((theme) => ({
    root: {
      display: 'flex',
