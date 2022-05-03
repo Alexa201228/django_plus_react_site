@@ -10,7 +10,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box, Container } from '@material-ui/core';
+import {Box, Container, Icon} from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Zoom from '@material-ui/core/Zoom';
@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 		flexGrow: 1,
 	},
 	headerContainer: {
+		margin: '10px 0 0 0',
 		display: 'flex',
 		alignItems: 'center',
 		flexWrap: 'wrap',
@@ -184,6 +185,9 @@ export function Header(props) {
 				>
 				<Toolbar className={classes.toolbar}>
 					<Container className={classes.headerContainer}>
+						<Container style={{width: '50px'}}>
+							<img src='./../../kubstu.png'/>
+						</Container>
 						<Container className={classes.labelContainer}>
 								<Typography
 								variant="h6"
@@ -196,7 +200,7 @@ export function Header(props) {
 									underline="none"
 									color="textPrimary"
 								>
-								Mathematiks
+								Информационная система по подготовке и тестированию студентов
 								</Link>
 								</Typography>
 							</Container>

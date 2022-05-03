@@ -10,9 +10,16 @@ from rest_framework_simplejwt.tokens import RefreshToken, OutstandingToken, Blac
 from rest_framework.response import Response
 from rest_framework import status
 
-from .serializers import LoginSerializer, RegisterSerializer, ResetPasswordSerializer, UserSerializer
+from .serializers import (
+    LoginSerializer,
+    RegisterSerializer,
+    ResetPasswordSerializer,
+    UserSerializer,
+    MentorSerializer,
+    StudentSerializer
+)
 from ..utils import EmailManager
-from ..models import User
+from ..models import User, Mentor, Student
 
 
 def send_email_with_link(user, request, subject, message, link):
@@ -38,7 +45,7 @@ class RegisterApiView(generics.GenericAPIView):
             serializer.is_valid(raise_exception=True)
             user = serializer.save()
             email_message = '\nTo verify your email, please use this link\n'
-            access_url_path = '#/confirm/'
+            access_url_path = '/confirm/'
             email_subject = 'Activate account'
             send_email_with_link(user, request, email_subject,
                                  email_message, access_url_path)
@@ -89,7 +96,13 @@ class UserApiView(generics.RetrieveAPIView):
     permission_classes = [
         permissions.IsAuthenticated,
     ]
-    serializer_class = UserSerializer
+
+    def get_serializer_class(self):
+        if isinstance(self.request.user, Mentor):
+            return MentorSerializer
+        if isinstance(self.request.user, Student):
+            return StudentSerializer
+        return UserSerializer
 
     def get_object(self):
         return self.request.user
@@ -146,7 +159,7 @@ class VerifyEmailView(generics.GenericAPIView):
         try:
             user = User.objects.get(email=request.data)
             email_message = '\nTo verify your email, please use this link\n'
-            access_url = '#/confirm/'
+            access_url = '/confirm/'
             email_subject = 'Activate account'
             send_email_with_link(
                 user, request, email_subject, email_message, access_url)
@@ -169,6 +182,7 @@ class VerifyEmailView(generics.GenericAPIView):
 
 class SendResetPasswordEmailView(generics.GenericAPIView):
     permission_classes = [permissions.AllowAny, ]
+
 
     def get(self, request, *args, **kwargs):
         token = request.GET.get('token')

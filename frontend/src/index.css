@@ -11,3 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+header{
+
+}
+
+.appContainer {
+  margin: 125px 0 0 10px;
+}
+
+.registerLoginInput {
+  margin: 0 0 15px 0;
+}

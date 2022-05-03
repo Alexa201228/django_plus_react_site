@@ -4,19 +4,17 @@ from django.contrib.auth import authenticate
 
 from rest_framework import serializers
 
-from ..models import User
+from ..models import User, Mentor, Student
 from courses.api.serializers import CourseSerializer
 from testsApp.api.serializers import TestSerializer
+from student_groups.api.serializers import StudentGroupSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
-    student_courses = CourseSerializer(many=True, read_only=True, required=False)
-    student_tests = TestSerializer(many=True, read_only=True, required=False)
 
     class Meta:
         model = User
-        fields = ['id', 'email', 'first_name', 'last_name',
-                  'student_courses', 'student_tests']
+        fields = ['id', 'email', 'first_name', 'last_name']
 
 
 class RegisterSerializer(serializers.HyperlinkedModelSerializer):
@@ -92,3 +90,23 @@ class ResetPasswordSerializer(serializers.Serializer):
             raise obj_not_exists
         except Exception as e:
             raise e
+
+
+class MentorSerializer(serializers.ModelSerializer):
+    student_groups = StudentGroupSerializer(many=True, required=False)
+    taught_courses = CourseSerializer(many=True, required=False)
+
+    class Meta:
+        model = Mentor
+        fields = ['login', 'first_name', 'last_name', 'student_groups',
+                  'taught_courses']
+
+
+class StudentSerializer(serializers.ModelSerializer):
+    student_courses = CourseSerializer(many=True, read_only=True, required=False)
+    student_tests = TestSerializer(many=True, read_only=True, required=False)
+
+    class Meta:
+        model = Student
+        fields = ['id', 'email', 'first_name', 'last_name',
+                  'student_courses', 'student_tests']

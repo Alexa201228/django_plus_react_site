@@ -26,6 +26,7 @@ import Courses from "./components/courses/Courses";
 import MainTestPage from "./components/tests/MainTestPage";
 import QuestionBody from "./components/tests/QuestionBody";
 import TestResults from "./components/tests/TestResults";
+import './index.css';
 
 
 //Alert options
@@ -37,7 +38,7 @@ const alertOptions = {
 
 export const useStyles = makeStyles((theme) => ({
   contentContainer:{
-      marginTop: theme.spacing(11),
+      marginTop: theme.spacing(12),
       [theme.breakpoints.down('xs')]: {
           marginTop: theme.spacing(24)
       },
@@ -58,7 +59,7 @@ export function App(){
             <Fragment>
               <Header />
               <Alerts/>
-            <div className='container'>
+            <div className='appContainer'>
                   <Routes>
                       <Route path={'/test/:slug/:test_id/results/test_results'} element={<PrivateRoute/>}>
                         <Route path={'/test/:slug/:test_id/results/test_results'} element={<TestResults/>} />
@@ -82,8 +83,9 @@ export function App(){
 
                   <Route path='/confirm/:token' element={<EmailVerified/>} />
                   <Route path='/login' element={<Login/>} />
-
-                  <Route path=':slug/*' element={<CourseDetail/>}/>
+                    <Route path=':slug/*' element={<PrivateRoute/>}>
+                       <Route path=':slug/*' element={<CourseDetail/>}/>
+                    </Route>
               </Routes>
             </div>
             </Fragment>

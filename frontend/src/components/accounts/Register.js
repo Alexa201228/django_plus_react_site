@@ -16,6 +16,9 @@ import { Typography } from '@material-ui/core';
 
 import { register } from '../../actions/auth';
 import { REQUIRED_FIELD } from '../../helpers/editContentHelper';
+import {Form} from "react-bootstrap";
+import './../../index.css';
+
 
 const useStyles = makeStyles((theme) => ({
   formContainer: {
@@ -72,12 +75,12 @@ export function Register(props) {
     <Fragment>
       <Container className={classes.formContainer}>
       <CssBaseline />
-      <div className='col-md-6 m-auto'>
-        <div className='card card-body mt-5'>
+      <Container className='col-md-6 m-auto'>
+        <Container className='card card-body mt-5'>
           <h2 className='text-center'>Зарегистрироваться</h2>
-          <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
-            <div className="container">
-              <Box my={2}>
+          <Form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+            <Container>
+              <Box className='registerLoginInput'>
               <Controller
                   render={({ field }) =>
                     <TextField
@@ -113,7 +116,7 @@ export function Register(props) {
                   }}
                 />
               </Box> 
-              <Box my={2}>
+              <Box className='registerLoginInput'>
                 <Controller
                   render={({ field }) =>
                     <TextField
@@ -152,7 +155,7 @@ export function Register(props) {
                   }}
                 />
               </Box>
-              <Box my={2}>
+              <Box className='registerLoginInput'>
                 <Controller
                   render={({ field }) =>
                     <TextField
@@ -201,10 +204,10 @@ export function Register(props) {
             <Typography paragraph={true}>
               Уже зарегистрированы? <Link to='/login'>Login</Link>
             </Typography>
-            </div>
-          </form>
-        </div>
-        </div>
+            </Container>
+          </Form>
+        </Container>
+      </Container>
       </Container>
     </Fragment>
       

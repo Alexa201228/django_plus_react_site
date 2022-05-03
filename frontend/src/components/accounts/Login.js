@@ -56,7 +56,7 @@ export function Login(props) {
         <div className="card card-body mt-5">
           <h2 className="text-center">Вход</h2>
           <form onSubmit={onSubmit}>
-            <Box my={2}>
+            <Box className='registerLoginInput'>
               <TextField
                 autoComplete="email"
                 className={logStyle.input}
@@ -69,7 +69,7 @@ export function Login(props) {
                 autoFocus
               />
             </Box>
-            <Box my={2}>
+            <Box className='registerLoginInput'>
               <TextField
                 autoComplete="current-password"
                 className={logStyle.input}
