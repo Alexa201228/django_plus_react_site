@@ -21,7 +21,7 @@ export const getTest = (id) => (dispatch, getState) => {
             return null;
         }
         else{
-            dispatch(returnErrorMessages(err.response.data, err.response.status))
+            dispatch(returnErrorMessages({msg: err.response.data}, {status: err.response.status}))
         }
     });
 }
@@ -43,7 +43,7 @@ export const getQuestion = (id) =>(dispatch, getState) => {
             return null;
         }
         else{
-            dispatch(returnErrorMessages(err.response.data, err.response.status))
+            dispatch(returnErrorMessages({msg: err.response.data}, {status: err.response.status}))
         }
     });
 }

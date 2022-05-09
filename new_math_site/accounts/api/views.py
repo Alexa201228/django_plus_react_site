@@ -11,7 +11,8 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from .serializers import (
-    LoginSerializer,
+    StudentLoginSerializer,
+    MentorLoginSerializer,
     RegisterSerializer,
     ResetPasswordSerializer,
     UserSerializer,
@@ -20,6 +21,7 @@ from .serializers import (
 )
 from ..utils import EmailManager
 from ..models import User, Mentor, Student
+from student_groups.models import StudentGroup, StudentBookNumber
 
 
 def send_email_with_link(user, request, subject, message, link):
@@ -41,7 +43,21 @@ class RegisterApiView(generics.GenericAPIView):
 
     def post(self, request):
         try:
-            serializer = self.get_serializer(data=request.data)
+            student_group = StudentGroup.objects.filter(group_name__iexact=request.data['student_group']).first()
+            if student_group is None:
+                raise ValueError('Такой группы нет в базе!')
+            student_book_number = StudentBookNumber.objects.filter(
+                student_book_number=request.data['student_book_number']).first()
+            if student_book_number is None:
+                raise ValueError('Неверный номер зачетной книжки')
+            data = {
+                'email': request.data['email'],
+                'first_name': request.data['first_name'],
+                'password': request.data['password'],
+                'student_group': student_group.id,
+                'student_book_number': student_book_number.id
+            }
+            serializer = self.get_serializer(data=data)
             serializer.is_valid(raise_exception=True)
             user = serializer.save()
             email_message = '\nTo verify your email, please use this link\n'
@@ -51,7 +67,7 @@ class RegisterApiView(generics.GenericAPIView):
                                  email_message, access_url_path)
             return Response(
                 {
-                    'user': UserSerializer(
+                    'user': StudentSerializer(
                         user,
                         context=self.get_serializer_context()).data
                 }
@@ -62,10 +78,57 @@ class RegisterApiView(generics.GenericAPIView):
                 e.messages,
                 status=status.HTTP_400_BAD_REQUEST,
             )
+        except ValueError as val_err:
+            return Response(
+                data=str(val_err),
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
 
-class LoginApiView(generics.GenericAPIView):
-    serializer_class = LoginSerializer
+class StudentLoginApiView(generics.GenericAPIView):
+    serializer_class = StudentLoginSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        try:
+            student_book_number = StudentBookNumber.objects.filter(
+                student_book_number=request.data['student_book_number']).first()
+            student = Student.objects.filter(student_book_number=student_book_number.id).first()
+            if student is None:
+                raise ValueError('Учащегося с данным номером зачетной книжки нет в базе.'
+                                 'Пожалуйста, зарегистрируйтесь для входа в систему')
+            data = {
+                'student_book_number': student_book_number.id,
+                'password': request.data['password']
+            }
+            serializer = self.get_serializer(data=data)
+            serializer.is_valid(raise_exception=True)
+            user = serializer.validated_data
+            return Response(
+                {
+                    'user': StudentSerializer(
+                        user['user'],
+                        context=self.get_serializer_context()).data,
+                    'access_token': user['tokens']['access'],
+                    'refresh_token': user['tokens']['refresh'],
+                    'is_mentor': False
+                },
+                status=status.HTTP_200_OK
+            )
+        except ValidationError as e:
+            return Response(
+                e.messages,
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        except ValueError as val_error:
+            return Response(
+                data=str(val_error),
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+
+class MentorLoginApiView(generics.GenericAPIView):
+    serializer_class = MentorLoginSerializer
     permission_classes = [permissions.AllowAny]
 
     def post(self, request):
@@ -75,13 +138,12 @@ class LoginApiView(generics.GenericAPIView):
             user = serializer.validated_data
             return Response(
                 {
-                    'user': UserSerializer(
+                    'user': MentorSerializer(
                         user['user'],
                         context=self.get_serializer_context()).data,
                     'access_token': user['tokens']['access'],
                     'refresh_token': user['tokens']['refresh'],
-                    'isVerified': True,
-
+                    'is_mentor': True
                 },
                 status=status.HTTP_200_OK
             )
@@ -110,7 +172,7 @@ class UserApiView(generics.RetrieveAPIView):
 
 class LogoutView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated, ]
-    serializer_class = LoginSerializer
+    serializer_class = RegisterSerializer
 
     def post(self, request, *args, **kwargs):
         if self.request.data.get('all'):
@@ -138,9 +200,7 @@ class VerifyEmailView(generics.GenericAPIView):
             payload = jwt.decode(
                 token, settings.SECRET_KEY, algorithms='HS256')
             user = User.objects.get(id=payload['user_id'])
-            if not user.is_verified:
-                user.is_verified = True
-                user.save()
+            user.save()
             return Response(
                 status=status.HTTP_200_OK
             )
@@ -221,7 +281,7 @@ class SendResetPasswordEmailView(generics.GenericAPIView):
         try:
             user = User.objects.get(email=request.data)
             email_message = '\nTo reset your account password, please use this link\n'
-            reset_password_url = '#/reset-password/'
+            reset_password_url = '/reset-password/'
             email_subject = 'Reset password'
             send_email_with_link(user, request, email_subject,
                                  email_message, reset_password_url)

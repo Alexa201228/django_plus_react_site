@@ -17,6 +17,8 @@ import Zoom from '@material-ui/core/Zoom';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 
 import { logout } from '../../actions/auth';
+import kustuImg from './../../kubstu.png';
+import './../../index.css';
 
 
 
@@ -31,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	link: {
 		background: '#E7D9EA',
-		margin: theme.spacing(1, 0, 1, 0),
+		margin: '10px',
 	},
 	toolbarTitle: {
 		flexGrow: 1,
@@ -46,13 +48,13 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 	buttonContainer: {
-		width: '30%',
+		width: '25%',
 		display: 'flex',
 		alignItems: 'center',
-		justifyContent:'flex-end',
+		justifyContent:'space-around',
 		[theme.breakpoints.down('xs')]:{
 			paddingRight: '0px',
-			marginLeft: 'auto',
+			marginLeft: '10px',
 			marginRight: 'auto',
 			flexWrap: 'wrap',
 			order: 2,
@@ -63,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
 		[theme.breakpoints.down('xs')]:{
 			textAlign: 'center',
 			width: '100%',
+			textWrap: 'wrap'
 		},
 	},
 	toolbar: theme.mixins.toolbar,
@@ -118,7 +121,7 @@ export function Header(props) {
 				to={`${window.location.pathname}`}
 				onClick={props.logout}
 				>
-				Logout
+				Выйти
 			</Button>
 			</Box>
 			<Box
@@ -132,7 +135,7 @@ export function Header(props) {
 					component={NavLink}
 					to={`/user/profile/${user.id}`}
 				>
-					Profile
+					Профиль
 				</Button>
 			}
 			</Box>
@@ -155,7 +158,7 @@ export function Header(props) {
 					component={NavLink}
 					to="/register"
 					>
-					Register
+					Зарегистрироваться
 				</Button>
 			</Box>
 				<Box
@@ -166,11 +169,24 @@ export function Header(props) {
 						variant="outlined"
 						className={classes.link}
 						component={NavLink}
-						to="/login"
+						to="/mentor-login"
 					>
-					Login
+					Преподаватель
 					</Button>
-				</Box>	
+				</Box>
+			<Box
+				px={1}>
+				<Button
+					href=""
+					color="primary"
+					variant="outlined"
+					className={classes.link}
+					component={NavLink}
+					to="/student-login"
+					>
+					Учащийся
+					</Button>
+				</Box>
 		</Fragment>			
 	);
 
@@ -185,24 +201,30 @@ export function Header(props) {
 				>
 				<Toolbar className={classes.toolbar}>
 					<Container className={classes.headerContainer}>
-						<Container style={{width: '50px'}}>
-							<img src='./../../kubstu.png'/>
-						</Container>
+
 						<Container className={classes.labelContainer}>
-								<Typography
-								variant="h6"
-								color="inherit"
-								noWrap
-								>
-								<Link
-									component={NavLink}
-									to="/"
-									underline="none"
-									color="textPrimary"
-								>
-								Информационная система по подготовке и тестированию студентов
-								</Link>
-								</Typography>
+							<Link
+								component={NavLink}
+								to="/"
+								underline="none"
+								color="textPrimary"
+							>
+							<Container >
+
+								<Container className='headerTextImageContainer'>
+									<img className='uniLogo' src={kustuImg} alt={'Эмблема КубГТУ'}/>
+									<Typography
+									variant="h6"
+									color="inherit"
+									noWrap
+									>
+
+									Информационная система по подготовке и тестированию студентов
+
+									</Typography>
+								</Container>
+							</Container>
+							</Link>
 							</Container>
 						<Container className={classes.buttonContainer}>
 							{isAuthenticated ? authLinks : guessLinks }

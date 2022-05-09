@@ -19,7 +19,7 @@ import {
     isAuthenticated: null,
     isLoading: true,
     user: null,
-    isVerified: false,
+    isMentor: false,
   };
   
 export default function (state = initialState, action) {
@@ -44,6 +44,7 @@ export default function (state = initialState, action) {
           ...action.payload,
           isAuthenticated: true,
           isLoading: false,
+          isMentor: action.payload.is_mentor
       };
     case GET_PASSWORD_RESET_FORM:
       localStorage.setItem('access_token', action.payload.access_token);

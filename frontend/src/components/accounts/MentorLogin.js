@@ -10,7 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Typography } from '@material-ui/core';
 
-import { login } from '../../actions/auth';
+import { mentorLogin } from '../../actions/auth';
 
 
 const loginStyles = makeStyles((theme) => ({
@@ -28,7 +28,7 @@ const loginStyles = makeStyles((theme) => ({
 }));
 
 
-export function Login(props) {
+export function MentorLogin(props) {
   
   const [userCredentials, setUserCredentials] = useState({
     email: '',
@@ -37,7 +37,7 @@ export function Login(props) {
   
   const onSubmit = (e) => {
     e.preventDefault();
-    props.login(userCredentials.email, userCredentials.password);
+    props.mentorLogin(userCredentials.email, userCredentials.password);
   };
 
   const onChange = (e) => {
@@ -93,9 +93,6 @@ export function Login(props) {
             <Typography paragraph={true}>
              <Link to='/reset-password'>Забыли пароль?</Link> 
             </Typography>
-            <Typography paragraph={true}>
-              Ещё не зарегистрированы? <Link to="/register">Зарегистрироваться</Link>
-            </Typography>
           </form>
         </div>
       </div>
@@ -104,8 +101,8 @@ export function Login(props) {
     );
   }
 
-Login.propTypes = {
-  login: PropTypes.func.isRequired,
+MentorLogin.propTypes = {
+  mentorLogin: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
 }
 
@@ -113,4 +110,4 @@ const mapStateToProps = (state) => ({
     isAuthenticated: state.auth.isAuthenticated,
 });
   
-export default connect(mapStateToProps, { login })(Login);
+export default connect(mapStateToProps, { mentorLogin })(MentorLogin);

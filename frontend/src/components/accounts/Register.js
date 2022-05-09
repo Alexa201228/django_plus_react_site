@@ -53,12 +53,16 @@ export function Register(props) {
   const first_name = watch('first_name');
   const email = watch('email');
   const password = watch('password');
+  const student_group = watch('student_group');
+  const student_book_number = watch('student_book_number');
   
   const classes = useStyles();
   
   function onSubmit() {
       const newUser = {
         first_name,
+        student_group,
+        student_book_number,
         email,
         password
       };
@@ -80,6 +84,46 @@ export function Register(props) {
           <h2 className='text-center'>Зарегистрироваться</h2>
           <Form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
             <Container>
+                <Box className='registerLoginInput'>
+                <Controller
+                  render={({ field }) =>
+                    <TextField
+                      {...field}
+                      fullWidth
+                      variant="filled"
+                      label="Email"
+                      autoFocus
+                    />}
+                  control={control}
+                  name="email"
+                  rules={{
+                    required: {
+                      value: true,
+                      message: REQUIRED_FIELD
+                    },
+                    pattern: {
+                      value: /^(([^<>()\[\]\.,;:\s@\']+(\.[^<>()\[\]\.,;:\s@\']+)*)|(\'.+\'))@(([^<>()[\]\.,;:\s@\']+\.)+[^<>()[\]\.,;:\s@\']{2,})$/i,
+                      message:"Please enter valid email"
+                      }
+                  }}
+                  defaultValue=""
+                >
+                </Controller>
+                <ErrorMessage
+                  errors={errors}
+                  name="email"
+                  render={({ messages }) => {
+                  return messages
+                  ? Object.entries(messages).map(([type, message]) => (
+                    <Typography
+                    paragraph={true}
+                    style={{ color: 'red' }}
+                    key={type}>{message}</Typography>
+                  ))
+                  : null;
+                  }}
+                />
+              </Box>
               <Box className='registerLoginInput'>
               <Controller
                   render={({ field }) =>
@@ -89,7 +133,6 @@ export function Register(props) {
                     fullWidth
                         variant="filled"
                         autoComplete="on"
-                        autoFocus
                   />}
                     name="first_name"
                     control={control}
@@ -115,34 +158,65 @@ export function Register(props) {
                   : null;
                   }}
                 />
-              </Box> 
+              </Box>
               <Box className='registerLoginInput'>
-                <Controller
+              <Controller
                   render={({ field }) =>
                     <TextField
                       {...field}
-                      fullWidth
-                      variant="filled"
-                      label="Email"
-                    />}
-                  control={control}
-                  name="email"
-                  rules={{
-                    required: {
-                      value: true,
-                      message: REQUIRED_FIELD
-                    }, 
-                    pattern: {
-                      value: /^(([^<>()\[\]\.,;:\s@\']+(\.[^<>()\[\]\.,;:\s@\']+)*)|(\'.+\'))@(([^<>()[\]\.,;:\s@\']+\.)+[^<>()[\]\.,;:\s@\']{2,})$/i,
-                      message:"Please enter valid email"
-                      } 
-                  }}
-                  defaultValue=""
-                > 
-                </Controller>
+                    label="Группа"
+                    fullWidth
+                        variant="filled"
+                        autoComplete="on"
+                  />}
+                    name="student_group"
+                    control={control}
+                    rules={{
+                      required: {
+                        value: true,
+                        message: REQUIRED_FIELD
+                      }
+                    }}
+                    defaultValue=""
+                />
                 <ErrorMessage
                   errors={errors}
-                  name="email"
+                  name="student_group"
+                  render={({ messages }) => {
+                  return messages
+                  ? Object.entries(messages).map(([type, message]) => (
+                    <Typography
+                    paragraph={true}
+                    style={{ color: 'red' }}
+                    key={type}>{message}</Typography>
+                  ))
+                  : null;
+                  }}
+                />
+              </Box>
+              <Box className='registerLoginInput'>
+              <Controller
+                  render={({ field }) =>
+                    <TextField
+                      {...field}
+                    label="Номер зачетной книжки"
+                    fullWidth
+                        variant="filled"
+                        autoComplete="on"
+                  />}
+                    name="student_book_number"
+                    control={control}
+                    rules={{
+                      required: {
+                        value: true,
+                        message: REQUIRED_FIELD
+                      }
+                    }}
+                    defaultValue=""
+                />
+                <ErrorMessage
+                  errors={errors}
+                  name="student_book_number"
                   render={({ messages }) => {
                   return messages
                   ? Object.entries(messages).map(([type, message]) => (
@@ -202,7 +276,7 @@ export function Register(props) {
                 Зарегистрироваться
               </Button>
             <Typography paragraph={true}>
-              Уже зарегистрированы? <Link to='/login'>Login</Link>
+              Уже зарегистрированы? <Link to='/login'>Войти</Link>
             </Typography>
             </Container>
           </Form>

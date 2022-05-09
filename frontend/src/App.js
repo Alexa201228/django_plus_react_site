@@ -10,7 +10,7 @@ import AlertTemplate from "react-alert-template-snackbar-material-ui";
 import Header from "./components/layout/Header";
 import Alerts from "./components/layout/Alerts";
 import Register from "./components/accounts/Register";
-import Login from "./components/accounts/Login";
+import MentorLogin from "./components/accounts/MentorLogin";
 import PrivateRoute from "./components/common/PrivateRoute";
 import UserProfile from "./components/accounts/UserProfile";
 import CourseDetail from "./components/courses/CourseDetail";
@@ -27,6 +27,7 @@ import MainTestPage from "./components/tests/MainTestPage";
 import QuestionBody from "./components/tests/QuestionBody";
 import TestResults from "./components/tests/TestResults";
 import './index.css';
+import StudentLogin from "./components/accounts/StudentLogin";
 
 
 //Alert options
@@ -61,7 +62,7 @@ export function App(){
               <Alerts/>
             <div className='appContainer'>
                   <Routes>
-                      <Route path={'/test/:slug/:test_id/results/test_results'} element={<PrivateRoute/>}>
+                      <Route element={<PrivateRoute/>}>
                         <Route path={'/test/:slug/:test_id/results/test_results'} element={<TestResults/>} />
                       </Route>
                       <Route element={<PrivateRoute/>}>
@@ -80,12 +81,13 @@ export function App(){
                     <Route path='/register' element={<Register/>}/>
                     <Route path='/reset-password/:token' element={<ResetPasswordForm/>}/>
                     <Route path='/reset-password' element={<ResetPassword/>}/>
-
-                  <Route path='/confirm/:token' element={<EmailVerified/>} />
-                  <Route path='/login' element={<Login/>} />
-                    <Route path=':slug/*' element={<PrivateRoute/>}>
+                      <Route element={<PrivateRoute/>}>
                        <Route path=':slug/*' element={<CourseDetail/>}/>
-                    </Route>
+                      </Route>
+                  <Route path='/confirm/:token' element={<EmailVerified/>} />
+                  <Route path='/mentor-login' element={<MentorLogin/>} />
+                  <Route path='/student-login' element={<StudentLogin/>}/>
+
               </Routes>
             </div>
             </Fragment>

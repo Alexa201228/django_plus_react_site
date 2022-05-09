@@ -28,8 +28,11 @@ const useStyles = makeStyles((theme) => ({
        width: `calc(100% - ${drawerWidth}px)`,
        marginLeft: drawerWidth,
      },
+     [theme.breakpoints.down('md')]:{
+      marginTop: theme.spacing(12)
+     },
      [theme.breakpoints.down('xs')]:{
-      marginTop: theme.spacing(17)
+      marginTop: theme.spacing(22)
      },
      marginTop: theme.spacing(8)
    },
@@ -49,8 +52,11 @@ const useStyles = makeStyles((theme) => ({
    drawerPaper: {
      width: drawerWidth,
      marginTop: theme.spacing(8),
+     [theme.breakpoints.down('md')]:{
+      marginTop: theme.spacing(12)
+     },
      [theme.breakpoints.down('xs')]:{
-      marginTop: theme.spacing(17)
+      marginTop: theme.spacing(22)
      },
    },
    content: {

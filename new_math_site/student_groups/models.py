@@ -23,3 +23,11 @@ class StudentGroup(models.Model):
 
     def __str__(self):
         return self.group_name
+
+
+class StudentBookNumber(models.Model):
+    student_book_number = models.CharField(max_length=30, null=False)
+
+    class Meta:
+        verbose_name = 'Номер зачетной книжки'
+        verbose_name_plural = 'Номера зачетных книжек'

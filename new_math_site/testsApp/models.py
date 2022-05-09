@@ -1,7 +1,7 @@
 from ckeditor.fields import RichTextField
 from django.db import models
 from courses.models import Course, Lesson
-from accounts.models import User
+from accounts.models import Student
 
 
 """
@@ -35,8 +35,8 @@ class Test(models.Model):
         blank=True
     )
     students = models.ManyToManyField(
-        User,
-        related_name='succeded_students',
+        Student,
+        related_name='succeeded_students',
         verbose_name='Студенты, прошедшие тест',
         blank=True
     )

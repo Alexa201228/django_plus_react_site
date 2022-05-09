@@ -15,7 +15,7 @@ const PrivateRoute = ({ auth }) => {
           </Fragment>
         );
       } if (!auth.isAuthenticated) {
-        return <Navigate to="/login"/>;
+        return <Navigate to="/student-login"/>;
       } else {
         return <Outlet />;
       }

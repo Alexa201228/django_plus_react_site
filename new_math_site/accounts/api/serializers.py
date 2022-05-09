@@ -1,4 +1,5 @@
 from django.contrib.auth.password_validation import validate_password
+from django.contrib.auth.hashers import check_password
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.contrib.auth import authenticate
 
@@ -17,11 +18,11 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'email', 'first_name', 'last_name']
 
 
-class RegisterSerializer(serializers.HyperlinkedModelSerializer):
+class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = User
-        fields = ['email', 'password', 'first_name', 'last_name']
+        model = Student
+        fields = ['email', 'password', 'first_name', 'student_group', 'student_book_number']
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
@@ -37,7 +38,32 @@ class RegisterSerializer(serializers.HyperlinkedModelSerializer):
             raise e
 
 
-class LoginSerializer(serializers.Serializer):
+class StudentLoginSerializer(serializers.Serializer):
+
+    student_book_number = serializers.CharField(error_messages={
+        'blank': 'Пожалуйста введите номер зачетной книжки'
+    },)
+    password = serializers.CharField(error_messages={
+        'blank': 'Пожалуйста введите пароль',
+    },)
+
+    class Meta:
+        model = Student
+
+    def validate(self, attrs):
+        user = Student.objects.filter(
+            student_book_number=attrs['student_book_number']).first()
+        user_auth = check_password(attrs['password'], user.password)
+        if user and user.is_active and not user.is_superuser and user_auth:
+            return {
+                'user': user,
+                'tokens': user.tokens()
+            }
+        else:
+            raise ValidationError('Неверны номер зачетной книжки или пароль')
+
+
+class MentorLoginSerializer(serializers.Serializer):
 
     email = serializers.EmailField(error_messages={
         'blank': 'Пожалуйста введите свой email',
@@ -47,13 +73,11 @@ class LoginSerializer(serializers.Serializer):
     },)
 
     class Meta:
-        model = User
+        model = Mentor
 
     def validate(self, attrs):
         user = authenticate(**attrs)
-        if user and not user.is_verified:
-            raise ValidationError('Пожалуйста, продтвердите свой email')
-        if user and user.is_active and user.is_verified and not user.is_superuser:
+        if user and user.is_active and not user.is_superuser:
             return {
                 'user': user,
                 'tokens': user.tokens()
@@ -98,7 +122,7 @@ class MentorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Mentor
-        fields = ['login', 'first_name', 'last_name', 'student_groups',
+        fields = ['first_name', 'last_name', 'student_groups',
                   'taught_courses']
 
 

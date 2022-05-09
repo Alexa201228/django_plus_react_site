@@ -9,7 +9,7 @@ class UserAdmin(BaseUserAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name')}),
-        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser', 'is_verified',
+        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
                                        'user_permissions')}),
         (_('Important dates'), {'fields': ('date_joined', )}),
     )
@@ -19,18 +19,22 @@ class UserAdmin(BaseUserAdmin):
         }),
     )
     list_display = ('email', 'is_active', 'is_staff',
-                    'is_superuser', 'is_verified')
+                    'is_superuser')
     search_fields = ('email', 'is_active', 'is_staff',
-                     'is_superuser', 'is_verified')
+                     'is_superuser')
     ordering = ('email',)
 
 
 @admin.register(Mentor)
 class MentorAdmin(admin.ModelAdmin):
-    list_display = ('login', 'first_name', 'last_name', 'patronymic')
-    search_fields = ('login', 'first_name', 'last_name', 'patronymic')
-    filter_horizontal = ('mentor_courses', 'mentors_qroups')
-    ordering = ('login', )
+    list_display = ('first_name', 'last_name', 'patronymic')
+    search_fields = ('first_name', 'last_name', 'patronymic')
+    filter_horizontal = ('mentor_courses', 'mentors_qroups', 'user_permissions')
+    ordering = ('last_name', )
+    fieldsets = (
+        (None, {'fields': ('email', 'password')}),
+        (_('Personal info'), {'fields': ('first_name', 'last_name', 'patronymic',
+                                         'mentor_courses', 'mentors_qroups')}))
 
 
 @admin.register(Student)

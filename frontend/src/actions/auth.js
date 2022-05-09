@@ -66,8 +66,8 @@ export const loadUser = () => (dispatch, getState) => {
         });
 };
 
-//Login
-export const login = (email, password) => dispatch => {
+//Mentor MentorLogin
+export const mentorLogin = (email, password) => dispatch => {
 
     const config = {
         headers: {
@@ -76,16 +76,16 @@ export const login = (email, password) => dispatch => {
     }
     const body = JSON.stringify({ email, password });
     axios
-        .post(`${API_PATH}/api/auth/login`, body, config)
+        .post(`${API_PATH}/api/auth/mentor-login`, body, config)
         .then(res => {
-            dispatch(createMessage({successfullLogin: `Добро пожаловать, ${res.data.user.first_name}`}))
+            dispatch(createMessage({successfulLogin: `Добро пожаловать, ${res.data.user.first_name}`}))
             dispatch({
                 type: LOGIN_SUCCESS,
                 payload: res.data
             });
 
         }).catch(err => {
-            dispatch(returnErrorMessages(err.response.data, err.response.status));
+            dispatch(returnErrorMessages({msg: err.response.data}, {status: err.response.status}));
             dispatch({
                 type: LOGIN_FAIL
             });
@@ -93,15 +93,42 @@ export const login = (email, password) => dispatch => {
         });
 };
 
+
+// Student MentorLogin
+export const studentLogin = (studentBookNumber, password) => dispatch => {
+        const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    const body = JSON.stringify({ student_book_number: studentBookNumber, password: password });
+    axios
+        .post(`${API_PATH}/api/auth/student-login`, body, config)
+        .then(res => {
+            dispatch(createMessage({successfulLogin: `Добро пожаловать, ${res.data.user.first_name}`}))
+            dispatch({
+                type: LOGIN_SUCCESS,
+                payload: res.data
+            });
+
+        }).catch(err => {
+            dispatch(returnErrorMessages({msg: err.response.data}, {status: err.response.status}));
+            dispatch({
+                type: LOGIN_FAIL
+            });
+
+        });
+};
+
 //Register
-export const register = ({ first_name, email, password }) => dispatch => {
+export const register = ({ email, first_name, student_group, student_book_number, password }) => dispatch => {
 
     const config = {
         headers: {
             'Content-Type': 'application/json'
         }
     }
-    const body = JSON.stringify({ first_name, email, password });
+    const body = JSON.stringify({ email, first_name, student_group, student_book_number, password });
     axios
         .post(`${API_PATH}/api/auth/register`, body, config)
         .then(res => {
@@ -111,7 +138,7 @@ export const register = ({ first_name, email, password }) => dispatch => {
                 payload: res.data
             });
         }).catch(err => {
-            dispatch(returnErrorMessages(err.response.data, err.response.status));
+            dispatch(returnErrorMessages({msg: err.response.data}, {status: err.response.status}));
             dispatch({
                 type: REGISTER_FAIL
             });
@@ -129,7 +156,7 @@ export const logout = () => (dispatch, getState) => {
                 type: LOGOUT_SUCCESS
             });
         }).catch(err => {
-            dispatch(returnErrorMessages(err.response.data, err.response.status));
+            dispatch(returnErrorMessages({msg: err.response.data}, {status: err.response.status}));
         });
 };
 
@@ -142,7 +169,7 @@ export const emailVerified = (token) => dispatch => {
                 payload: res.data
             });
         }).catch(err => {
-            dispatch(returnErrorMessages(err.response.data, err.response.status));
+            dispatch(returnErrorMessages({msg: err.response.data}, {status: err.response.status}));
         });
 };
 
@@ -159,7 +186,7 @@ export const resendEmailVerificationLink = (email) => dispatch => {
             dispatch(createMessage({ email_sent: 'Письмо для потдтверждения email адреса повторно отправлено вам на почту!' }))
         })
         .catch(err => {
-        dispatch(returnErrorMessages(err.response.data, err.response.status));
+        dispatch(returnErrorMessages({msg: err.response.data}, {status: err.response.status}));
     })
 }
 
@@ -172,7 +199,7 @@ export const getResetPasswordForm = (token) => dispatch => {
             payload: res.data
         });
     }).catch(err => {
-        dispatch(returnErrorMessages(err.response.data, err.response.status));
+        dispatch(returnErrorMessages({msg: err.response.data}, {status: err.response.status}));
         dispatch({
             type: ACCESS_LINK_EXPIRED
         })
@@ -192,7 +219,7 @@ export const resetPasswordEmailLink = (email) => dispatch => {
             dispatch(createMessage({ email_sent: 'Письмо для сброса пароля отправлено вам на почту!' }))
         })
         .catch(err => {
-        dispatch(returnErrorMessages(err.response.data, err.response.status));
+        dispatch(returnErrorMessages({msg: err.response.data}, {status: err.response.status}));
     })
 }
 
@@ -213,7 +240,7 @@ export const setNewPassword = ({ email, new_password, confirm_password }) => dis
             })
         })
         .catch(err => {
-        dispatch(returnErrorMessages(err.response.data, err.response.status))
+        dispatch(returnErrorMessages({msg: err.response.data}, {status: err.response.status}))
     })
 }
 

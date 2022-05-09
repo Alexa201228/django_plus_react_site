@@ -40,7 +40,7 @@ export function CourseInfo(props){
                     <Typography>
                         {renderHTML(course.description)}
                     </Typography>
-                {user.user && user.user.student_courses.some(c => c.id === course.id) ?
+                {user.user && user.user.student_courses?.some(c => c.id === course.id) ?
                 null
                 :<Button
                     type='submit'

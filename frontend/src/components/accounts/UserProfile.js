@@ -96,7 +96,7 @@ export function UserProfile(props) {
                         Твои курсы:
                     </Typography>
                  <Box m={4}>
-                     {user.student_courses.map((course, index) => (
+                     {user.student_courses && user.student_courses.map((course, index) => (
                          <Box className={style.coursesContainer}>
                              <Box my={3}
                              key={index}>
@@ -119,7 +119,7 @@ export function UserProfile(props) {
                  </Box>
                     <Typography>Пройденные тесты:</Typography>
                     <Box m={4}>
-                        {user.student_tests.map((test, index) => (
+                        {user.student_tests && user.student_tests.map((test, index) => (
                          <Box my={3}
                          key={index}>
                              <Link
