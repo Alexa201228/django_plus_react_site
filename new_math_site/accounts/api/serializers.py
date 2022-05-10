@@ -8,7 +8,7 @@ from rest_framework import serializers
 from ..models import User, Mentor, Student
 from courses.api.serializers import CourseSerializer
 from testsApp.api.serializers import TestSerializer
-from student_groups.api.serializers import StudentGroupSerializer
+from student_groups.api.serializers import StudentGroupSerializer, StudentBookNumberSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -117,20 +117,21 @@ class ResetPasswordSerializer(serializers.Serializer):
 
 
 class MentorSerializer(serializers.ModelSerializer):
-    student_groups = StudentGroupSerializer(many=True, required=False)
-    taught_courses = CourseSerializer(many=True, required=False)
+    mentor_courses = CourseSerializer(many=True, read_only=True, required=False)
+    mentors_groups = StudentGroupSerializer(many=True, read_only=True, required=False)
 
     class Meta:
         model = Mentor
-        fields = ['first_name', 'last_name', 'student_groups',
-                  'taught_courses']
+        fields = ['id', 'first_name', 'last_name', 'mentor_courses',
+                  'mentors_groups']
 
 
 class StudentSerializer(serializers.ModelSerializer):
     student_courses = CourseSerializer(many=True, read_only=True, required=False)
     student_tests = TestSerializer(many=True, read_only=True, required=False)
+    student_book_number = StudentBookNumberSerializer(read_only=True)
 
     class Meta:
         model = Student
         fields = ['id', 'email', 'first_name', 'last_name',
-                  'student_courses', 'student_tests']
+                  'student_courses', 'student_tests', 'student_book_number']

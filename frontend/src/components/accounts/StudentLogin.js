@@ -54,7 +54,7 @@ export function Login(props) {
       <Container p={2} className={logStyle.formContainer}>
       <div className="col-md-6 m-auto">
         <div className="card card-body mt-5">
-          <h2 className="text-center">Вход</h2>
+          <h2 className="text-center">Вход для учащихся</h2>
           <form onSubmit={onSubmit}>
             <Box className='registerLoginInput'>
               <TextField

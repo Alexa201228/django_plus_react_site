@@ -47,7 +47,7 @@ export function CourseInfo(props){
                     color='primary'
                     variant="contained"
                     onClick={useButtonClick}>
-                    Enroll course
+                    Записаться на курс
                     </Button>
                 }
                 </Container>

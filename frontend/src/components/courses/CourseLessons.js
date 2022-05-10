@@ -13,7 +13,7 @@ export function CourseLesson(){
     const { slug, lesson_slug } = useParams();
     const dispatch = useDispatch();
     const {course, lesson} = useSelector(state => state.courses)
-    const {isAuthenticated} = useSelector(state => state.auth)
+    const {isAuthenticated, isMentor} = useSelector(state => state.auth)
     //перезапускаем useEffect только если поменялся lesson_slug
     useEffect(() => {
         dispatch(getLesson({slug, lesson_slug}))
@@ -31,7 +31,7 @@ export function CourseLesson(){
                     <Typography>
                         {renderHTML(lesson.body)}
                     </Typography>
-                    {lesson.module_test && isAuthenticated  ?
+                    {lesson.module_test && isAuthenticated && !isMentor ?
                     lesson.module_test.map((test, index) => (
                         <Button
                         key={index}

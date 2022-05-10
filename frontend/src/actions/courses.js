@@ -20,7 +20,6 @@ export const getCourses = () => dispatch => {
 
 //Get course details
 export const courseDetails = (slug) => dispatch => {
-    console.log(slug)
     axios.get(`${API_PATH}/api/courses/${slug}/`)
         .then(res => {
             dispatch({

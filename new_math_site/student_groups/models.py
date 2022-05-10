@@ -31,3 +31,6 @@ class StudentBookNumber(models.Model):
     class Meta:
         verbose_name = 'Номер зачетной книжки'
         verbose_name_plural = 'Номера зачетных книжек'
+
+    def __str__(self):
+        return self.student_book_number

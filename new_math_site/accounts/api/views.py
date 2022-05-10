@@ -5,7 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 import jwt
 
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, viewsets
 from rest_framework_simplejwt.tokens import RefreshToken, OutstandingToken, BlacklistedToken
 from rest_framework.response import Response
 from rest_framework import status
@@ -104,11 +104,10 @@ class StudentLoginApiView(generics.GenericAPIView):
             serializer = self.get_serializer(data=data)
             serializer.is_valid(raise_exception=True)
             user = serializer.validated_data
+            student = Student.objects.filter(id=user['user'].id).first()
             return Response(
                 {
-                    'user': StudentSerializer(
-                        user['user'],
-                        context=self.get_serializer_context()).data,
+                    'user': StudentSerializer(student).data,
                     'access_token': user['tokens']['access'],
                     'refresh_token': user['tokens']['refresh'],
                     'is_mentor': False
@@ -136,11 +135,10 @@ class MentorLoginApiView(generics.GenericAPIView):
             serializer = self.get_serializer(data=request.data)
             serializer.is_valid(raise_exception=True)
             user = serializer.validated_data
+            mentor = Mentor.objects.filter(id=user['user'].id).first()
             return Response(
                 {
-                    'user': MentorSerializer(
-                        user['user'],
-                        context=self.get_serializer_context()).data,
+                    'user': MentorSerializer(mentor).data,
                     'access_token': user['tokens']['access'],
                     'refresh_token': user['tokens']['refresh'],
                     'is_mentor': True
@@ -154,20 +152,31 @@ class MentorLoginApiView(generics.GenericAPIView):
             )
 
 
-class UserApiView(generics.RetrieveAPIView):
+class UserApiView(generics.GenericAPIView):
     permission_classes = [
         permissions.IsAuthenticated,
     ]
 
     def get_serializer_class(self):
-        if isinstance(self.request.user, Mentor):
+        mentor = Mentor.objects.filter(email=self.request.user.email).first()
+        if mentor is not None:
             return MentorSerializer
-        if isinstance(self.request.user, Student):
-            return StudentSerializer
-        return UserSerializer
+        return StudentSerializer
 
-    def get_object(self):
-        return self.request.user
+    def get(self, *args, **kwargs):
+        curr_serializer = self.get_serializer()
+        user = Student.objects.filter(email=self.request.user.email).first()
+        is_mentor = False
+        if isinstance(curr_serializer, MentorSerializer):
+            is_mentor = True
+            user = Mentor.objects.filter(email=self.request.user.email).first()
+        return Response(
+                {
+                    'user': self.get_serializer(user).data,
+                    'is_mentor': is_mentor
+                },
+                status=status.HTTP_200_OK
+            )
 
 
 class LogoutView(generics.GenericAPIView):

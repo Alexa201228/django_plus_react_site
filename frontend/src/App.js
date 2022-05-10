@@ -28,6 +28,9 @@ import QuestionBody from "./components/tests/QuestionBody";
 import TestResults from "./components/tests/TestResults";
 import './index.css';
 import StudentLogin from "./components/accounts/StudentLogin";
+import MentorCoursePage from "./components/mentors/MentorCoursePage";
+import MentorPrivateRoute from "./components/common/MentorPrivateRoute";
+import MentorTestsPage from "./components/mentors/MentorTestsPage";
 
 
 //Alert options
@@ -81,6 +84,12 @@ export function App(){
                     <Route path='/register' element={<Register/>}/>
                     <Route path='/reset-password/:token' element={<ResetPasswordForm/>}/>
                     <Route path='/reset-password' element={<ResetPassword/>}/>
+                      <Route element={<MentorPrivateRoute/>}>
+                       <Route path='/lessons-list/:slug' element={<MentorCoursePage/>}/>
+                      </Route>
+                      <Route element={<MentorPrivateRoute/>}>
+                       <Route path='/course-tests/:slug' element={<MentorTestsPage/>}/>
+                      </Route>
                       <Route element={<PrivateRoute/>}>
                        <Route path=':slug/*' element={<CourseDetail/>}/>
                       </Route>

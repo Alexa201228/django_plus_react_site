@@ -80,7 +80,7 @@ class Mentor(User):
         blank=True,
         verbose_name='Преподаваемые дисциплины'
     )
-    mentors_qroups = models.ManyToManyField(
+    mentors_groups = models.ManyToManyField(
         to='student_groups.StudentGroup',
         related_name='mentors',
         blank=True,

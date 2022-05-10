@@ -12,6 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 
+
 const drawerWidth = 150;
 const useStyles = makeStyles((theme) => ({
    root: {
@@ -28,13 +29,13 @@ const useStyles = makeStyles((theme) => ({
        width: `calc(100% - ${drawerWidth}px)`,
        marginLeft: drawerWidth,
      },
-     [theme.breakpoints.down('md')]:{
-      marginTop: theme.spacing(12)
+     [theme.breakpoints.down('sm')]:{
+      marginTop: theme.spacing(23)
      },
      [theme.breakpoints.down('xs')]:{
-      marginTop: theme.spacing(22)
+      marginTop: theme.spacing(35)
      },
-     marginTop: theme.spacing(8)
+     marginTop: theme.spacing(14)
    },
    menuButton: {
      marginRight: theme.spacing(2),
@@ -51,12 +52,12 @@ const useStyles = makeStyles((theme) => ({
    },
    drawerPaper: {
      width: drawerWidth,
-     marginTop: theme.spacing(8),
-     [theme.breakpoints.down('md')]:{
-      marginTop: theme.spacing(12)
+     marginTop: theme.spacing(14),
+     [theme.breakpoints.down('sm')]:{
+      marginTop: theme.spacing(23)
      },
      [theme.breakpoints.down('xs')]:{
-      marginTop: theme.spacing(22)
+      marginTop: theme.spacing(35)
      },
    },
    content: {

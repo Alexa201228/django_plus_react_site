@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
 import { useSelector } from 'react-redux';
-import { Avatar, Box, CssBaseline, Typography } from '@material-ui/core';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import Container from '@material-ui/core/Container';
+import StudentProfile from "./StudentProfile";
+import {MentorMainPage} from "../mentors/MentorMainPage";
 import { makeStyles } from '@material-ui/core/styles';
 
 import {Link, Navigate} from "react-router-dom";
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -37,104 +37,17 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export function UserProfile(props) {
-    
-    const style = useStyles();
+export function UserProfile() {
 
-    const { user } = useSelector(state => state.auth);
+    const { user, isMentor } = useSelector(state => state.auth);
 
     if (!user) {
         return <Navigate to={'/login'}/>;
     }
-
-    const findLesson = (test_id) => {
-        var slug = "";
-        user.student_courses.forEach((course, _) => {
-            course.course_lessons.forEach((lesson, _) => {
-
-                if(lesson.module_test.some(t => t.id == test_id))
-                    {
-                        slug = `${course.slug}/${lesson.lesson_slug}`
-                    }
-                else if(course.course_test.some(t => t.id == test_id))
-                    {
-                        slug = `${course.slug}/test`
-                    }
-                }
-            )}
-        )
-        return slug
-    }
-
-    const userProgress = (course) => {
-        var allTestsCount = course.course_test.length;
-        var passedTests = user.student_tests.length;
-        for(var i = 0; i < course.course_lessons.length; i++){
-            allTestsCount += course.course_lessons[i].module_test.length;
-        }
-        if(allTestsCount === 0){
-            return null;
-        }
-        return `${passedTests / allTestsCount * 100}%`
-    }
-
+    
         return (
         <Fragment>
-            <Container className={style.contentContainer}>
-                <CssBaseline/>
-                <div className={style.paper}>
-                <Avatar className={style.avatar}>
-                    <AccountCircleIcon/>
-                </Avatar>
-                <Typography>
-                 {
-                     `Привет, ${user.first_name}!`}
-                 </Typography>
-                </div>               
-                <Box p={4}>
-                    <Typography >
-                        Твои курсы:
-                    </Typography>
-                 <Box m={4}>
-                     {user.student_courses && user.student_courses.map((course, index) => (
-                         <Box className={style.coursesContainer}>
-                             <Box my={3}
-                             key={index}>
-                                 <Link
-                                 to={`/${course.slug}`}>
-                                    <Typography
-                                     paragraph={true}>
-                                     {course.title}
-                                 </Typography>
-                                 </Link>
-                             </Box>
-                             <Box my={3}
-                             key={`${course.title}${index}`}>
-                                     {userProgress(course) ?
-                                         <Typography>Прогресс курса: {userProgress(course)}</Typography>
-                                         : null}
-                             </Box>
-                         </Box>
-                     ))}
-                 </Box>
-                    <Typography>Пройденные тесты:</Typography>
-                    <Box m={4}>
-                        {user.student_tests && user.student_tests.map((test, index) => (
-                         <Box my={3}
-                         key={index}>
-                             <Link
-                             to={`/${findLesson(test.id)}/${test.id}`}>
-                                <Typography
-                                     paragraph={true}>
-                                    {test.title}
-                                </Typography>
-                             </Link>
-                         </Box>
-
-                     ))}
-                    </Box>
-             </Box>
-             </Container>
+            {isMentor ? <MentorMainPage/> : <StudentProfile/>}
             </Fragment>
         );
     }

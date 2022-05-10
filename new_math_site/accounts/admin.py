@@ -26,19 +26,28 @@ class UserAdmin(BaseUserAdmin):
 
 
 @admin.register(Mentor)
-class MentorAdmin(admin.ModelAdmin):
+class MentorAdmin(BaseUserAdmin):
     list_display = ('first_name', 'last_name', 'patronymic')
     search_fields = ('first_name', 'last_name', 'patronymic')
-    filter_horizontal = ('mentor_courses', 'mentors_qroups', 'user_permissions')
+    filter_horizontal = ('mentor_courses', 'mentors_groups', 'user_permissions')
     ordering = ('last_name', )
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name', 'patronymic',
-                                         'mentor_courses', 'mentors_qroups')}))
+                                         'mentor_courses', 'mentors_groups')}))
 
 
 @admin.register(Student)
-class StudentAdmin(admin.ModelAdmin):
+class StudentAdmin(BaseUserAdmin):
     list_display = ('first_name', 'last_name', 'patronymic', 'student_group')
     search_fields = ('first_name', 'last_name', 'patronymic', 'student_group')
+    filter_horizontal = ('student_courses', )
+    readonly_fields = ('student_tests',)
+    fieldsets = (
+        (None, {'fields': ('email', 'password')}),
+        (_('Personal info'), {'fields': ('first_name', 'last_name', 'patronymic',
+                                         'student_courses', 'student_group',
+                                         'student_tests', 'student_book_number')}))
+    ordering = ('last_name',)
+
 

@@ -17,19 +17,11 @@ header{
 }
 
 .appContainer {
-  margin: 80px 0 0 10px;
+  margin: 120px 0 0 10px;
 }
 
 .registerLoginInput {
   margin: 0 0 15px 0;
-}
-
-.headerTextImageContainer {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  padding-left: 0;
-  padding-right: 0;
 }
 
 .uniLogo{
@@ -44,8 +36,8 @@ header{
   padding-left: 0;
 }
 
-@media (max-width: 600px){
+@media (max-width: 750px){
   .appContainer {
-    margin: 200px 0 0 10px;
+    margin: 300px 0 0 10px;
   }
 }

@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 import PropTypes from 'prop-types';
 
 import AppBar from '@material-ui/core/AppBar';
@@ -10,7 +10,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import {Box, Container, Icon} from '@material-ui/core';
+import {Box, Container} from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Zoom from '@material-ui/core/Zoom';
@@ -48,7 +48,6 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 	buttonContainer: {
-		width: '25%',
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent:'space-around',
@@ -61,12 +60,20 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 	labelContainer:{
-		width: '70%',
+		justifyContent: 'space-around',
+		paddingLeft: 0,
 		[theme.breakpoints.down('xs')]:{
 			textAlign: 'center',
 			width: '100%',
 			textWrap: 'wrap'
 		},
+	},
+	headerTextImageContainer: {
+		display: "flex"
+	},
+	labelTextTypography: {
+		marginRight: '20px',
+		marginLeft: '20px',
 	},
 	toolbar: theme.mixins.toolbar,
  }));
@@ -103,9 +110,8 @@ const useStyles = makeStyles((theme) => ({
 
 export function Header(props) {
 
-	const { isAuthenticated, user } = props.auth;
+	const { isAuthenticated, user } = useSelector((state) => state.auth);
 	const classes = useStyles();
-
 
 	//Header in case authenticated user
 	const authLinks = (
@@ -209,21 +215,18 @@ export function Header(props) {
 								underline="none"
 								color="textPrimary"
 							>
-							<Container >
-
-								<Container className='headerTextImageContainer'>
+								<Container className={classes.headerTextImageContainer}>
 									<img className='uniLogo' src={kustuImg} alt={'Эмблема КубГТУ'}/>
 									<Typography
 									variant="h6"
 									color="inherit"
-									noWrap
+									className={classes.labelTextTypography}
 									>
 
 									Информационная система по подготовке и тестированию студентов
 
 									</Typography>
 								</Container>
-							</Container>
 							</Link>
 							</Container>
 						<Container className={classes.buttonContainer}>
