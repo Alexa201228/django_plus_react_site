@@ -1,27 +1,47 @@
-import { GET_QUESTION, GET_TEST, GET_TEST_RESULTS, TRY_TEST_AGAIN } from "../actions/types";
+import {
+    GET_QUESTION,
+    GET_TEST,
+    GET_TEST_RESULTS,
+    GET_TEST_USERS,
+    GET_USER_TEST_ANSWERS,
+    TRY_TEST_AGAIN
+} from "../actions/types";
 
 const initialState = {
     test: null,
     question: null,
     questions: [],
-    chosen_answers: {},
+    user_chosen_answers: {},
     correct_answers: {},
     result: null,
     is_passed: false,
-    finished: false
+    finished: false,
+    test_users: [],
+    user_test_answers: []
 }
 
 
 export default function(state = initialState, action) {
-
     switch(action.type){
+        case GET_TEST_USERS:
+            return {
+                ...state,
+                test_users: action.payload.students
+            }
+        case GET_USER_TEST_ANSWERS:
+            return {
+                ...state,
+                user_test_answers: action.payload.test_results
+            }
         case GET_TEST:
             return {
                 ...state,
                 test: action.payload,
                 questions: action.payload.questions_on_test,
-                chosen_answers: clearChosenAnswers(action.payload.questions_on_test),
-                correct_answers: {}
+                user_chosen_answers: clearChosenAnswers(action.payload.questions_on_test),
+                correct_answers: {},
+                test_users: [],
+                user_test_answers: []
             }
         case GET_QUESTION:
             return{
@@ -44,8 +64,10 @@ export default function(state = initialState, action) {
             return{
                 ...state, 
                 finished: false,
-                chosen_answers: clearChosenAnswers(action.payload.questions_on_test),
-                correct_answers: {}
+                user_chosen_answers: clearChosenAnswers(action.payload.questions_on_test),
+                correct_answers: {},
+                test_users: [],
+                user_test_answers: []
             }
         default:
             return state;

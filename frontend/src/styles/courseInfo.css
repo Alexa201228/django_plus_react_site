@@ -1,0 +1,286 @@
+.MuiTypography-root.courseInfoTitle.MuiTypography-body1 {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 28px;
+
+    color: #000000;
+}
+
+.MuiContainer-root.courseInfoContainer.MuiContainer-maxWidthLg {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.MuiContainer-root.backLinkContainer.MuiContainer-maxWidthLg {
+    width: 5px;
+    height: 20px;
+    background: url('./images/bx-arrow-back 1.svg') no-repeat center;
+    margin: 20px 10px 0 5px;
+}
+
+
+.MuiTypography-root.backLinkText.MuiTypography-body1 {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 20px;
+    margin-left: 20px;
+    text-decoration-line: underline;
+
+    color: #797979;
+}
+
+
+.MuiTypography-root.lessonParagraph.MuiTypography-body1 {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 24px;
+
+
+    color: #000000;
+}
+
+
+.mainLessonsContainer {
+    margin: 50px auto;
+    padding-bottom: 30px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.MuiTypography-root.lessonHelpTextParagraph.MuiTypography-body1 {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+
+
+    color: #000000;
+}
+
+
+.MuiContainer-root.lessonContainer.MuiContainer-maxWidthLg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 22px 26px;
+    gap: 10px;
+    width: fit-content;
+    background: #FFFFFF;
+    border: 0.5px solid rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 2px 9px 1px rgba(211, 211, 211, 0.8);
+    border-radius: 8px;
+}
+
+a.MuiContainer-root.lessonContainer.MuiContainer-maxWidthLg {
+    text-decoration: none;
+    margin: 0 50px 0 0;
+}
+
+.MuiContainer-root.lessonContainer.MuiContainer-maxWidthLg:hover,
+.MuiContainer-root.lessonContainer.MuiContainer-maxWidthLg:focus {
+    background: rgba(211, 211, 211, 0.17);
+}
+
+
+.MuiTypography-root.courseProgressHeader.MuiTypography-body1 {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 24px;
+    line-height: 20px;
+
+    color: #000000;
+}
+
+.MuiContainer-root.mainProgressContainer.MuiContainer-maxWidthLg {
+    display: flex;
+    margin: 20px 0;
+
+    justify-content: left;
+    padding: 0;
+
+}
+
+.MuiContainer-root.userTests.MuiContainer-maxWidthLg {
+    display: flex;
+    justify-content: space-around;
+    width: fit-content;
+    margin: 20px 0;
+    border-right: 0.5px solid rgba(0, 0, 0, 0.5);
+}
+
+.MuiTypography-root.triedTests.MuiTypography-body1 {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 20px;
+    margin-right: 20px;
+
+    color: #000000;
+}
+
+.MuiTypography-root.testNumber.MuiTypography-body1 {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 50px;
+    line-height: 30px;
+
+    color: #00CD83;
+
+}
+
+.MuiContainer-root.userAverage.MuiContainer-maxWidthLg {
+    display: flex;
+    justify-content: space-around;
+    width: fit-content;
+    margin: 20px 0;
+}
+
+.MuiTypography-root.testAverage.MuiTypography-body1 {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 50px;
+    line-height: 30px;
+
+}
+
+.userProgress {
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.5);
+}
+
+
+.MuiTypography-root.lessonHeader.MuiTypography-body1 {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    /* identical to box height, or 83% */
+
+    color: #000000;
+}
+
+.lessonContentContainer {
+    margin-top: 50px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+
+    color: #000000;
+}
+
+.mainLessonContentContainer {
+    margin: 50px 0;
+}
+
+.MuiButtonBase-root.MuiButton-root.MuiButton-text.enrollCourseButton {
+    width: 520px;
+    height: 74px;
+    margin: 50px 0;
+    background: #333AD3;
+    border-radius: 133px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 20px;
+    /* identical to box height, or 83% */
+
+
+    color: #FFFFFF;
+}
+
+.MuiContainer-root.goToTest.MuiContainer-maxWidthLg {
+    margin: 50px 0;
+    display: flex;
+    justify-content: right;
+}
+
+.MuiContainer-root.questionCount.MuiContainer-maxWidthLg {
+    margin-top: 40px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 28px;
+    /* or 71% */
+
+
+    color: #000000;
+}
+
+.questionShadowContainer {
+    margin: 20px 0;
+    padding: 25px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.25);
+    border-radius: 13px;
+}
+
+.MuiButtonBase-root.MuiButton-root.MuiButton-text.buttonGoAhead {
+    width: 320px;
+    height: 74px;
+    margin: 50px 0;
+    background: #333AD3;
+    border-radius: 133px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    /* identical to box height, or 83% */
+
+
+    color: #FFFFFF;
+}
+
+.MuiContainer-root.testButtonContainer.MuiContainer-maxWidthLg {
+    margin: 30px 0;
+    display: flex;
+    justify-content: right;
+}
+
+.MuiContainer-root.testResultsShadowContainer.MuiContainer-maxWidthLg {
+    display: flex;
+    justify-content: flex-start;
+    margin: 20px 0;
+    padding: 25px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.25);
+    border-radius: 13px;
+}
+
+.MuiContainer-root.testMark.MuiContainer-maxWidthLg {
+    display: flex;
+    margin: 0 0;
+    width: fit-content;
+    border-right: 1px solid #000000;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+
+}
+
+.MuiContainer-root.testTryAgain.MuiContainer-maxWidthLg {
+    display: flex;
+    justify-content: space-between;
+    margin: 30px 0;
+}
+
+.MuiButtonBase-root.MuiButton-root.MuiButton-text.exitTestButton {
+    background: #D33333;
+    width: 320px;
+    height: 74px;
+    margin: 50px 0;
+    border-radius: 133px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    color: #FFFFFF;
+}

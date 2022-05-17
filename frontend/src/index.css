@@ -12,28 +12,8 @@ code {
     monospace;
 }
 
-header{
-
-}
-
 .appContainer {
   margin: 120px 0 0 10px;
-}
-
-.registerLoginInput {
-  margin: 0 0 15px 0;
-}
-
-.uniLogo{
-  width: 50px;
-  height: 50px;
-  object-fit: cover
-}
-
-.uniLogoContainer {
-  margin: 0;
-  padding-right: 0;
-  padding-left: 0;
 }
 
 @media (max-width: 750px){

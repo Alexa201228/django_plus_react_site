@@ -11,7 +11,8 @@ class StudentGroupSerializer(serializers.ModelSerializer):
 
 
 class StudentBookNumberSerializer(serializers.ModelSerializer):
+    student_group = StudentGroupSerializer(required=True)
 
     class Meta:
         model = StudentBookNumber
-        fields = ['student_book_number']
+        fields = ['student_book_number', 'student_group']

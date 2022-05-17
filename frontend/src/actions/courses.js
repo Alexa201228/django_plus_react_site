@@ -1,5 +1,5 @@
 import axios from "axios";
-import {API_PATH} from "../helpers/editContentHelper";
+import {API_PATH} from "../helpers/requiredConst";
 import { createMessage, returnErrorMessages } from "./messages";
 import { GET_COURSES, ENROLL_COURSE, GET_COURSE_DETAILS, GET_LESSON } from "./types";
 

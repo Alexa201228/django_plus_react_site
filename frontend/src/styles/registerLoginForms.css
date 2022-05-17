@@ -1,0 +1,285 @@
+.MuiContainer-root.mentorLogin.MuiContainer-maxWidthLg {
+    /* LoginBox */
+
+    /* Auto layout */
+
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 32px;
+    gap: 42px;
+    margin-left: 30px;
+    width: fit-content;
+    height: fit-content;
+    left: 83px;
+    top: 273px;
+
+    background: #FFFFFF;
+    box-shadow: 0px 0px 25px 8px rgba(0, 0, 0, 0.18);
+    border-radius: 31px;
+}
+
+.MuiTypography-root.mentorLoginLabel.MuiTypography-body1 {
+    /* Вход для преподователей */
+    margin: 0 auto 45px auto;
+    padding: 0;
+    width: 350px;
+    height: 20px;
+
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 24px;
+    line-height: 20px;
+/* identical to box height, or 83% */
+
+    color: #000000;
+
+/* Inside auto layout */
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.MuiTypography-root.loginLabelText.MuiTypography-body1 {
+
+    width: 262px;
+    height: 20px;
+    left: 32px;
+    top: 102px;
+
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 20px;
+/* identical to box height, or 111% */
+
+    color: #535353;
+}
+
+.MuiFormControl-root.MuiTextField-root.loginRegisterInput {
+    box-sizing: border-box;
+    position: sticky;
+    padding-top: 20px;
+    margin-bottom: 20px;
+    width: 520px;
+    height: 62px;
+    left: 32px;
+    top: 122px;
+    background: #FFFFFF;
+}
+
+.inputIconEmailContainer {
+    background: url('./images/bx-envelope 1.svg');
+}
+
+.inputIconPasswordContainer {
+    background: url('./images/bx-lock-alt 1.svg');
+}
+
+.inputIconStudentBookContainer {
+    background: url('./images/bx-book-content 1.svg');
+}
+
+.forgotPasswordLink {
+    width: 156px;
+    height: 20px;
+    left: 396px;
+    top: 318px;
+    margin-left: 75%;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 20px;
+/* identical to box height, or 111% */
+    text-decoration-line: underline;
+
+    color: #535353;
+}
+
+.MuiButtonBase-root.MuiButton-root.MuiButton-text.loginButton{
+    position: sticky;
+    display: flex;
+    justify-content: center;
+    width: 520px;
+    height: 74px;
+    left: 32px;
+    top: 380px;
+
+    background: #333AD3;
+    border-radius: 133px;
+}
+
+.MuiTypography-root.loginButtonText.MuiTypography-body1{
+    width: fit-content;
+    height: 20px;
+    left: 252px;
+    top: 407px;
+
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 20px;
+/* identical to box height, or 83% */
+
+
+    color: #FFFFFF;
+}
+
+.MuiTypography-root.iAmStudentTextLabel.MuiTypography-body1 a{
+    width: 139px;
+    height: 20px;
+    margin: 35px auto 0 auto;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    /* identical to box height, or 125% */
+
+    text-decoration-line: underline;
+
+    color: #3339D3;
+
+
+    flex: none;
+    order: 4;
+    flex-grow: 0;
+}
+
+.MuiTypography-root.iAmStudentTextLabel.MuiTypography-body1{
+    justify-content: center;
+    width: 139px;
+    height: 20px;
+    margin: 35px auto 0 auto;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    /* identical to box height, or 125% */
+
+    text-decoration-line: underline;
+
+    color: #3339D3;
+
+
+    flex: none;
+    order: 4;
+    flex-grow: 0;
+}
+
+.MuiContainer-root.circlesContainer.MuiContainer-maxWidthLg {
+    width: 940px;
+    height: 620px;
+    left: 889px;
+    top: 313px;
+}
+
+
+
+.MuiContainer-root.blueCircle.MuiContainer-maxWidthLg{
+    position: sticky;
+    width: 400px;
+    height: 412px;
+    left: 889px;
+    top: 355px;
+    background: rgba(51, 125, 211, 0.68);
+    filter: blur(335px);
+}
+
+
+.MuiContainer-root.purpleCircle.MuiContainer-maxWidthLg{
+    position: sticky;
+    width: 483px;
+    height: 478px;
+    left: 1346px;
+    top: 313px;
+
+    background: rgba(51, 57, 211, 0.68);
+    filter: blur(335px);
+}
+
+.MuiContainer-root.upperCircles.MuiContainer-maxWidthLg {
+    margin-top: 150px;
+    display: flex;
+    justify-content: space-between;
+    height: 310px;
+    font-family: 'Playfair Display';
+    align-content: center;
+    font-style: italic;
+    font-weight: 800;
+    font-size: 20px;
+
+/* or 55% */
+    text-align: right;
+
+    color: #000000;
+}
+
+.MuiContainer-root.pinkCircle.MuiContainer-maxWidthLg{
+    position: sticky;
+    width: 416px;
+    height: 350px;
+    left: 1138px;
+    top: 521px;
+
+    background: rgba(190, 114, 226, 0.68);
+    filter: blur(335px);
+}
+
+.MuiContainer-root.wiseQuote.MuiContainer-maxWidthLg {
+
+    position: sticky;
+    margin: auto auto;
+    font-family: 'Playfair Display';
+    font-style: italic;
+    font-weight: 800;
+    font-size: 40px;
+/* or 55% */
+    text-align: right;
+
+    color: #000000;
+}
+
+
+.MuiContainer-root.wiseStudentQuote.MuiContainer-maxWidthLg {
+
+    position: sticky;
+    margin: auto auto;
+    font-family: 'Playfair Display';
+    font-style: italic;
+    font-weight: 800;
+    font-size: 30px;
+/* or 55% */
+    text-align: right;
+
+    color: #000000;
+}
+
+.MuiTypography-root.notRegisteredYet.MuiTypography-body1.MuiTypography-paragraph {
+    width: 416px;
+    height: 20px;
+    justify-content: center;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 20px;
+    /* identical to box height, or 125% */
+    margin: 35px auto 0 100px;
+    color: #535353;
+
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 4;
+    flex-grow: 0;
+}
+

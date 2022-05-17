@@ -17,21 +17,18 @@ import { makeStyles, useTheme } from '@material-ui/core';
    root: {
      display: 'flex',
    },
-   drawer: {
-     [theme.breakpoints.up('sm')]: {
-       width: drawerWidth,
-       flexShrink: 0,
-     },
-   },
    appBar: {
      [theme.breakpoints.up('sm')]: {
        width: `calc(100% - ${drawerWidth}px)`,
        marginLeft: drawerWidth,
      },
-     [theme.breakpoints.down('xs')]:{
-      marginTop: theme.spacing(17)
+     [theme.breakpoints.down('sm')]:{
+      marginTop: theme.spacing(23)
      },
-     marginTop: theme.spacing(8)
+     [theme.breakpoints.down('xs')]:{
+      marginTop: theme.spacing(35)
+     },
+     marginTop: theme.spacing(14)
    },
    menuButton: {
      marginRight: theme.spacing(2),
@@ -40,12 +37,14 @@ import { makeStyles, useTheme } from '@material-ui/core';
      },
    },
    // necessary for content to be below app bar
-   toolbar: theme.mixins.toolbar,
    drawerPaper: {
      width: drawerWidth,
-     marginTop: theme.spacing(8),
+     marginTop: theme.spacing(14),
+     [theme.breakpoints.down('sm')]:{
+      marginTop: theme.spacing(23)
+     },
      [theme.breakpoints.down('xs')]:{
-      marginTop: theme.spacing(17)
+      marginTop: theme.spacing(35)
      },
    },
    content: {
@@ -64,7 +63,8 @@ import { makeStyles, useTheme } from '@material-ui/core';
    const [mobileOpen, setMobileOpen] = React.useState(false);
    
    const  {slug, lesson_slug, test_id } = useParams();
-   const {finished, test} = useSelector(state => state.tests)
+   const {finished, test} = useSelector(state => state.tests);
+   const {course} = useSelector((state) => state.courses);
  
    const handleDrawerToggle = () => {
      setMobileOpen(!mobileOpen);
@@ -79,7 +79,8 @@ import { makeStyles, useTheme } from '@material-ui/core';
                     <ListItem 
                         button 
                         component={Link}
-                        to={`/${slug}/${lesson_slug}/${test_id}/${question.id}`}
+                        to={lesson_slug ?`${lesson_slug}/questions/${question.id}`:
+                        `questions/${question.id}`}
                         key={`${question.id}+${test_id}`}>
                         <Typography>
                             Вопрос {index + 1}
@@ -90,7 +91,7 @@ import { makeStyles, useTheme } from '@material-ui/core';
                 <ListItem
                     button 
                     component={Link}
-                    to={`/${slug}/${lesson_slug}/${test_id}/results/test_results`}>
+                    to={`/test/${test_id}/results/test_results`}>
                         <Typography>
                             Результаты теста
                         </Typography>
@@ -98,7 +99,7 @@ import { makeStyles, useTheme } from '@material-ui/core';
                 <ListItem
                     button
                     component={Link}
-                    to={`/${slug}`}>
+                    to={`/${course.slug}`}>
                     <Typography>
                         Вернуться к изучению материала
                     </Typography>
@@ -157,7 +158,7 @@ import { makeStyles, useTheme } from '@material-ui/core';
          </Hidden>
        </nav>
        <main className={classes.content}>
-         <div className={classes.toolbar} />
+         <div />
 
        </main>
      </div>

@@ -17,12 +17,10 @@ import CourseDetail from "./components/courses/CourseDetail";
 
 import {store, persistor} from "./store";
 import { loadUser } from "./actions/auth";
-import TestPage from "./components/tests/TestPage";
 
 import EmailVerified from "./components/accounts/EmailVerified";
 import ResetPassword from "./components/accounts/ResetPassword";
 import ResetPasswordForm from "./components/accounts/ResetPasswordForm";
-import Courses from "./components/courses/Courses";
 import MainTestPage from "./components/tests/MainTestPage";
 import QuestionBody from "./components/tests/QuestionBody";
 import TestResults from "./components/tests/TestResults";
@@ -31,6 +29,9 @@ import StudentLogin from "./components/accounts/StudentLogin";
 import MentorCoursePage from "./components/mentors/MentorCoursePage";
 import MentorPrivateRoute from "./components/common/MentorPrivateRoute";
 import MentorTestsPage from "./components/mentors/MentorTestsPage";
+import TestPrivateRoute from "./components/common/TestPrivateRoute";
+import StudentTestResultPage from "./components/mentors/StudentTestResultPage";
+import StudentTestAnswers from "./components/mentors/StudentTestAnswers";
 
 
 //Alert options
@@ -43,9 +44,6 @@ const alertOptions = {
 export const useStyles = makeStyles((theme) => ({
   contentContainer:{
       marginTop: theme.spacing(12),
-      [theme.breakpoints.down('xs')]: {
-          marginTop: theme.spacing(24)
-      },
   }
 }))
 
@@ -66,29 +64,28 @@ export function App(){
             <div className='appContainer'>
                   <Routes>
                       <Route element={<PrivateRoute/>}>
-                        <Route path={'/test/:slug/:test_id/results/test_results'} element={<TestResults/>} />
+                        <Route path={'/test/:test_id/results/test_results'} element={<TestResults/>} />
                       </Route>
-                      <Route element={<PrivateRoute/>}>
-                          <Route path='/test/:slug/*'>
+                      <Route element={<TestPrivateRoute/>}>
+                          <Route path='/test/:slug'>
                             <Route path={':test_id'} element={<MainTestPage/>}>
-                                <Route path={':lesson_slug'} element={<TestPage/>}>
-                                   <Route path={':question_id'} element={<QuestionBody/>}/>
-                                </Route>
+                                    <Route path={'/test/:slug/:test_id/questions/:question_id'} element={<QuestionBody/>}/>
+                                   <Route path={'/test/:slug/:test_id/:lesson_slug/questions/:question_id'} element={<QuestionBody/>}/>
                             </Route>
                         </Route>
                       </Route>
                       <Route path={'/user/profile/:id'} element={<PrivateRoute/>}>
                         <Route path={'/user/profile/:id'} element={<UserProfile/>}/>
                       </Route>
-                    <Route path='/' element={<Courses/>}/>
+                    <Route path='/' element={<StudentLogin/>}/>
                     <Route path='/register' element={<Register/>}/>
                     <Route path='/reset-password/:token' element={<ResetPasswordForm/>}/>
                     <Route path='/reset-password' element={<ResetPassword/>}/>
                       <Route element={<MentorPrivateRoute/>}>
                        <Route path='/lessons-list/:slug' element={<MentorCoursePage/>}/>
-                      </Route>
-                      <Route element={<MentorPrivateRoute/>}>
                        <Route path='/course-tests/:slug' element={<MentorTestsPage/>}/>
+                       <Route path='/tests/:test_id/students' element={<StudentTestResultPage/>}/>
+                       <Route path='/tests/:test_id/students/:user_id' element={<StudentTestAnswers/>}/>
                       </Route>
                       <Route element={<PrivateRoute/>}>
                        <Route path=':slug/*' element={<CourseDetail/>}/>

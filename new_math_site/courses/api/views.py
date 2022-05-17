@@ -4,6 +4,7 @@ from rest_framework_simplejwt.exceptions import AuthenticationFailed
 from rest_framework.response import Response
 
 from ..models import Course
+from accounts.models import Student
 from .serializers import *
 
 
@@ -24,8 +25,9 @@ class CourseViewSet(viewsets.ReadOnlyModelViewSet):
     def enroll(self, request, *args, **kwargs):
         try:
             course = self.get_object()
-            course.students_on_course.add(request.user)
-            request.user.student_courses.add(course)
+            student = Student.objects.filter(email=request.user.email).first()
+            course.students_on_course.add(student)
+            student.student_courses.add(course)
             return Response(status=status.HTTP_202_ACCEPTED)
         except AuthenticationFailed as auth_fail:
             return Response(
@@ -34,7 +36,7 @@ class CourseViewSet(viewsets.ReadOnlyModelViewSet):
             )
         except Exception as e:
             return Response(
-                {'error': e},
+                {'error': str(e)},
                 status=status.HTTP_400_BAD_REQUEST
             )
 

@@ -1,6 +1,6 @@
 import axios from "axios";
 import createAuthRefreshInterceptor from 'axios-auth-refresh';
-import {API_PATH} from "../helpers/editContentHelper";
+import {API_PATH} from "../helpers/requiredConst";
 import { createMessage, returnErrorMessages } from "./messages";
 import {
     USER_LOADED,
@@ -121,14 +121,14 @@ export const studentLogin = (studentBookNumber, password) => dispatch => {
 };
 
 //Register
-export const register = ({ email, first_name, student_group, student_book_number, password }) => dispatch => {
+export const register = ({ email, first_name, last_name, student_group, student_book_number, password }) => dispatch => {
 
     const config = {
         headers: {
             'Content-Type': 'application/json'
         }
     }
-    const body = JSON.stringify({ email, first_name, student_group, student_book_number, password });
+    const body = JSON.stringify({ email, first_name, last_name, student_group, student_book_number, password });
     axios
         .post(`${API_PATH}/api/auth/register`, body, config)
         .then(res => {

@@ -11,7 +11,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
 import { emailVerified, resendEmailVerificationLink } from '../../actions/auth';
-import { EMAIL_TEXTFIELD_VALIDATOR, REQUIRED_FIELD } from '../../helpers/editContentHelper';
+import { EMAIL_TEXTFIELD_VALIDATOR, REQUIRED_FIELD } from '../../helpers/requiredConst';
 
 
 const useStyles = makeStyles((theme) => ({

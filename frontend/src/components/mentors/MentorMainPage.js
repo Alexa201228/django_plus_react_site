@@ -1,52 +1,52 @@
 import {useSelector} from "react-redux";
 import Container from "@material-ui/core/Container";
-import {Typography} from "@material-ui/core";
+import {Box, Typography} from "@material-ui/core";
 import {Link} from "react-router-dom";
+import React, {Fragment} from "react";
 
 
 export function MentorMainPage() {
     const {user} = useSelector((state) => state.auth);
+    console.log(user)
     return (
         <>
             {user &&
-                <>
-                    <Container>
-                        {user.first_name} {user.last_name} {user.patronymic}
-                    </Container>
-                    <Container>
-                        <Typography>
-                            Преподаваемые дисциплины
-                        </Typography>
+            <Fragment>
+                <Container>
+                    <Container className={'latestNewsContainer'}>
                         <Container>
-                            {user.mentor_courses &&
-                            user.mentor_courses.map((course, key) => (
-                                    <Container style={{display: 'flex', justifyContent: 'space-between'}}>
-                                        <Link
-                                        key={`${key}-link`}
-                                        to={`/lessons-list/${course.slug}`}
-                                        state={{curr_course: course.slug }}
-                                        >
-                                        <Typography
-                                        key={key}>
-                                        {course.title}
-                                        </Typography>
-                                    </Link>
-                                        <Link
-                                        key={`${key}-test-link`}
-                                        to={`/course-tests/${course.slug}`}
-                                        state={{curr_course: course.slug }}
-                                        >
-                                        <Typography
-                                        key={`${key}-test-text`}>
-                                        Тесты дисциплины
-                                        </Typography>
-                                    </Link>
-                                    </Container>
-                                ))
-                            }
+                            <Container className={'studentsMeetingContainer'}/>
+                        </Container>
+                        <Container>
+                            <Container className={'studentsOpportunities'}/>
                         </Container>
                     </Container>
-                </>
+                    <Container>
+                        <Typography className={'startedCourses'}>
+                            Преподаваемые дисциплины:
+                        </Typography>
+                        <Typography className={'startedCoursesHelpText'}>
+                            Для перехода к дисциплине, нажмите на нее
+                        </Typography>
+                        <Container className={'studentCoursesContainer'}>
+                            {user.mentor_courses && user.mentor_courses.map((course, index) => (
+                                <Container
+                                    component={Link}
+                                    to={`/lessons-list/${course.slug}`}
+                                    className='courseContainer'
+                                    key={index}>
+                                    <Box my={3}
+                                    >
+                                        <Typography className={'courseTitle'}>
+                                            {course.title}
+                                        </Typography>
+                                    </Box>
+                                </Container>
+                            ))}
+                        </Container>
+                    </Container>
+                </Container>
+            </Fragment>
             }
         </>
     )

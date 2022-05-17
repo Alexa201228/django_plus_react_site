@@ -47,12 +47,14 @@ class RegisterApiView(generics.GenericAPIView):
             if student_group is None:
                 raise ValueError('Такой группы нет в базе!')
             student_book_number = StudentBookNumber.objects.filter(
-                student_book_number=request.data['student_book_number']).first()
+                student_book_number=request.data['student_book_number'],
+                student_group=student_group.id).first()
             if student_book_number is None:
-                raise ValueError('Неверный номер зачетной книжки')
+                raise ValueError('Номер зачетной книжки не соответствует номеру группы')
             data = {
                 'email': request.data['email'],
                 'first_name': request.data['first_name'],
+                'last_name': request.data['last_name'],
                 'password': request.data['password'],
                 'student_group': student_group.id,
                 'student_book_number': student_book_number.id

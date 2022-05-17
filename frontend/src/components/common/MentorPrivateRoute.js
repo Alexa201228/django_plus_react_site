@@ -9,7 +9,7 @@ const MentorPrivateRoute = ({ auth }) => {
       if (auth.isLoading) {
         return (
           <Fragment>
-            <Container style={{'width': '20em', 'height': '20em', 'justifyContent': 'center'}}>
+            <Container style={{'width': '20em', 'height': '20em', 'justifyContent': 'center', 'marginTop': '20em'}}>
               <CircularProgress/>
             </Container>
           </Fragment>

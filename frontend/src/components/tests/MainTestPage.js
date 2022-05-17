@@ -1,16 +1,12 @@
-import React, { useEffect, Fragment } from 'react';
+import React, {useEffect, Fragment, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {Outlet, useParams} from 'react-router';
-import {Routes, Route} from "react-router-dom"
 
 import { Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
 
 import { getTest } from '../../actions/tests';
-import QuestionBody from './QuestionBody';
-import QuestionList from './QuestionList';
-import TestResults from './TestResults';
-import PrivateRoute from '../common/PrivateRoute';
+import {Timer} from "../../helpers/timerComponent";
 
 
 const useStyles = makeStyles((theme) =>({
@@ -21,10 +17,10 @@ const useStyles = makeStyles((theme) =>({
 
 export function TestPage(){
     const { test_id } = useParams();
-    const params = useParams();
     const { test } = useSelector(state => state.tests);
+    const [seconds, setSeconds] = useState(0);
+    const [isActive, setIsActive] = useState(true)
     const dispatch = useDispatch();
-    console.log(params)
     useEffect(()=>{
         dispatch(getTest(test_id))
     }, [test_id])
@@ -33,8 +29,10 @@ export function TestPage(){
         <Fragment>
             {test ?
             <Fragment>
-                <Container className={styles.testContainer}>
-                <QuestionList questions={test.questions_on_test}/>
+                <Container>
+                    <Container className={'mainTestContainer'}>
+                        <Timer isActive={isActive} seconds={seconds} setSeconds={setSeconds}/>
+                    </Container>
                     <Outlet/>
                 </Container>
             </Fragment>

@@ -42,7 +42,7 @@ class Test(models.Model):
     )
 
     class Meta:
-        verbose_name = 'Тесты'
+        verbose_name = 'Тест'
         verbose_name_plural = 'Тесты'
 
     def __str__(self) -> str:
@@ -61,7 +61,7 @@ class Question(models.Model):
         verbose_name='Текст вопроса')
 
     def get_correct_answers(self):
-        correct_answers = list(self.answer_to_question.filter(is_correct=True))
+        correct_answers = list(self.answers_to_question.filter(is_correct=True))
         answers_ids = []
         for i in correct_answers:
             answers_ids.append(i.id)
@@ -76,9 +76,42 @@ class Answer(models.Model):
         Question,
         on_delete=models.CASCADE,
         verbose_name='Вариант ответа к вопросу',
-        related_name='answer_to_question'
+        related_name='answers_to_question'
     )
     answer_body = RichTextField(
         config_name='tests_config',
         verbose_name='Текст ответа')
     is_correct = models.BooleanField(verbose_name='Правильный ответ')
+
+
+class TestResult(models.Model):
+    """
+    Model of user test results
+    """
+    test_id = models.ForeignKey(
+        to='testsApp.Test',
+        related_name='tests_results',
+        on_delete=models.CASCADE
+    )
+    user_id = models.ForeignKey(
+        to='accounts.Student',
+        related_name='tests_results',
+        on_delete=models.CASCADE
+    )
+    test_questions = models.ManyToManyField(
+        to='testsApp.Question',
+        related_name='tests_results',
+        verbose_name='Вопросы теста'
+    )
+    chosen_answers = models.ManyToManyField(
+        to='testsApp.Answer',
+        related_name='tests_results',
+        verbose_name='Ответы учащегося'
+    )
+
+    test_time = models.IntegerField(default=0)
+    is_passed = models.BooleanField(default=False)
+    test_mark = models.IntegerField(
+        verbose_name='Оценка за тест',
+        default=2
+    )

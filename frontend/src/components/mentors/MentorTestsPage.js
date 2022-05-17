@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import {courseDetails} from "../../actions/courses";
@@ -17,7 +17,15 @@ export function MentorTestsPage(){
             Список тестов:
             {course.course_test[0] ?
                 <Container>
-                    Тест по окончанию изучения дисциплины {course.course_test.title}
+                    <Typography>
+                       Тест по окончанию изучения дисциплины
+                    </Typography>
+                    <Typography
+                        component={Link}
+                        outlined
+                        to={`/tests/${course.course_test[0].id}/students`}>
+                      {course.course_test[0].title}
+                    </Typography>
                 </Container> : null}
             {course.course_lessons && course.course_lessons.map((lesson, key) => (
                 lesson.module_test &&

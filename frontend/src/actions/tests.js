@@ -1,8 +1,8 @@
 import axios from "axios";
 import { tokenConfig } from "./auth";
 import { createMessage, returnErrorMessages } from "./messages";
-import { GET_QUESTION, GET_TEST, GET_TEST_RESULTS, TRY_TEST_AGAIN } from "./types"
-import {API_PATH} from "../helpers/editContentHelper";
+import {GET_QUESTION, GET_TEST, GET_TEST_RESULTS, GET_TEST_USERS, GET_USER_TEST_ANSWERS, TRY_TEST_AGAIN} from "./types"
+import {API_PATH} from "../helpers/requiredConst";
 
 //Get test by id
 export const getTest = (id) => (dispatch, getState) => {
@@ -49,9 +49,9 @@ export const getQuestion = (id) =>(dispatch, getState) => {
 }
 
 //Get Test results
-export const testResults = ({test_id, chosen_answers}) => (dispatch, getState) =>{
-    console.log(chosen_answers)
-    axios.post(`${API_PATH}/api/tests/${test_id}/test_results/`, chosen_answers, tokenConfig(getState))
+export const testResults = ({test_id, user_chosen_answers, test_time}) => (dispatch, getState) =>{
+    const body = JSON.stringify({chosen_answers: user_chosen_answers, test_time: test_time})
+    axios.post(`${API_PATH}/api/tests/${test_id}/test_results/`, body, tokenConfig(getState))
     .then(res =>{
         dispatch(createMessage({test_finished:`Вы завершили тест!`}));
         dispatch({
@@ -89,4 +89,47 @@ export const tryTestAgain = (test_id) => (dispatch, getState) => {
             dispatch(returnErrorMessages({error: err.response.data}, {status: err.response.status}))
         }
     });
+}
+
+export const getTestUsers = (test_id) => {
+    return (dispatch, getState) => {
+        axios.get(
+            `${API_PATH}/api/tests/${test_id}/students/`,
+            tokenConfig(getState)
+        )
+            .then(res => {
+                dispatch({
+                    type: GET_TEST_USERS,
+                    payload: res.data
+                })
+            })
+            .catch(err => {
+                if (err.response.status === 401) {
+                    return null;
+                } else {
+                    dispatch(returnErrorMessages({error: err.response.data}, {status: err.response.status}))
+                }
+            })
+    };
+}
+
+export const getUserTestAnswers = ({test_id, user_id}) => (dispatch, getState) =>{
+  axios.get(
+      `${API_PATH}/api/tests/${test_id}/students/student-result?user-id=${user_id}`,
+      tokenConfig(getState)
+  )
+      .then(res =>{
+          dispatch({
+              type: GET_USER_TEST_ANSWERS,
+              payload: res.data
+          })
+      })
+      .catch(err =>{
+          if (err.response.status === 401) {
+                    return null;
+          }
+          else {
+              dispatch(returnErrorMessages({error: err.response.data}, {status: err.response.status}))
+          }
+      })
 }

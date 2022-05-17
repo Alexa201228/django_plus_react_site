@@ -27,6 +27,11 @@ class StudentGroup(models.Model):
 
 class StudentBookNumber(models.Model):
     student_book_number = models.CharField(max_length=30, null=False)
+    student_group = models.ForeignKey(
+        to='student_groups.StudentGroup',
+        related_name='student_book_numbers',
+        on_delete=models.CASCADE
+    )
 
     class Meta:
         verbose_name = 'Номер зачетной книжки'
