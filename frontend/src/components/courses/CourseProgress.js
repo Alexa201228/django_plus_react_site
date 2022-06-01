@@ -61,7 +61,7 @@ export function CourseProgress() {
         }
 
         ,
-        []
+        [course]
     )
 
     const countStudentTests = () => {

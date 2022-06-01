@@ -80,7 +80,7 @@ export function Login(props) {
                         </Typography>
                         <Button
                             type="submit"
-                            className='loginButton'
+                            className={'loginButton'}
                         >
                             <Typography
                                 className={'loginButtonText '}>

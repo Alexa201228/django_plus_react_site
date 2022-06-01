@@ -7,7 +7,6 @@ import React, {Fragment} from "react";
 
 export function MentorMainPage() {
     const {user} = useSelector((state) => state.auth);
-    console.log(user)
     return (
         <>
             {user &&

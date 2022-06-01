@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Course, Lesson
+from .models import Course, Lesson, TrainingDirections
 
 
 @admin.register(Course)
@@ -17,3 +17,8 @@ class ModuleAdmin(admin.ModelAdmin):
     prepopulated_fields = {'lesson_slug': ('lesson_name', )}
     search_fields = ['theme', 'lesson_name']
 
+
+@admin.register(TrainingDirections)
+class TrainingDirectionsAdmin(admin.ModelAdmin):
+    list_display = ['direction_code', 'direction_name']
+    search_fields = ['direction_code', 'direction_name']

@@ -1,8 +1,8 @@
 import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect} from "react";
 import {getUserTestAnswers} from "../../actions/tests";
-import {Link, useParams} from "react-router-dom";
-import {Button, Container, MenuItem, Typography} from "@material-ui/core";
+import {useParams} from "react-router-dom";
+import {Container, MenuItem, Typography} from "@material-ui/core";
 import {formatSeconds} from "../../helpers/timerComponent";
 import renderHTML from "react-render-html";
 import {Dropdown} from "react-bootstrap";
@@ -14,9 +14,7 @@ export function StudentTestAnswers() {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getUserTestAnswers({test_id, user_id}))
-    }, [])
-    console.log(user_test_answers);
-    console.log(user_id)
+    }, [user_id])
 
     const getRightAnswer = (question) => {
         let rightAnswer = '';

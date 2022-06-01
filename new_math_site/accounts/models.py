@@ -87,6 +87,13 @@ class Mentor(User):
         verbose_name='Группы обучающихся'
     )
 
+    mentor_training_directions = models.ManyToManyField(
+        to='courses.TrainingDirections',
+        related_name='mentors',
+        blank=True,
+        verbose_name='Направления подготовки'
+    )
+
     class Meta:
         verbose_name = 'Преподаватель'
         verbose_name_plural = 'Преподаватели'

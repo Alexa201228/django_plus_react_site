@@ -2,6 +2,7 @@ from rest_framework import generics, viewsets, permissions, status
 from rest_framework.decorators import action
 from rest_framework_simplejwt.exceptions import AuthenticationFailed
 from rest_framework.response import Response
+from pytils.translit import slugify
 
 from ..models import Course
 from accounts.models import Student
@@ -65,3 +66,28 @@ class ModuleDetailApiView(generics.RetrieveAPIView):
         lesson = Lesson.objects.get(
             course_id=course.id, lesson_slug=lesson_slug)
         return lesson
+
+
+class LessonViewSet(viewsets.ModelViewSet):
+
+    serializer_class = ModuleSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = Lesson.objects.all()
+
+    @action(
+        detail=False,
+        methods=['post'],
+        url_path='add'
+    )
+    def add_new_lesson(self, request):
+        """
+        Method to add new lesson to course
+        """
+        lesson_slug = slugify(request.data['lesson_name'])
+        course = Course.objects.filter(id=request.data['course']).first()
+        new_lesson = Lesson.objects.create(lesson_name=request.data['lesson_name'],
+                                           course_id=course,
+                                           body=request.data['lesson_text'],
+                                           lesson_slug=lesson_slug)
+        new_lesson.save()
+        return Response({})

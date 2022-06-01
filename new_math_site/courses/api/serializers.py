@@ -1,10 +1,10 @@
 from rest_framework import serializers
-from ..models import Course, Lesson
+from ..models import Course, Lesson, TrainingDirections
 from testsApp.api.serializers import TestSerializer
 
 
 class ModuleSerializer(serializers.ModelSerializer):
-    module_test = TestSerializer(many=True)
+    module_test = TestSerializer(many=True, required=False)
 
     class Meta:
         model = Lesson
@@ -27,3 +27,10 @@ class CourseSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'url': {'lookup_field': 'slug'}
         }
+
+
+class TrainingDirectionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = TrainingDirections
+        fields = ['id', 'direction_code', 'direction_name']

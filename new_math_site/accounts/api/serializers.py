@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate
 from rest_framework import serializers
 
 from ..models import User, Mentor, Student
-from courses.api.serializers import CourseSerializer
+from courses.api.serializers import CourseSerializer, TrainingDirectionSerializer
 from testsApp.api.serializers import TestSerializer
 from student_groups.api.serializers import StudentGroupSerializer, StudentBookNumberSerializer
 
@@ -119,11 +119,12 @@ class ResetPasswordSerializer(serializers.Serializer):
 class MentorSerializer(serializers.ModelSerializer):
     mentor_courses = CourseSerializer(many=True, read_only=True, required=False)
     mentors_groups = StudentGroupSerializer(many=True, read_only=True, required=False)
+    mentor_training_directions = TrainingDirectionSerializer(many=True, read_only=True, required=False)
 
     class Meta:
         model = Mentor
         fields = ['id', 'first_name', 'last_name', 'mentor_courses',
-                  'mentors_groups']
+                  'mentors_groups', 'mentor_training_directions']
 
 
 class StudentSerializer(serializers.ModelSerializer):

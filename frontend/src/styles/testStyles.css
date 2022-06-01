@@ -8,7 +8,7 @@
 .MuiTypography-root.timerLabel.MuiTypography-body1 {
     margin: 20px 0;
     width: fit-content;
-    font-family: 'Montserrat';
+    font-family: 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 24px;
@@ -18,7 +18,7 @@
 .MuiTypography-root.correctAnswer.MuiTypography-body1 {
     width: fit-content;
     margin-right: 30px;
-    font-family: 'Montserrat';
+    font-family: 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 24px;
@@ -34,13 +34,155 @@
     justify-content: space-evenly;
     margin: 20px 0;
     padding: 25px;
-    box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
     border-radius: 13px;
-    font-family: 'Montserrat';
+    font-family: 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 20px;
     text-decoration: none;
 }
 
+.MuiButtonBase-root.MuiButton-root.MuiButton-text.addTest {
+    width: available;
+    height: available;
+    margin: 20px 0;
+    padding: 20px;
+    background: #333AD3;
+    border-radius: 133px;
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 20px;
+    color: #FFFFFF;
+}
 
+.MuiContainer-root.addTestContainer.MuiContainer-maxWidthLg {
+    margin: 20px 20px;
+    width: 97%;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+
+.MuiTypography-root.introAddTestText.MuiTypography-body1 {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 18px;
+
+    color: #000000;
+}
+
+.MuiContainer-root.addTestFormContainer.MuiContainer-maxWidthLg {
+
+    margin: 30px 0;
+}
+
+.MuiContainer-root.ckeditorEditorContainer.MuiContainer-maxWidthLg {
+    margin: 20px 0;
+    padding: 0;
+}
+
+.MuiTypography-root.ckeditorQuestionLabel.MuiTypography-body1 {
+    margin-bottom: 30px;
+    font-family: 'Montserrat';
+}
+
+.MuiTableContainer-root.testResultTableContainer {
+    margin: 20px;
+    border: 1px solid #808080;
+    width: 96%;
+}
+
+.MuiContainer-root.testUsersResult.MuiContainer-maxWidthLg {
+    display: flex;
+    padding-left: 47%;
+}
+
+.MuiTypography-root.testUserLabel.MuiTypography-body1 {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 20px;
+    /* identical to box height, or 83% */
+    padding-right: 20px;
+
+    border-right: 1px solid grey;
+
+}
+
+.MuiTypography-root.testUserLinkTypography.MuiTypography-body1 {
+    padding-left: 20px;
+}
+
+.MuiButtonBase-root.MuiButton-root.MuiButton-text.yearButton {
+    margin: 20px;
+    width: max-content;
+    background: #3339d3;
+    color: white;
+    font-family: 'Montserrat';
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.answerContainer {
+    margin: 20px;
+}
+
+.questionContainer {
+    margin: 20px;
+}
+
+.MuiContainer-root.addQuestion.MuiContainer-maxWidthLg {
+    display: flex;
+    justify-content: center;
+    background: #333AD3;
+    border-radius: 133px;
+}
+
+.MuiButtonBase-root.MuiButton-root.MuiButton-text.questionButton {
+    width: 100%;
+    font-family: Montserrat;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0em;
+    text-align: left;
+    color: white;
+
+}
+
+.MuiContainer-root.removeQuestion.MuiContainer-maxWidthLg {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background: #d33333;
+    border-radius: 133px;
+    margin: 20px 0;
+}
+
+.MuiButtonBase-root.MuiButton-root.MuiButton-text.addAnswer {
+    background: rgba(71, 153, 17, 0.88);
+    color: white;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 25px 0;
+}
+
+.MuiButtonBase-root.MuiButton-root.MuiButton-text.removeAnswer {
+    background: rgba(153, 29, 39, 0.88);
+    color: white;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 20px 0 0 0;
+}
+
+.testChoiceButtonContainer {
+    margin: 20px 0;
+    background: #3339d3;
+    border-radius: 100px;
+}

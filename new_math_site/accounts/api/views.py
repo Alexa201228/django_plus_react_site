@@ -253,7 +253,7 @@ class VerifyEmailView(generics.GenericAPIView):
 
 class SendResetPasswordEmailView(generics.GenericAPIView):
     permission_classes = [permissions.AllowAny, ]
-
+    serializer_class = None
 
     def get(self, request, *args, **kwargs):
         token = request.GET.get('token')

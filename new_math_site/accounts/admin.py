@@ -29,12 +29,12 @@ class UserAdmin(BaseUserAdmin):
 class MentorAdmin(BaseUserAdmin):
     list_display = ('first_name', 'last_name', 'patronymic')
     search_fields = ('first_name', 'last_name', 'patronymic')
-    filter_horizontal = ('mentor_courses', 'mentors_groups', 'user_permissions')
+    filter_horizontal = ('mentor_courses', 'mentors_groups', 'mentor_training_directions')
     ordering = ('last_name', )
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name', 'patronymic',
-                                         'mentor_courses', 'mentors_groups')}))
+                                         'mentor_courses', 'mentors_groups', 'mentor_training_directions')}))
 
 
 @admin.register(Student)

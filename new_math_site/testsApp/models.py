@@ -1,8 +1,8 @@
 from ckeditor.fields import RichTextField
+from django.core.validators import MinValueValidator
 from django.db import models
 from courses.models import Course, Lesson
 from accounts.models import Student
-
 
 """
 Three models for tests:
@@ -19,7 +19,7 @@ class Test(models.Model):
         verbose_name='Название теста'
     )
     lesson = models.ForeignKey(
-        Lesson, 
+        Lesson,
         on_delete=models.CASCADE,
         verbose_name='Тест к уроку',
         related_name='module_test',
@@ -41,13 +41,15 @@ class Test(models.Model):
         blank=True
     )
 
+    attempts_amount = models.IntegerField(default=1, validators=[MinValueValidator(1)])
+
     class Meta:
         verbose_name = 'Тест'
         verbose_name_plural = 'Тесты'
 
     def __str__(self) -> str:
         return self.title
-    
+
 
 class Question(models.Model):
     test = models.ForeignKey(

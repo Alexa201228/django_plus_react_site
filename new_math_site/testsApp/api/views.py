@@ -8,10 +8,12 @@ from rest_framework import permissions
 from rest_framework.decorators import action
 
 from .serializers import TestResultSerializer, QuestionSerializer, TestSerializer
-from ..models import Question, Test, TestResult
+from ..models import Question, Test, TestResult, Answer
 from accounts.models import Student
 
 from accounts.api.serializers import StudentSerializer
+
+from courses.models import Lesson, Course
 
 
 class TestViewSet(viewsets.ReadOnlyModelViewSet):
@@ -63,7 +65,8 @@ class TestViewSet(viewsets.ReadOnlyModelViewSet):
         test = self.get_object()
         students = []
         for student in test.students.all():
-            students.append(StudentSerializer(student).data)
+            if student.student_group.group_name == request.GET.get('group'):
+                students.append(StudentSerializer(student).data)
         return Response(
             {'students': students}
         )
@@ -84,6 +87,40 @@ class TestViewSet(viewsets.ReadOnlyModelViewSet):
                 'test_results': TestResultSerializer(test_results).data
             }
         )
+
+    @action(
+        detail=False,
+        methods=['post'],
+        url_path='add',
+        permission_classes=[permissions.IsAuthenticated]
+    )
+    def add_new_test(self, request):
+        """
+        Method to add new test from frontend
+        """
+        print(request.data)
+        if request.data.get('lesson_id'):
+            lesson = Lesson.objects.filter(id=request.data.pop('lesson_id')).first()
+            new_test = Test.objects.create(lesson=lesson)
+        if request.data.get('course_id'):
+            course = Course.objects.filter(id=request.data.pop('course_id')).first()
+            new_test = Test.objects.create(course=course)
+        new_test.title = request.data.pop('test_name')
+        new_test.attempts_amount = request.data.pop('attempts_amount')
+
+        for question in request.data:
+            print(question, request.data[question]['question'])
+
+            new_question = Question.objects.create(test=new_test, question_body=request.data[question]['question'])
+            new_question.save()
+            for answer in request.data[question]['answers']:
+                print(answer)
+                question_answers = Answer.objects.create(question=new_question,
+                                                         answer_body=request.data[question]['answers'][answer]['answer'],
+                                                         is_correct=request.data[question]['answers'][answer]['isCorrect'])
+                question_answers.save()
+        new_test.save()
+        return Response({})
 
 
 class QuestionViewSet(viewsets.ReadOnlyModelViewSet):

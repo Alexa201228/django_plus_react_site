@@ -18,6 +18,7 @@
     left: 83px;
     top: 20px;
     background: url('./images/kubstulogo 1.svg');
+    font-family: 'Montserrat', sans-serif;
 }
 
 .material-icons.MuiIcon-root.logoutIcon{
@@ -27,7 +28,7 @@
     margin: auto 0;
 }
 
-.labelTextTypography {
+.MuiTypography-root.labelTextTypography.MuiTypography-h6.MuiTypography-colorInherit {
     /* Информационная система по подготовке и тестированию обучающихся */
 
     position: absolute;

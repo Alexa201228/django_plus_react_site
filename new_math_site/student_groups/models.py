@@ -14,6 +14,8 @@ class StudentGroup(models.Model):
         verbose_name='Преаодаватели группы'
     )
 
+    start_year = models.IntegerField(verbose_name='Год образования группы')
+
     class Meta:
         verbose_name = 'Группы обучающихся'
         verbose_name_plural = 'Группы обучающихся'

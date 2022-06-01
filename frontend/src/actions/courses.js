@@ -2,6 +2,7 @@ import axios from "axios";
 import {API_PATH} from "../helpers/requiredConst";
 import { createMessage, returnErrorMessages } from "./messages";
 import { GET_COURSES, ENROLL_COURSE, GET_COURSE_DETAILS, GET_LESSON } from "./types";
+import {tokenConfig} from "./auth";
 
 //Get courses
 export const getCourses = () => dispatch => {
@@ -74,4 +75,19 @@ export const enrollCourse = ({token, title, slug}) => dispatch => {
         }
         
     })
+}
+
+//Add course lesson
+export const addLesson = (course, lesson_name, lesson_text) => (dispatch, getState) => {
+    console.log(`${course}, ${lesson_name}, ${lesson_text}`)
+    const body = JSON.stringify({course, lesson_name, lesson_text});
+    console.log(body)
+    axios.post(`${API_PATH}/api/lessons/add/`, body, tokenConfig(getState))
+        .then(res => {
+            dispatch(createMessage({successfulLectureAdd: 'Лекция добавлена!'}))
+        })
+        .catch(err => {
+            dispatch(returnErrorMessages({error: err.response.data}, {status: err.response.status}))
+        })
+
 }

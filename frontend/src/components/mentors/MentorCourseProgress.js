@@ -58,7 +58,7 @@ export function MentorCourseProgress() {
         }
 
         ,
-        []
+        [course]
     )
 
     const countStudentTests = () => {

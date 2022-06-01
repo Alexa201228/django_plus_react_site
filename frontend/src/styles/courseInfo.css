@@ -284,3 +284,50 @@ a.MuiContainer-root.lessonContainer.MuiContainer-maxWidthLg {
     font-size: 24px;
     color: #FFFFFF;
 }
+
+.MuiButtonBase-root.MuiButton-root.MuiButton-text.addLesson {
+    background: #00CD83;
+    border-radius: 133px;
+    color: white;
+    width: fit-content;
+    padding: 20px;
+    font-family: Montserrat;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+
+}
+
+.MuiContainer-root.addButtonContainer.MuiContainer-maxWidthLg {
+    display: flex;
+    margin: 20px 0;
+}
+
+.MuiContainer-root.addLessonShadowContainer.MuiContainer-maxWidthLg {
+    background: #FFFFFF;
+    box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.25);
+    border-radius: 13px;
+    padding: 20px;
+    margin: 30px 0;
+}
+
+.MuiTypography-root.newLessonName.MuiTypography-body1 {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    /* identical to box height, or 111% */
+
+    color: #535353;
+}
+
+.MuiContainer-root.lessonAddBackLink.MuiContainer-maxWidthLg {
+    width: 5px;
+    height: 20px;
+    background: url('./images/bx-arrow-back 1.svg') no-repeat center;
+    margin: 20px 10px 30px 5px;
+
+    color: #797979;
+}

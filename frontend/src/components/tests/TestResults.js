@@ -22,9 +22,8 @@ export function TestResults(props) {
     useEffect(() => {
         dispatch(getUserTestAnswers({test_id: test_id, user_id: user.id}))
         dispatch(getTest(test_id))
-    }, [])
+    }, [test_id, user])
 
-    console.log(user_test_answers)
 
     const tryAgain = () => {
         props.tryTestAgain(test_id)
@@ -34,11 +33,10 @@ export function TestResults(props) {
         navigate(`/test/${course.slug}/${test_id}/questions/${test.questions_on_test[0].id}`)
     }
     const getRightAnswer = (question) => {
-        let rightAnswer = '';
+        let rightAnswer = [];
         for (let i = 0; i < question?.answers_to_question?.length; i++) {
             if (question?.answers_to_question?.[i].is_correct) {
-                rightAnswer = question?.answers_to_question?.[i].answer_body;
-                break;
+                rightAnswer.push(question?.answers_to_question?.[i].answer_body)
             }
         }
         return rightAnswer;
@@ -98,13 +96,19 @@ export function TestResults(props) {
                             >
                                 <Typography className={'correctAnswer'}>Ваш ответ:</Typography>
                                 {getUserAnswer(quest).map((q, key) => (
-                                    renderHTML(q)
+                                    <p style={{marginRight: '15px'}}>
+                                        {renderHTML(q)}
+                                    </p>
                                 ))}
                             </MenuItem>
                             <MenuItem className={'answersDropDown'}
                             >
                                 <Typography className={'correctAnswer'}>Правильный ответ:</Typography>
-                                {renderHTML(getRightAnswer(quest))}
+                                {getRightAnswer(quest).map((q, i) => (
+                                    <p style={{marginRight: '15px'}}>
+                                        {renderHTML(q)}
+                                    </p>
+                                ))}
                             </MenuItem>
                         </Dropdown>
                     </Container>

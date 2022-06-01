@@ -38,14 +38,15 @@ export function CourseLessonsList({lessons, course}, props) {
                             </Typography>
                         </Container> : null}
 
-                    {lessons.map((lesson, index) => (
+                    {lessons && lessons.map((lesson, index) => (
+                        lesson.module_test[0] &&
                         <Container className={'lessonContainer'}
                                    button
                                    component={Link}
                                    to={`/test/${course.slug}/${lesson.module_test[0].id}/${lesson.lesson_slug}/questions/${lesson.module_test[0].questions_on_test[0].id}`}
                                    key={index}>
                             <Typography>
-                                {lesson.module_test[0].title}
+                                {lesson.module_test[0]?.title}
                             </Typography>
                         </Container>
                     ))}
