@@ -1,7 +1,7 @@
 .MuiContainer-root.latestNewsContainer.MuiContainer-maxWidthLg {
     display: flex;
     justify-content: space-between;
-    margin: 0;
+    margin: 20px 0;
 }
 
 
@@ -37,10 +37,6 @@
 }
 
 .MuiTypography-root.startedCoursesHelpText.MuiTypography-body1 {
-    width: 324px;
-    height: 20px;
-    left: 87px;
-    top: 587px;
 
     font-family: 'Montserrat';
     font-style: normal;

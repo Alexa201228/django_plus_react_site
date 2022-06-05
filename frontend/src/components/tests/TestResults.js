@@ -5,7 +5,7 @@ import {connect, useDispatch, useSelector} from 'react-redux';
 
 import {Box, Container, Typography, Button, MenuItem} from '@material-ui/core';
 
-import {getTest, getUserTestAnswers, tryTestAgain} from '../../actions/tests';
+import {getJustTest, getTest, getUserTestAnswers, tryTestAgain} from '../../actions/tests';
 import renderHTML from "react-render-html";
 import {Link, useNavigate} from "react-router-dom";
 import {Dropdown} from "react-bootstrap";
@@ -24,10 +24,7 @@ export function TestResults(props) {
     const navigate = useNavigate();
     const dispatch = useDispatch()
     useEffect(() => {
-        console.log(test_id)
-        console.log(user)
         dispatch(getUserTestAnswers(test_id, user.id))
-        dispatch(getTest(test_id, user.id, course.slug))
     }, [test_id, user])
 
 
@@ -87,6 +84,8 @@ export function TestResults(props) {
         }
         return answer
     }
+
+    console.log(user_test_answers)
     return (
         <Fragment>
             {course && test &&

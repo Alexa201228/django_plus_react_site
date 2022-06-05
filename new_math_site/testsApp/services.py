@@ -60,12 +60,12 @@ class TestChecker():
 
             # Проверка на прохождение теста по резултатам
             is_passed: bool = False
-            if user_result >= 80:
+            if user_result >= 85:
                 user_test_result.test_mark = 5
                 is_passed = True
-            if 70 <= user_result < 80:
+            if 70 <= user_result < 85:
                 user_test_result.test_mark = 4
-            if 45 <= user_result < 70:
+            if 55 <= user_result < 70:
                 user_test_result.test_mark = 3
             user_test_result.is_passed = is_passed
             # Заполняем словарь правильных ответов

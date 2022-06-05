@@ -36,7 +36,8 @@ export function MentorCourseProgress() {
 
                 for (let i = 0; i < course.course_lessons.length; i++) {
                     if (course.course_lessons[i].module_test[0]) {
-                        for (let j = 0; j < course?.course_lessons[i].module_test?.students?.length; i++) {
+                        for (let j = 0; j < course.course_lessons[i]?.module_test?.[0]?.students?.length; i++) {
+                            console.log('students')
                             const resp = await axios.get(
                                 `${API_PATH}/api/tests/${course.course_lessons[i].module_test[j].id}/students/student-result?user-id=${course.course_lessons[i].module_test[0].students[j]}`,
                                 config
