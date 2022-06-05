@@ -2,7 +2,7 @@ import axios from "axios";
 import {tokenConfig} from "./auth";
 import {createMessage, returnErrorMessages} from "./messages";
 import {
-    GET_ALL_STUDENT_TEST_ATTEMPTS,
+    GET_ALL_STUDENT_TEST_ATTEMPTS, GET_JUST_TEST,
     GET_QUESTION,
     GET_TEST,
     GET_TEST_RESULTS,
@@ -12,10 +12,32 @@ import {
 } from "./types"
 import {API_PATH} from "../helpers/requiredConst";
 
-//Get test by id
-export const getTest = (id) => (dispatch, getState) => {
+//Get test
+export const getJustTest = (id) => (dispatch, getState) => {
     axios.get(
         `${API_PATH}/api/tests/${id}/`,
+        tokenConfig(getState)
+    )
+        .then(res => {
+            dispatch({
+                type: GET_JUST_TEST,
+                payload: res.data
+            })
+        })
+        .catch(err => {
+            if (err.response.status === 401) {
+                return null;
+            } else {
+                dispatch(returnErrorMessages({msg: err.response.data}, {status: err.response.status}))
+            }
+        });
+}
+
+//Get test by id for student
+export const getTest = (id, user_id, course_slug) => (dispatch, getState) => {
+    console.log()
+    axios.get(
+        `${API_PATH}/api/tests/${id}/get-test?user-id=${user_id}`,
         tokenConfig(getState)
     )
         .then(res => {
@@ -29,6 +51,10 @@ export const getTest = (id) => (dispatch, getState) => {
                 return null;
             } else {
                 dispatch(returnErrorMessages({msg: err.response.data}, {status: err.response.status}))
+                setTimeout(() => {
+                    window.location = `/${course_slug}`
+                }, 2000)
+
             }
         });
 }
@@ -117,9 +143,10 @@ export const getTestUsers = (test_id, group) => {
     };
 }
 
-export const getUserTestAnswers = (test_id, attempt_id) => (dispatch, getState) => {
+
+export const getUserTestAnswers = (test_id, user_id) => (dispatch, getState) => {
     axios.get(
-        `${API_PATH}/api/tests/${test_id}/students/student-result?attempt-id=${attempt_id}`,
+        `${API_PATH}/api/tests/${test_id}/students/student-result?user-id=${user_id}`,
         tokenConfig(getState)
     )
         .then(res => {

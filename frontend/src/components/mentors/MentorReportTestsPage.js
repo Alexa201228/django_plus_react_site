@@ -12,23 +12,23 @@ import {
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useParams} from "react-router-dom";
 import {useEffect} from "react";
-import {getGroupStudents} from "../../actions/auth";
+import {deleteDownloadedReport, getGroupStudents} from "../../actions/auth";
 import axios from "axios";
 import {API_PATH} from "../../helpers/requiredConst";
 
 export function MentorReportTestsPage() {
 
     const {course} = useSelector(state => state.courses);
-    const {student_group, access_token} = useSelector(state => state.auth);
+    const {student_group, access_token, students_marks} = useSelector(state => state.auth);
     const {group, year} = useParams();
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getGroupStudents(group))
-    }, [group])
+        dispatch(getGroupStudents(group, course.slug))
+    }, [group, course])
 
     const handleDownloadReportButtonClick = () => {
-        let link = 'files/';
+        let filepath = '/reports/';
         const config = {
             headers: {
                 'Content-Type': 'application/json'
@@ -38,42 +38,41 @@ export function MentorReportTestsPage() {
             config.headers['Authorization'] = `Bearer ${access_token}`;
         }
 
-        axios.get(`${API_PATH}/api/student_groups/group/students?group-name=${group}?course=${course.title}`)
+        axios.get(`${API_PATH}/api/student_groups/group/students/report?group-name=${group}&course=${course.slug}`, config)
             .then(res => {
-                link += `${res.data.filename}`
+                filepath += res.data.filename;
+                const link = document.createElement('a');
+                link.download = res.data.filename;
+                link.href = filepath;
+                link.target = '_blank';
+                link.click();
+                document.removeChild(link)
+
             })
+            .then(setTimeout(() => {
+                dispatch(deleteDownloadedReport(filepath))
+            }, 6000))
             .catch(err => {
                 console.log(err)
             })
+
     }
 
     const getStudentsTests = (student) => {
         let studentTests = []
-        if (course?.course_test?.[0]) {
+        for (const mark in students_marks[student.id]) {
             let res = {}
-            if (student.student_tests.some(test => test.id == course?.course_test?.[0].id)) {
-                res[course?.course_test?.[0].id] = 'Пройден';
+            if (students_marks[student.id][mark] > 0) {
+                res[mark] = `${students_marks[student.id][mark]}`
                 studentTests.push(res)
             } else {
-                res[course?.course_test?.[0].id] = '-';
+                res[mark] = '-'
                 studentTests.push(res)
             }
         }
-        for (let i = 0; i < course?.course_lessons.length; i++) {
-            for (let j = 0; j < course.course_lessons[i].module_test.length; j++) {
-                let res = {};
-                if (student.student_tests.some(test => test.id == course.course_lessons[i].module_test[j].id)) {
-                    res[course.course_lessons[i].module_test[j].id] = 'Пройден';
-                    studentTests.push(res)
-                } else {
-                    res[course.course_lessons[i].module_test[j].id] = '-';
-                    studentTests.push(res)
-                }
-            }
-        }
+
         return studentTests;
     }
-
     return (
         <>
             {course && student_group &&
@@ -110,7 +109,7 @@ export function MentorReportTestsPage() {
                                         <TableCell
                                             className={'tableCell'}>{student.last_name} {student.first_name?.[0]} {student.patronymic?.[0]}</TableCell>
                                         {getStudentsTests(student).map((res, key) => (
-                                            res[Object.keys(res)[0]] == 'Пройден' ?
+                                            res[Object.keys(res)[0]] !== '-' ?
                                                 <TableCell component={Link}
                                                            to={`/tests/${Object.keys(res)[0]}/students/${student.id}/attempts`}
                                                            className={'tableCell'}>{res[Object.keys(res)[0]]}</TableCell>

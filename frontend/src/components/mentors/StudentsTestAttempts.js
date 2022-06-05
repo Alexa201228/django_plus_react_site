@@ -74,7 +74,7 @@ export function StudentsTestAttempts() {
 
     return (
         <>
-            {student_test_attempts &&
+            {student_test_attempts && currentStudent && test_users &&
             <>
                 <Container>
                     <Container>

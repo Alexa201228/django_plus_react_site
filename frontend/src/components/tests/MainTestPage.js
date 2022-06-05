@@ -18,13 +18,14 @@ const useStyles = makeStyles((theme) =>({
 export function TestPage(){
     const { test_id } = useParams();
     const { test } = useSelector(state => state.tests);
+    const { user } = useSelector(state => state.auth);
+    const { course } = useSelector(state => state.courses);
     const [seconds, setSeconds] = useState(0);
     const [isActive, setIsActive] = useState(true)
     const dispatch = useDispatch();
     useEffect(()=>{
-        dispatch(getTest(test_id))
-    }, [test_id])
-    const styles = useStyles();
+        dispatch(getTest(test_id, user.id, course.slug))
+    }, [test_id, user.id])
     return(
         <Fragment>
             {test ?

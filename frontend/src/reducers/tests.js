@@ -1,5 +1,5 @@
 import {
-    GET_ALL_STUDENT_TEST_ATTEMPTS,
+    GET_ALL_STUDENT_TEST_ATTEMPTS, GET_JUST_TEST,
     GET_QUESTION,
     GET_TEST,
     GET_TEST_RESULTS,
@@ -23,8 +23,18 @@ const initialState = {
 }
 
 
-export default function(state = initialState, action) {
-    switch(action.type){
+export default function (state = initialState, action) {
+    switch (action.type) {
+        case GET_JUST_TEST:
+            return {
+                ...state,
+                test: action.payload,
+                questions: action.payload.questions_on_test,
+                user_chosen_answers: clearChosenAnswers(action.payload.questions_on_test),
+                correct_answers: {},
+                test_users: [],
+                user_test_answers: []
+            }
         case GET_TEST_USERS:
             return {
                 ...state,
@@ -38,33 +48,33 @@ export default function(state = initialState, action) {
         case GET_TEST:
             return {
                 ...state,
-                test: action.payload,
-                questions: action.payload.questions_on_test,
-                user_chosen_answers: clearChosenAnswers(action.payload.questions_on_test),
+                test: action.payload.test,
+                questions: action.payload.test.questions_on_test,
+                user_chosen_answers: clearChosenAnswers(action.payload.test.questions_on_test),
                 correct_answers: {},
                 test_users: [],
                 user_test_answers: []
             }
         case GET_QUESTION:
-            return{
+            return {
                 ...state,
                 question: action.payload,
             }
         case GET_TEST_RESULTS:
 
-            return{
+            return {
                 ...state,
                 result: action.payload.result,
-                correct_answers:{
+                correct_answers: {
                     ...state.correct_answers, ...action.payload.correct_answers
                 },
                 is_passed: action.payload.is_passed,
-                finished: action.payload.finished, 
+                finished: action.payload.finished,
             }
 
         case TRY_TEST_AGAIN:
-            return{
-                ...state, 
+            return {
+                ...state,
                 finished: false,
                 user_chosen_answers: clearChosenAnswers(action.payload.questions_on_test),
                 correct_answers: {},
@@ -74,7 +84,8 @@ export default function(state = initialState, action) {
         case GET_ALL_STUDENT_TEST_ATTEMPTS:
             return {
                 ...state,
-                student_test_attempts: action.payload.test_results
+                student_test_attempts: action.payload.test_results,
+                test_users: action.payload.test_users
             }
         default:
             return state;

@@ -11,7 +11,7 @@ import {
 import {Link, Outlet, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import {getTest, getTestUsers} from "../../actions/tests";
+import {getJustTest, getTest, getTestUsers} from "../../actions/tests";
 import axios from "axios";
 import {API_PATH} from "../../helpers/requiredConst";
 
@@ -22,7 +22,7 @@ export function StudentTestResultPage() {
     const {test_users, test} = useSelector((state) => state.tests);
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getTest(test_id));
+        dispatch(getJustTest(test_id));
         dispatch(getTestUsers(test_id, group));
 
 

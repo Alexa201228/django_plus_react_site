@@ -40,7 +40,6 @@ class TestViewSet(viewsets.ReadOnlyModelViewSet):
         try:
             test = self.get_object()
             student = Student.objects.filter(email=request.user.email).first()
-            print(request.data)
             test_checker = TestChecker(test, request.data['chosen_answers'], request.data['test_time'], student)
             result = test_checker.get_test_result()
 
@@ -59,6 +58,33 @@ class TestViewSet(viewsets.ReadOnlyModelViewSet):
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         except Exception as e:
             return HttpResponseBadRequest(f'Error type: {type(e).__name__}. Error message: {e}')
+
+    @action(
+        detail=True,
+        methods=['get'],
+        url_path='get-test',
+        permission_classes=[permissions.IsAuthenticated]
+    )
+    def get_test_checking_attempts(self, request, *args, **kwargs):
+        """
+        Method to get test with checking whether student have some attempts left
+        """
+        try:
+            student = Student.objects.filter(id=request.GET.get('user-id')).first()
+            test = self.get_object()
+            student_results = TestResult.objects.filter(test_id=test, user_id=student).all()
+            if len(student_results) > test.attempts_amount:
+                return Response({
+                    'error': f'Вы не можете пройти тест так как количество попыток исчерпано.\n'
+                             f'Количество попыток: {len(student_results)}/{test.attempts_amount}'
+                }, status=status.HTTP_400_BAD_REQUEST)
+            return Response({
+                'test': TestSerializer(test).data
+            })
+        except Exception as e:
+            return Response({
+                'error': type(e).__name__
+            }, status=status.HTTP_400_BAD_REQUEST)
 
     @action(
         detail=True,
@@ -89,11 +115,9 @@ class TestViewSet(viewsets.ReadOnlyModelViewSet):
         throw error. Otherwise let user try to pass test.
         """
 
-        print(request.GET.get('user_id'), self.request.user.__dict__)
         test = self.get_object()
         user = Student.objects.filter(id=self.request.user.id).first()
         user_attempts = TestResult.objects.filter(test_id=test, user_id=user).all()
-        print(user, user_attempts)
         if len(user_attempts) + 1 > test.attempts_amount:
             return Response({
                 'error': f'Вы израходовали все попытки прохождения теста.\n'
@@ -110,8 +134,9 @@ class TestViewSet(viewsets.ReadOnlyModelViewSet):
         url_path='students/student-result'
     )
     def get_user_test_answers(self, request, *args, **kwargs):
-        test_results = TestResult.objects.filter(id=request.GET.get('attempt-id')).first()
-
+        student = Student.objects.filter(id=request.GET.get('user-id')).first()
+        test = self.get_object()
+        test_results = TestResult.objects.filter(test_id=test, user_id=student).order_by('-id').first()
         return Response(
             {
                 'test_results': TestResultSerializer(test_results).data
@@ -134,7 +159,8 @@ class TestViewSet(viewsets.ReadOnlyModelViewSet):
         db_test_results = TestResult.objects.filter(test_id=test, user_id=student).all()
         results = [TestResultSerializer(test_result).data for test_result in db_test_results]
         return Response({
-            'test_results': results
+            'test_results': results,
+            'test_users': [StudentSerializer(student).data]
         })
 
     @action(

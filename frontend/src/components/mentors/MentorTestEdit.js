@@ -3,15 +3,15 @@ import {Link, useParams} from "react-router-dom";
 import CkeditorComponent from "../../helpers/CkeditorComponent";
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {addTest, editTest, getTest} from "../../actions/tests";
+import {addTest, editTest, getJustTest, getTest} from "../../actions/tests";
 
 
 export function MentorTestEdit() {
     const {test} = useSelector(state => state.tests);
     const dispatch = useDispatch();
     const {test_id} = useParams();
-    const [testName, setTestName] = useState(test.title);
-    const [testAttempts, setTestAttempts] = useState(test.attempts_amount);
+    const [testName, setTestName] = useState(test?.title);
+    const [testAttempts, setTestAttempts] = useState(test?.attempts_amount);
     const [questionList, setQuestionList] = useState(
         [
             {
@@ -27,20 +27,20 @@ export function MentorTestEdit() {
     )
 
     useEffect(() => {
-        dispatch(getTest(test_id))
+        dispatch(getJustTest(test_id))
     }, [test_id])
 
     useEffect(() => {
         let initQuestionList = []
-        for (let i = 0; i < test.questions_on_test.length; i++) {
+        for (let i = 0; i < test?.questions_on_test.length; i++) {
             let question = {
-                question: test.questions_on_test[i].question_body,
+                question: test?.questions_on_test[i].question_body,
                 answers: []
             };
-            for (let j = 0; j < test.questions_on_test[i].answers_to_question.length; j++) {
+            for (let j = 0; j < test?.questions_on_test[i].answers_to_question.length; j++) {
                 question['answers'].push({
-                    answer: test.questions_on_test[i].answers_to_question[j].answer_body,
-                    isCorrect: test.questions_on_test[i].answers_to_question[j].is_correct
+                    answer: test?.questions_on_test[i].answers_to_question[j].answer_body,
+                    isCorrect: test?.questions_on_test[i].answers_to_question[j].is_correct
                 })
             }
             initQuestionList.push(question)
@@ -132,17 +132,14 @@ export function MentorTestEdit() {
     }
 
     const setDefaultChecked = (question_id, name, answerKey) => {
-        console.log(questionList[question_id].answers[answerKey].isCorrect)
         localStorage.setItem(name, questionList[question_id].answers[answerKey].isCorrect)
         return questionList[question_id].answers[answerKey].isCorrect;
     }
 
-    console.log(test)
-    console.log(questionList)
 
     return (
         <>
-            {questionList[0].question !== '' &&
+            {questionList[0] && questionList[0].question !== '' && test &&
             <>
                 <Container className={'addTestContainer'}>
                     <Typography className='introAddTestText'>

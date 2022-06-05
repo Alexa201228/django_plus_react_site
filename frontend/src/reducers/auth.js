@@ -22,7 +22,8 @@ const initialState = {
     isMentor: false,
     groups: [],
     groupsByYear: [],
-    student_group: null
+    student_group: null,
+    students_marks: null
 };
 
 export default function (state = initialState, action) {
@@ -99,7 +100,8 @@ export default function (state = initialState, action) {
         case GET_GROUP_STUDENT:
             return {
                 ...state,
-                student_group: action.payload.group_students
+                student_group: action.payload.group_students,
+                students_marks: action.payload.students_marks
             }
         default:
             return state;

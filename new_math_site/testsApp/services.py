@@ -79,7 +79,6 @@ class TestChecker():
                         )
                 returned_correct_answers[key] = temp_arr
             user_test_result.save()
-            print(user_test_result.chosen_answers.all())
             return [user_result, returned_correct_answers, is_passed]
         except Exception as e:
             raise e

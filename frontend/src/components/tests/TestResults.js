@@ -24,8 +24,10 @@ export function TestResults(props) {
     const navigate = useNavigate();
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch(getUserTestAnswers({test_id: test_id, user_id: user.id}))
-        dispatch(getTest(test_id))
+        console.log(test_id)
+        console.log(user)
+        dispatch(getUserTestAnswers(test_id, user.id))
+        dispatch(getTest(test_id, user.id, course.slug))
     }, [test_id, user])
 
 

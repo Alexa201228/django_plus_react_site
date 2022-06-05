@@ -270,8 +270,8 @@ export const getAllStudentGroups = () => (dispatch, getState) => {
         })
 }
 
-export const getGroupStudents = (group_name) => (dispatch, getState) => {
-    axios.get(`${API_PATH}/api/student_groups/group/students?group-name=${group_name}`, tokenConfig(getState))
+export const getGroupStudents = (group_name, course_slug) => (dispatch, getState) => {
+    axios.get(`${API_PATH}/api/student_groups/group/students?group-name=${group_name}&course=${course_slug}`, tokenConfig(getState))
         .then(res => {
             dispatch({
                 type: GET_GROUP_STUDENT,
@@ -283,6 +283,16 @@ export const getGroupStudents = (group_name) => (dispatch, getState) => {
         })
 }
 
+//Method to delete downloaded file from folder
+export const deleteDownloadedReport = (filename) => (dispatch, getState) => {
+    axios.delete(`${API_PATH}/api/student_groups/group/students/reports/delete?file=${filename}`, tokenConfig(getState))
+        .then(res => {
+            console.log('temp file deleted')
+        })
+        .catch(err => {
+            dispatch(returnErrorMessages({msg: err.response.data}, {status: err.response.status}))
+        })
+}
 
 //Setup config
 export const tokenConfig = getState => {
