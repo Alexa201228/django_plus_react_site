@@ -20,40 +20,17 @@ export function StudentTestResultPage() {
 
     const {test_id, group, year} = useParams();
     const {test_users, test} = useSelector((state) => state.tests);
-    const userState = useSelector(state => state.auth);
-    const [usersResults, setUsersResults] = useState(undefined);
     const dispatch = useDispatch();
     useEffect(() => {
+        dispatch(getTest(test_id));
         dispatch(getTestUsers(test_id, group));
-        setUsersResults({})
-        async function getAllUsersResults() {
-            let usersResults = {};
-            const token = userState.access_token;
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }
-            if (token) {
-                config.headers['Authorization'] = `Bearer ${token}`;
-            }
-            for (let i = 0; i < test_users.length; i++) {
-                const resp = await axios.get(
-                    `${API_PATH}/api/tests/${test_id}/students/student-result?user-id=${test_users[i].id}`,
-                    config
-                )
-                usersResults[test_users[i].id] = resp.data.test_results.test_mark;
-            }
-            setUsersResults(usersResults)
-        }
 
-        getAllUsersResults()
-    }, [group, year])
 
-    console.log(`${group}, ${year}`)
+    }, [test_id, group, year])
+
     return (
 
-        <>{test_users && usersResults &&
+        <>{test && test_users &&
         <>
             <Container>
                 <Container className={'courseInfoContainer'}>
@@ -63,7 +40,7 @@ export function StudentTestResultPage() {
                     <Table className={'testResultTable'}>
                         <TableHead>
                             <TableRow>
-                                <TableCell align="right">ФИО</TableCell>
+                                <TableCell align="center">ФИО</TableCell>
                                 <TableCell align="center">Результат</TableCell>
                             </TableRow>
                         </TableHead>
@@ -72,16 +49,14 @@ export function StudentTestResultPage() {
                                 <TableRow key={key}>
                                     <TableCell
                                         key={`${key + 10}`}
-                                        align="right">
+                                        align="center">
                                         {student.first_name} {student.last_name} {student.patronymic}
                                     </TableCell>
                                     <TableCell align="right">
                                         <Container className={'testUsersResult'}>
-                                            <Typography
-                                                className={'testUserLabel'}>{usersResults[student.id]}</Typography>
-                                            <Link to={`/tests/${test_id}/students/results/${student.id}`}>
+                                            <Link to={`/tests/${test_id}/students/${student.id}/attempts`}>
                                                 <Typography className={'testUserLinkTypography'}>
-                                                    Смотреть результат
+                                                    Подробнее
                                                 </Typography>
                                             </Link>
                                         </Container>

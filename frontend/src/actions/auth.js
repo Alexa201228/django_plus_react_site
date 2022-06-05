@@ -14,7 +14,7 @@ import {
     EMAIL_VERIFIED,
     PASSWORD_RESET,
     GET_PASSWORD_RESET_FORM,
-    ACCESS_LINK_EXPIRED, GET_USERS_GROUPS_BY_YEAR, GET_STUDENT_GROUPS,
+    ACCESS_LINK_EXPIRED, GET_USERS_GROUPS_BY_YEAR, GET_STUDENT_GROUPS, GET_GROUP_STUDENT,
 } from "./types";
 
 
@@ -243,7 +243,6 @@ export const setNewPassword = ({email, new_password, confirm_password}) => dispa
 }
 
 export const getGroupsByYear = ({year}) => (dispatch, getState) => {
-    const body = JSON.stringify(year);
     axios.get(`${API_PATH}/api/student_groups/year?year=${year}`, tokenConfig(getState))
         .then(res => {
                 dispatch({
@@ -268,6 +267,19 @@ export const getAllStudentGroups = () => (dispatch, getState) => {
         })
         .catch(err => {
             dispatch(returnErrorMessages({msg: err.response.data}, {status: err.response.status}))
+        })
+}
+
+export const getGroupStudents = (group_name) => (dispatch, getState) => {
+    axios.get(`${API_PATH}/api/student_groups/group/students?group-name=${group_name}`, tokenConfig(getState))
+        .then(res => {
+            dispatch({
+                type: GET_GROUP_STUDENT,
+                payload: res.data
+            })
+        })
+        .catch(err => {
+             dispatch(returnErrorMessages({msg: err.response.data}, {status: err.response.status}))
         })
 }
 

@@ -38,6 +38,12 @@ import {RouterTwoTone} from "@material-ui/icons";
 import {MentorGroupsPage} from "./components/mentors/MentorGroupsPage";
 import MentorAddLesson from "./components/mentors/MentorAddLesson";
 import MentorMainAddTestPage from "./components/mentors/MentorMainAddTestPage";
+import MentorLessonEdit from "./components/mentors/MentorLessonEdit";
+import MentorTestEdit from "./components/mentors/MentorTestEdit";
+import StudentsTestAttempts from "./components/mentors/StudentsTestAttempts";
+import MentorReportYear from "./components/mentors/MentorReportYear";
+import MentorReportTestsPage from "./components/mentors/MentorReportTestsPage";
+import MentorReportGroupPage from "./components/mentors/MentorReportGroupPage";
 
 
 //Alert options
@@ -97,13 +103,22 @@ export function App() {
                                         <Route path='/lessons-list/:slug/tests/new' element={<MentorMainAddTestPage/>}/>
                                         <Route path='/lessons-list/:slug/tests/new/course' element={<MentorAddTest/>}/>
                                         <Route path='/lessons-list/:slug/tests/new/lesson' element={<MentorAddTest/>}/>
+                                        <Route path='/tests/:test_id/edit' element={<MentorTestEdit/>}/>
+                                        <Route path='/lessons-list/:slug/lessons/:lesson_slug/edit'
+                                               element={<MentorLessonEdit/>}/>
                                         <Route path='/tests/:test_id/students' element={<MentorStudentPageResult/>}>
-
                                             <Route path=':year' element={<MentorGroupsPage/>}>
                                                 <Route path=':group' element={<StudentTestResultPage/>}/>
                                             </Route>
+
                                         </Route>
-                                        <Route path='/tests/:test_id/students/results/:user_id'
+                                        <Route path='/tests/:slug/report' element={<MentorReportYear/>}>
+                                            <Route path=':year' element={<MentorReportGroupPage/>}>
+                                                <Route path=':group' element={<MentorReportTestsPage/>}/>
+                                            </Route>
+                                        </Route>
+                                        <Route path='/tests/:test_id/students/:user_id/attempts' element={<StudentsTestAttempts/>}/>
+                                        <Route path='/tests/:test_id/students/:user_id/attempts/:attempt_id'
                                                element={<StudentTestAnswers/>}/>
                                     </Route>
                                     <Route element={<PrivateRoute/>}>

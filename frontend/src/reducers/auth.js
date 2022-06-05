@@ -10,7 +10,7 @@ import {
     EMAIL_VERIFIED,
     PASSWORD_RESET,
     GET_PASSWORD_RESET_FORM,
-    ACCESS_LINK_EXPIRED, GET_USERS_GROUPS_BY_YEAR, GET_STUDENT_GROUPS
+    ACCESS_LINK_EXPIRED, GET_USERS_GROUPS_BY_YEAR, GET_STUDENT_GROUPS, GET_GROUP_STUDENT
 } from '../actions/types';
 
 const initialState = {
@@ -21,7 +21,8 @@ const initialState = {
     user: null,
     isMentor: false,
     groups: [],
-    groupsByYear: []
+    groupsByYear: [],
+    student_group: null
 };
 
 export default function (state = initialState, action) {
@@ -94,6 +95,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 groups: action.payload.results
+            }
+        case GET_GROUP_STUDENT:
+            return {
+                ...state,
+                student_group: action.payload.group_students
             }
         default:
             return state;

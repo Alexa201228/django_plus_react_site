@@ -207,7 +207,7 @@ a.MuiContainer-root.lessonContainer.MuiContainer-maxWidthLg {
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 800;
-    font-size: 28px;
+    font-size: 24px;
     /* or 71% */
 
 
@@ -231,7 +231,7 @@ a.MuiContainer-root.lessonContainer.MuiContainer-maxWidthLg {
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 700;
-    font-size: 24px;
+    font-size: 20px;
     /* identical to box height, or 83% */
 
 
@@ -262,7 +262,7 @@ a.MuiContainer-root.lessonContainer.MuiContainer-maxWidthLg {
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 500;
-    font-size: 24px;
+    font-size: 20px;
 
 }
 
@@ -281,7 +281,7 @@ a.MuiContainer-root.lessonContainer.MuiContainer-maxWidthLg {
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 700;
-    font-size: 24px;
+    font-size: 20px;
     color: #FFFFFF;
 }
 
@@ -292,7 +292,7 @@ a.MuiContainer-root.lessonContainer.MuiContainer-maxWidthLg {
     width: fit-content;
     padding: 20px;
     font-family: Montserrat;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
     line-height: 20px;
     letter-spacing: 0em;
@@ -317,7 +317,7 @@ a.MuiContainer-root.lessonContainer.MuiContainer-maxWidthLg {
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 700;
-    font-size: 18px;
+    font-size: 16px;
     /* identical to box height, or 111% */
 
     color: #535353;

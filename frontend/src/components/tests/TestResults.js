@@ -10,6 +10,10 @@ import renderHTML from "react-render-html";
 import {Link, useNavigate} from "react-router-dom";
 import {Dropdown} from "react-bootstrap";
 import {formatSeconds} from "../../helpers/timerComponent";
+import axios from "axios";
+import {API_PATH} from "../../helpers/requiredConst";
+import {TRY_TEST_AGAIN} from "../../actions/types";
+import {returnErrorMessages} from "../../actions/messages";
 
 
 export function TestResults(props) {
@@ -26,11 +30,38 @@ export function TestResults(props) {
 
 
     const tryAgain = () => {
-        props.tryTestAgain(test_id)
-        if (lesson) {
-            navigate(`/test/${course.slug}/${lesson.lesson_slug}/${test_id}/questions/${test.questions_on_test[0].id}`);
+        const token = user.access_token;
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
         }
-        navigate(`/test/${course.slug}/${test_id}/questions/${test.questions_on_test[0].id}`)
+        if (token) {
+            config.headers['Authorization'] = `Bearer ${token}`;
+        }
+        axios.get(
+            `${API_PATH}/api/tests/${test_id}/try-again`,
+            config
+        )
+            .then(res => {
+                if (lesson) {
+                    navigate(`/test/${course.slug}/${lesson.lesson_slug}/${test_id}/questions/${test.questions_on_test[0].id}`);
+                }
+                navigate(`/test/${course.slug}/${test_id}/questions/${test.questions_on_test[0].id}`)
+                dispatch({
+                    type: TRY_TEST_AGAIN,
+                    payload: res.data
+                })
+
+            })
+            .catch(err => {
+                if (err.response.status === 401) {
+                    return null;
+                } else {
+                    dispatch(returnErrorMessages({error: err.response.data}, {status: err.response.status}))
+                }
+            });
+
     }
     const getRightAnswer = (question) => {
         let rightAnswer = [];
@@ -44,13 +75,12 @@ export function TestResults(props) {
 
     const getUserAnswer = (question) => {
         let answer = [];
-        for(let i = 0; i < user_test_answers.chosen_answers.length; i++){
-            if(user_test_answers.chosen_answers[i].question == question.id)
-            {
+        for (let i = 0; i < user_test_answers.chosen_answers.length; i++) {
+            if (user_test_answers.chosen_answers[i].question == question.id) {
                 answer.push(user_test_answers.chosen_answers[i].answer_body)
             }
         }
-        if(answer === []){
+        if (answer === []) {
             answer.push('<p style="color: red">Вы не ответили на этот вопрос</p>')
         }
         return answer

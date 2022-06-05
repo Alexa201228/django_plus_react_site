@@ -1,7 +1,15 @@
 import axios from "axios";
 import {tokenConfig} from "./auth";
 import {createMessage, returnErrorMessages} from "./messages";
-import {GET_QUESTION, GET_TEST, GET_TEST_RESULTS, GET_TEST_USERS, GET_USER_TEST_ANSWERS, TRY_TEST_AGAIN} from "./types"
+import {
+    GET_ALL_STUDENT_TEST_ATTEMPTS,
+    GET_QUESTION,
+    GET_TEST,
+    GET_TEST_RESULTS,
+    GET_TEST_USERS,
+    GET_USER_TEST_ANSWERS,
+    TRY_TEST_AGAIN
+} from "./types"
 import {API_PATH} from "../helpers/requiredConst";
 
 //Get test by id
@@ -69,7 +77,7 @@ export const testResults = ({test_id, user_chosen_answers, test_time}) => (dispa
 //Try to pass test again
 export const tryTestAgain = (test_id) => (dispatch, getState) => {
     axios.get(
-        `${API_PATH}/api/tests/${test_id}/`,
+        `${API_PATH}/api/tests/${test_id}/try-again`,
         tokenConfig(getState)
     )
         .then(res => {
@@ -109,9 +117,9 @@ export const getTestUsers = (test_id, group) => {
     };
 }
 
-export const getUserTestAnswers = ({test_id, user_id}) => (dispatch, getState) => {
+export const getUserTestAnswers = (test_id, attempt_id) => (dispatch, getState) => {
     axios.get(
-        `${API_PATH}/api/tests/${test_id}/students/student-result?user-id=${user_id}`,
+        `${API_PATH}/api/tests/${test_id}/students/student-result?attempt-id=${attempt_id}`,
         tokenConfig(getState)
     )
         .then(res => {
@@ -131,9 +139,39 @@ export const getUserTestAnswers = ({test_id, user_id}) => (dispatch, getState) =
 
 export const addTest = (data) => (dispatch, getState) => {
     const body = JSON.stringify(data)
-    axios.post(`${API_PATH}/api/tests/add/`, body, tokenConfig(getState))
+    axios.post(`${API_PATH}/api/tests/add-edit/`, body, tokenConfig(getState))
         .then(res => {
             dispatch(createMessage({successfulTestAdd: 'Тест добавлен!'}))
+        })
+        .catch(err => {
+            dispatch(returnErrorMessages({error: err.response.data}, {status: err.response.status}))
+        })
+}
+
+
+export const editTest = (data) => (dispatch, getState) => {
+    const body = JSON.stringify(data)
+    axios.patch(`${API_PATH}/api/tests/add-edit/`, body, tokenConfig(getState))
+        .then(res => {
+            dispatch(createMessage({successfulTestAdd: 'Тест добавлен!'}));
+            dispatch({
+                type: GET_TEST,
+                payload: res.data
+            })
+        })
+        .catch(err => {
+            dispatch(returnErrorMessages({error: err.response.data}, {status: err.response.status}))
+        })
+}
+
+// Method to get all students' test attempts
+export const getAllStudentTestAttempts = (test_id, user_id) => (dispatch, getState) => {
+    axios.get(`${API_PATH}/api/tests/${test_id}/attempts/students?user-id=${user_id}`, tokenConfig(getState))
+        .then(res => {
+            dispatch({
+                type: GET_ALL_STUDENT_TEST_ATTEMPTS,
+                payload: res.data
+            })
         })
         .catch(err => {
             dispatch(returnErrorMessages({error: err.response.data}, {status: err.response.status}))

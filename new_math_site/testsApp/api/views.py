@@ -1,3 +1,5 @@
+import logging
+
 from django.http.response import HttpResponseBadRequest
 
 from rest_framework.exceptions import AuthenticationFailed
@@ -14,6 +16,9 @@ from accounts.models import Student
 from accounts.api.serializers import StudentSerializer
 
 from courses.models import Lesson, Course
+
+
+logger = logging.getLogger(__name__)
 
 
 class TestViewSet(viewsets.ReadOnlyModelViewSet):
@@ -75,12 +80,37 @@ class TestViewSet(viewsets.ReadOnlyModelViewSet):
         detail=True,
         permission_classes=[permissions.IsAuthenticated],
         methods=['get'],
+        url_path='try-again'
+    )
+    def try_test_again(self, request, *args, **kwargs):
+        """
+        Method to let user try test again.
+        If user attempts amount exceeds attempts amount of the test -
+        throw error. Otherwise let user try to pass test.
+        """
+
+        print(request.GET.get('user_id'), self.request.user.__dict__)
+        test = self.get_object()
+        user = Student.objects.filter(id=self.request.user.id).first()
+        user_attempts = TestResult.objects.filter(test_id=test, user_id=user).all()
+        print(user, user_attempts)
+        if len(user_attempts) + 1 > test.attempts_amount:
+            return Response({
+                'error': f'Вы израходовали все попытки прохождения теста.\n'
+                         f'Количество попыток: {len(user_attempts)} из {test.attempts_amount}'
+            }, status=status.HTTP_400_BAD_REQUEST)
+        return Response({
+            'test': TestSerializer(test).data
+        })
+
+    @action(
+        detail=True,
+        permission_classes=[permissions.IsAuthenticated],
+        methods=['get'],
         url_path='students/student-result'
     )
     def get_user_test_answers(self, request, *args, **kwargs):
-        student = Student.objects.filter(id=int(request.GET.get('user-id')[0])).first()
-        user_test = Test.objects.filter(id=int(kwargs['pk'])).first()
-        test_results = TestResult.objects.filter(user_id=student, test_id=user_test).order_by('-id').first()
+        test_results = TestResult.objects.filter(id=request.GET.get('attempt-id')).first()
 
         return Response(
             {
@@ -89,38 +119,69 @@ class TestViewSet(viewsets.ReadOnlyModelViewSet):
         )
 
     @action(
+        detail=True,
+        permission_classes=[permissions.IsAuthenticated],
+        methods=['get'],
+        url_path='attempts/students'
+    )
+    def get_all_students_test_results(self, request, *args, **kwargs):
+        """
+        Method to get all test results of particular student.
+        Student id is provided with query parameters
+        """
+        test = self.get_object()
+        student = Student.objects.filter(id=request.GET.get('user-id')).first()
+        db_test_results = TestResult.objects.filter(test_id=test, user_id=student).all()
+        results = [TestResultSerializer(test_result).data for test_result in db_test_results]
+        return Response({
+            'test_results': results
+        })
+
+    @action(
         detail=False,
-        methods=['post'],
-        url_path='add',
+        methods=['post', 'patch'],
+        url_path='add-edit',
         permission_classes=[permissions.IsAuthenticated]
     )
-    def add_new_test(self, request):
+    def add_or_edit_new_test(self, request):
         """
-        Method to add new test from frontend
+        Method to add new test or edit existing one from frontend
         """
-        print(request.data)
-        if request.data.get('lesson_id'):
-            lesson = Lesson.objects.filter(id=request.data.pop('lesson_id')).first()
-            new_test = Test.objects.create(lesson=lesson)
-        if request.data.get('course_id'):
-            course = Course.objects.filter(id=request.data.pop('course_id')).first()
-            new_test = Test.objects.create(course=course)
-        new_test.title = request.data.pop('test_name')
-        new_test.attempts_amount = request.data.pop('attempts_amount')
+        try:
+            print(request.method, request.data)
+            if request.method == 'PATCH':
 
-        for question in request.data:
-            print(question, request.data[question]['question'])
+                new_test = Test.objects.filter(id=request.data.pop('test_id')).first()
+                for question in new_test.questions_on_test.all():
+                    question.delete()
+            if request.method == 'POST':
+                if request.data.get('lesson_id'):
+                    lesson = Lesson.objects.filter(id=request.data.pop('lesson_id')).first()
+                    new_test = Test.objects.create(lesson=lesson)
+                if request.data.get('course_id'):
+                    course = Course.objects.filter(id=request.data.pop('course_id')).first()
+                    new_test = Test.objects.create(course=course)
+            new_test.title = request.data.pop('test_name')
+            new_test.attempts_amount = request.data.pop('attempts_amount')
 
-            new_question = Question.objects.create(test=new_test, question_body=request.data[question]['question'])
-            new_question.save()
-            for answer in request.data[question]['answers']:
-                print(answer)
-                question_answers = Answer.objects.create(question=new_question,
-                                                         answer_body=request.data[question]['answers'][answer]['answer'],
-                                                         is_correct=request.data[question]['answers'][answer]['isCorrect'])
-                question_answers.save()
-        new_test.save()
-        return Response({})
+            for question in request.data:
+
+                new_question = Question.objects.create(test=new_test, question_body=request.data[question]['question'])
+                new_question.save()
+                for answer in request.data[question]['answers']:
+                    question_answers = Answer.objects.create(question=new_question,
+                                                             answer_body=request.data[question]['answers'][answer]['answer'],
+                                                             is_correct=request.data[question]['answers'][answer]['isCorrect'] == 'true')
+                    question_answers.save()
+            new_test.save()
+            return Response({
+                'test': TestSerializer(new_test).data
+            })
+        except Exception as e:
+            logger.error(e)
+            return Response({
+                'error': type(e).__name__
+            }, status=status.HTTP_400_BAD_REQUEST)
 
 
 class QuestionViewSet(viewsets.ReadOnlyModelViewSet):

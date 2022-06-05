@@ -19,7 +19,6 @@ export function CourseLesson() {
         dispatch(getLesson({slug, lesson_slug}))
     }, [lesson_slug])
 
-    const styles = useStyles();
     return (
         <Fragment>
             {lesson ?
@@ -49,6 +48,16 @@ export function CourseLesson() {
                                 </Button>
                             </Container>
                             : null}
+
+                        {isMentor &&
+                        <Container className={'goToTest'}>
+                            <Button
+                                className={'enrollCourseButton'}
+                                component={NavLink}
+                                to={`/lessons-list/${course.slug}/lessons/${lesson.lesson_slug}/edit`}>
+                                Редактировать
+                            </Button>
+                        </Container>}
                     </Container>
                 </Fragment>
                 : null}

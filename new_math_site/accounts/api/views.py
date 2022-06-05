@@ -6,6 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 import jwt
 
 from rest_framework import generics, permissions, viewsets
+from rest_framework.decorators import action
 from rest_framework_simplejwt.tokens import RefreshToken, OutstandingToken, BlacklistedToken
 from rest_framework.response import Response
 from rest_framework import status

@@ -10,6 +10,11 @@ const CkeditorComponent = ({name, content}) => {
                 name={name}
                 editor={ClassicEditor}
                 data={content}
+                onReady = {
+                    editor => {
+                        localStorage.setItem(name, content)
+                    }
+                }
                 onChange={(event, editor) => {
                     const data = editor.getData();
                     localStorage.setItem(name, data)

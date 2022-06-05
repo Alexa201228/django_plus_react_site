@@ -10,21 +10,21 @@ import {Dropdown} from "react-bootstrap";
 
 export function StudentTestAnswers() {
     const {user_test_answers} = useSelector((state) => state.tests);
-    const {test_id, user_id} = useParams();
+    console.log(useParams())
+    const {test_id, attempt_id} = useParams();
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getUserTestAnswers({test_id, user_id}))
-    }, [user_id])
+        dispatch(getUserTestAnswers(test_id, attempt_id))
+    }, [attempt_id])
 
-    const getRightAnswer = (question) => {
-        let rightAnswer = '';
+    const getRightAnswers = (question) => {
+        let rightAnswers = [];
         for (let i = 0; i < question?.answers_to_question?.length; i++) {
             if (question?.answers_to_question?.[i].is_correct) {
-                rightAnswer = question?.answers_to_question?.[i].answer_body;
-                break;
+                rightAnswers.push(question?.answers_to_question?.[i].answer_body);
             }
         }
-        return rightAnswer;
+        return rightAnswers;
     }
 
     const getUserAnswer = (question) => {
@@ -34,8 +34,8 @@ export function StudentTestAnswers() {
                 answer.push(user_test_answers.chosen_answers[i].answer_body)
             }
         }
-        if (answer === []) {
-            answer.push('<p style="color: red">Вы не ответили на этот вопрос</p>')
+        if (answer.length < 1) {
+            answer.push('<p style="color: red">Студент не ответил на данный вопрос</p>')
         }
         return answer
     }
@@ -82,7 +82,9 @@ export function StudentTestAnswers() {
                             <MenuItem className={'answersDropDown'}
                             >
                                 <Typography className={'correctAnswer'}>Правильный ответ:</Typography>
-                                {renderHTML(getRightAnswer(quest))}
+                                {getRightAnswers(quest).map((q, k) => (
+                                    renderHTML(q)
+                                ))}
                             </MenuItem>
                         </Dropdown>
                     </Container>

@@ -1,14 +1,11 @@
-import {Button, Container, Typography} from "@material-ui/core";
-import {Link, Outlet, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
+import {Link, Outlet, useParams} from "react-router-dom";
 import {useEffect} from "react";
 import {getAllStudentGroups} from "../../actions/auth";
+import {Button, Container, Typography} from "@material-ui/core";
 
-
-export function MentorStudentPageResult() {
-
+export function MentorReportYear() {
     const {groups} = useSelector(state => state.auth);
-    const {test_id} = useParams()
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -29,9 +26,6 @@ export function MentorStudentPageResult() {
                 <Container>
                     <Container className={'courseInfoContainer'}>
                         <Typography className={'courseInfoTitle'}>Выберите год обучения:</Typography>
-                        <Button component={Link}
-                                to={`/tests/${test_id}/edit`}
-                                className={'yearButton'}>Изменить тест</Button>
                     </Container>
                     <Container>
                         {getDistinctYears().map((year, index) => (
@@ -51,4 +45,4 @@ export function MentorStudentPageResult() {
     )
 }
 
-export default MentorStudentPageResult;
+export default MentorReportYear;

@@ -21,7 +21,7 @@ class TestSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Test
-        fields = ('id', 'title', 'questions_on_test', 'lesson', 'course', 'students')
+        fields = ('id', 'title', 'questions_on_test', 'lesson', 'course', 'students', 'attempts_amount')
         extra_kwargs = {
             'questions_on_test': {'required': False},
             'title': {'required': False, 'read_only': True},

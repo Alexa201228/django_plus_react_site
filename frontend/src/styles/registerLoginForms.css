@@ -30,7 +30,7 @@
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 800;
-    font-size: 24px;
+    font-size: 22px;
     line-height: 20px;
 /* identical to box height, or 83% */
 
@@ -53,7 +53,7 @@
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 700;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 20px;
 /* identical to box height, or 111% */
 
@@ -89,12 +89,11 @@
     height: 20px;
     left: 396px;
     top: 318px;
-    margin-left: 75%;
+    margin-left: 70%;
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 500;
-    font-size: 18px;
-    line-height: 20px;
+    font-size: 16px;
 /* identical to box height, or 111% */
     text-decoration-line: underline;
 
@@ -130,21 +129,17 @@
 }
 
 .MuiTypography-root.iAmStudentTextLabel.MuiTypography-body1 a{
-    width: 139px;
-    height: 20px;
-    margin: 35px auto 0 auto;
+
+    margin: 30px auto 0 auto;
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 700;
-    font-size: 16px;
-    line-height: 20px;
+    font-size: 15px;
     /* identical to box height, or 125% */
 
     text-decoration-line: underline;
 
     color: #3339D3;
-
-
     flex: none;
     order: 4;
     flex-grow: 0;
@@ -154,12 +149,12 @@
     justify-content: center;
     width: 139px;
     height: 20px;
-    margin: 35px auto 0 auto;
+    margin: 30px auto 0 auto;
+    padding-top: 15px;
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 700;
     font-size: 16px;
-    line-height: 20px;
     /* identical to box height, or 125% */
 
     text-decoration-line: underline;
@@ -267,14 +262,10 @@
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 500;
-    font-size: 18px;
-    line-height: 20px;
+    font-size: 16px;
     /* identical to box height, or 125% */
     margin: 35px auto 0 100px;
     color: #535353;
-
-
-    /* Inside auto layout */
 
     flex: none;
     order: 4;

@@ -123,7 +123,7 @@ class MentorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Mentor
-        fields = ['id', 'first_name', 'last_name', 'mentor_courses',
+        fields = ['id', 'first_name', 'last_name', 'patronymic', 'mentor_courses',
                   'mentors_groups', 'mentor_training_directions']
 
 
@@ -134,5 +134,5 @@ class StudentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Student
-        fields = ['id', 'email', 'first_name', 'last_name',
+        fields = ['id', 'email', 'first_name', 'last_name', 'patronymic',
                   'student_courses', 'student_tests', 'student_book_number']

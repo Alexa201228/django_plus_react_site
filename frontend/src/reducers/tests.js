@@ -1,4 +1,5 @@
 import {
+    GET_ALL_STUDENT_TEST_ATTEMPTS,
     GET_QUESTION,
     GET_TEST,
     GET_TEST_RESULTS,
@@ -17,7 +18,8 @@ const initialState = {
     is_passed: false,
     finished: false,
     test_users: [],
-    user_test_answers: []
+    user_test_answers: [],
+    student_test_attempts: []
 }
 
 
@@ -68,6 +70,11 @@ export default function(state = initialState, action) {
                 correct_answers: {},
                 test_users: [],
                 user_test_answers: []
+            }
+        case GET_ALL_STUDENT_TEST_ATTEMPTS:
+            return {
+                ...state,
+                student_test_attempts: action.payload.test_results
             }
         default:
             return state;

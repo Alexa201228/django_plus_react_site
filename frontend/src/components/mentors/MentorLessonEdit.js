@@ -1,38 +1,39 @@
-import {Button, Container, FormControlLabel, TextField, Typography} from "@material-ui/core";
+import {Button, Container, TextField, Typography} from "@material-ui/core";
+import {Link, useNavigate} from "react-router-dom";
 import CkeditorComponent from "../../helpers/CkeditorComponent";
 import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {addLesson} from "../../actions/courses";
-import {Link, useNavigate} from "react-router-dom";
+import {editLesson} from "../../actions/courses";
 
 
-export function MentorAddLesson() {
+export function MentorLessonEdit() {
 
-    const [lessonName, setLessonName] = useState('');
-    const {course} = useSelector(state => state.courses);
-    const dispatch = useDispatch();
+    const {course, lesson} = useSelector(state => state.courses);
+    const [lessonName, setLessonName] = useState(lesson.lesson_name);
     const navigate = useNavigate();
-
-    const handleSubmit = () => {
-        let lessonText = localStorage.getItem('lessonText');
-        localStorage.removeItem('lessonText');
-        const course_id = course.id;
-
-        dispatch(addLesson(
-            course_id,
-            lessonName,
-            lessonText))
-        navigate(`/lessons-list/${course.slug}`)
-    }
+    const dispatch = useDispatch();
+    console.log(lesson)
 
     const lessonNameChange = (e) => {
         setLessonName(e.target.value)
     }
 
+    const handleSubmit = () => {
+        let lessonText = localStorage.getItem('lessonText');
+        localStorage.removeItem('lessonText');
+        const lesson_id = lesson.id;
+
+        dispatch(editLesson(
+            lesson_id,
+            lessonName,
+            lessonText))
+        navigate(`/lessons-list/${course.slug}`)
+    }
+
     return (
         <>
             <Container className={'addTestContainer'}>
-                <Typography className='introAddTestText'>Добавление урока к курсу {course.title}</Typography>
+                <Typography className='introAddTestText'>Редактирование урока {lesson.lesson_name}</Typography>
 
             </Container>
             <Container
@@ -51,12 +52,13 @@ export function MentorAddLesson() {
                             className='loginRegisterInput'
                             placeholder={'Введите название урока'}
                             variant={'standard'}
+                            defaultValue={lesson.lesson_name}
                             onChange={(e) => lessonNameChange(e)}/>
                     </Container>
 
                     <Container>
                         <Typography className={'newLessonName'}>Текст лекции</Typography>
-                        <CkeditorComponent name={'lessonText'} content={''}/>
+                        <CkeditorComponent name={'lessonText'} content={lesson.body}/>
                     </Container>
                 </Container>
 
@@ -70,4 +72,4 @@ export function MentorAddLesson() {
     )
 }
 
-export default MentorAddLesson;
+export default MentorLessonEdit;

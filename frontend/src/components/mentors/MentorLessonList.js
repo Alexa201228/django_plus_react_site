@@ -31,8 +31,23 @@ export function MentorLessonList({lessons, course}) {
                         </Typography>
                     </Container>
                 </Container>
-                <Typography className={'lessonParagraph'}>Доступные тесты</Typography>
-                <Typography className={'lessonHelpTextParagraph'}> Для перехода к тесту, нажмите на него</Typography>
+                <Container className={'mentorTestsButtonLabelContainer'}>
+                    <Container style={{padding: 0}}>
+                        <Typography className={'lessonParagraph'}>Доступные тесты</Typography>
+                        <Typography className={'lessonHelpTextParagraph'}> Для перехода к тесту, нажмите на
+                            него</Typography>
+                    </Container>
+                    <Container className={'reportButtonContainer'}>
+                        <Container className={'lessonContainer'}
+                                   button
+                                   component={Link}
+                                   to={`/tests/${course.slug}/report`}>
+                            <Typography>
+                                Отчет выполнения тестов
+                            </Typography>
+                        </Container>
+                    </Container>
+                </Container>
                 <Container className={'studentCoursesContainer'}>
                     {course?.course_test?.[0] ?
                         <Container className={'lessonContainer'}

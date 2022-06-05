@@ -79,7 +79,6 @@ export const enrollCourse = ({token, title, slug}) => dispatch => {
 
 //Add course lesson
 export const addLesson = (course, lesson_name, lesson_text) => (dispatch, getState) => {
-    console.log(`${course}, ${lesson_name}, ${lesson_text}`)
     const body = JSON.stringify({course, lesson_name, lesson_text});
     console.log(body)
     axios.post(`${API_PATH}/api/lessons/add/`, body, tokenConfig(getState))
@@ -91,3 +90,18 @@ export const addLesson = (course, lesson_name, lesson_text) => (dispatch, getSta
         })
 
 }
+
+//Edit course lesson
+export const editLesson = (lesson, lesson_name, lesson_text) => (dispatch, getState) => {
+    const body = JSON.stringify({lesson_name: lesson_name, body: lesson_text});
+    console.log(body)
+    axios.patch(`${API_PATH}/api/lessons/${lesson}/`, body, tokenConfig(getState))
+        .then(res => {
+            dispatch(createMessage({successfulLectureAdd: 'Лекция обновлена!'}))
+        })
+        .catch(err => {
+            dispatch(returnErrorMessages({error: err.response.data}, {status: err.response.status}))
+        })
+
+}
+
