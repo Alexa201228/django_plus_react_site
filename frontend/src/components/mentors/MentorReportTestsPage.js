@@ -41,6 +41,7 @@ export function MentorReportTestsPage() {
         axios.get(`${API_PATH}/api/student_groups/group/students/report?group-name=${group}&course=${course.slug}`, config)
             .then(res => {
                 filepath += res.data.filename;
+                localStorage.setItem('reportFilepath', filepath)
                 const link = document.createElement('a');
                 link.download = res.data.filename;
                 link.href = filepath;
@@ -50,8 +51,8 @@ export function MentorReportTestsPage() {
 
             })
             .then(setTimeout(() => {
-                dispatch(deleteDownloadedReport(filepath))
-            }, 6000))
+                dispatch(deleteDownloadedReport(localStorage.getItem('reportFilepath')))
+            }, 10000))
             .catch(err => {
                 console.log(err)
             })

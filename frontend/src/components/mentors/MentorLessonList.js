@@ -64,7 +64,7 @@ export function MentorLessonList({lessons, course}) {
                         <Container className={'lessonContainer'}
                                    button
                                    component={Link}
-                                   to={`/tests/${lesson.module_test[0]?.id}/students`}
+                                   to={`/tests/${lesson.module_test[0]?.id}`}
                                    key={index}>
                             <Typography>
                                 {lesson.module_test[0]?.title}

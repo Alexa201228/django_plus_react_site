@@ -5,9 +5,9 @@ import { GET_COURSES, ENROLL_COURSE, GET_COURSE_DETAILS, GET_LESSON } from "./ty
 import {tokenConfig} from "./auth";
 
 //Get courses
-export const getCourses = () => dispatch => {
+export const getCourses = () => (dispatch, getState) => {
     axios
-        .get(`${API_PATH}/api/courses/`)
+        .get(`${API_PATH}/api/courses/`, tokenConfig(getState))
         .then(res => {
             dispatch({
                 type: GET_COURSES,
@@ -20,8 +20,8 @@ export const getCourses = () => dispatch => {
 
 
 //Get course details
-export const courseDetails = (slug) => dispatch => {
-    axios.get(`${API_PATH}/api/courses/${slug}/`)
+export const courseDetails = (slug) => (dispatch, getState) => {
+    axios.get(`${API_PATH}/api/courses/${slug}/`, tokenConfig(getState))
         .then(res => {
             dispatch({
                 type: GET_COURSE_DETAILS,
@@ -36,8 +36,8 @@ export const courseDetails = (slug) => dispatch => {
 
 
 //Get lesson
-export const getLesson = ({slug, lesson_slug}) => dispatch =>{
-    axios.get(`${API_PATH}/api/courses/${slug}/${lesson_slug}/`)
+export const getLesson = ({slug, lesson_slug}) => (dispatch, getState) =>{
+    axios.get(`${API_PATH}/api/courses/${slug}/${lesson_slug}/`, tokenConfig(getState))
     .then(res => {
         dispatch({
             type: GET_LESSON,
@@ -51,15 +51,9 @@ export const getLesson = ({slug, lesson_slug}) => dispatch =>{
 }
 
 //Enroll course
-export const enrollCourse = ({token, title, slug}) => dispatch => {
-    const config = {
-        headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-        }
-    }
+export const enrollCourse = ({token, title, slug}) => (dispatch, getState) => {
     const body = JSON.stringify({title, slug})
-    axios.post(`${API_PATH}/api/courses/${slug}/enroll/`, body, config)
+    axios.post(`${API_PATH}/api/courses/${slug}/enroll/`, body, tokenConfig(getState))
     .then(res => {
         dispatch(createMessage({successfullEnroll: 'Вы успешно зарегистрировались на курс!'}))
         dispatch({

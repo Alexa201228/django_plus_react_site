@@ -28,6 +28,10 @@ export function QuestionBody(props) {
         dispatch(getQuestion(question_id))
     }, [question_id])
 
+    window.history.pushState(null, null, window.location.href);
+    window.onpopstate = function () {
+       window.history.go(1);
+    };
     //Получение результатов тестирования
     const getTestResult = () => {
         const test_time = localStorage.getItem('testTime')
@@ -66,8 +70,8 @@ export function QuestionBody(props) {
 
         if (countAnswersNumber(question) < 2) {
             let checkboxes = document.getElementsByClassName('PrivateSwitchBase-input-19')
-            for(let i = 0; i < checkboxes.length; i++){
-                if(checkboxes[i].value != e.target.value && checkboxes[i].checked){
+            for (let i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].value != e.target.value && checkboxes[i].checked) {
                     checkboxes[i].click();
                 }
             }
@@ -105,7 +109,7 @@ export function QuestionBody(props) {
         </FormGroup>
     );
 
-    const testNotFinished = (
+    const finishTest = (
         <Button
             className={'enrollCourseButton'}
             onClick={getTestResult}>
@@ -117,7 +121,7 @@ export function QuestionBody(props) {
         <Button
             className={'buttonGoAhead'}
             component={Link}
-        to={`${getFurtherQuestion()}`}>
+            to={`${getFurtherQuestion()}`}>
             Далее
         </Button>
     )
@@ -152,7 +156,7 @@ export function QuestionBody(props) {
                             </FormControl>
                         </Container>
                         <Container className={'testButtonContainer'}>
-                            {isLastQuestion() ? testNotFinished : goAhead}
+                            {isLastQuestion() ? finishTest : goAhead}
                         </Container>
                     </Container>
 

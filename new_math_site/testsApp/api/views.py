@@ -26,17 +26,17 @@ class TestViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     queryset = Test.objects.all()
 
-    """
-    Метод проверки теста пользователя.
-    Проверка производится в классе TestChecker
-    в файле services.py
-    """
     @action(
         detail=True,
         methods=['post'],
         permission_classes=[permissions.IsAuthenticated]
     )
     def test_results(self, request, *args, **kwargs):
+        """
+            Метод проверки теста пользователя.
+            Проверка производится в классе TestChecker
+            в файле services.py
+        """
         try:
             test = self.get_object()
             student = Student.objects.filter(email=request.user.email).first()
@@ -214,3 +214,4 @@ class QuestionViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = QuestionSerializer
     permission_classes = [permissions.IsAuthenticated]
     queryset = Question.objects.all()
+

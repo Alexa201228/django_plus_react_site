@@ -1,28 +1,35 @@
 import {CKEditor} from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import {Container} from "@material-ui/core";
+import Delayed from "./Delayed";
 
-
-const CkeditorComponent = ({name, content}) => {
+export function CkeditorComponent({name, content}) {
     return (
-        <Container className={'ckeditorEditorContainer'}>
-            <CKEditor
-                name={name}
-                editor={ClassicEditor}
-                data={content}
-                onReady = {
-                    editor => {
-                        localStorage.setItem(name, content)
+        <Delayed>
+            <Container className={'ckeditorEditorContainer'}>
+                <CKEditor
+                    name={name}
+                    editor={ClassicEditor}
+                    data={content}
+                    config={{
+                        toolbar: ['heading', '|', 'bold', 'italic', 'blockQuote', 'link', 'numberedList', 'bulletedList', 'insertTable',
+                            'tableColumn', 'tableRow', 'mergeTableCells', 'mediaEmbed', '|', 'undo', 'redo']
+                    }}
+                    onReady={
+                        editor => {
+                            localStorage.setItem(name, content)
+                        }
                     }
-                }
-                onChange={(event, editor) => {
-                    const data = editor.getData();
-                    localStorage.setItem(name, data)
-                }}
-            />
-        </Container>
+                    onChange={(event, editor) => {
+                        const data = editor.getData();
+                        localStorage.setItem(name, data)
+                    }}
+                />
+            </Container>
+        </Delayed>
+
 
     )
-};
+}
 
 export default CkeditorComponent;

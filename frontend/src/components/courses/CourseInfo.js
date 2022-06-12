@@ -41,7 +41,7 @@ export function CourseInfo(props) {
                 </Container>
                 <Container
                     component={Link}
-                    to={-1}
+                    to={`/user/profile/${user.user.id}`}
                     className={'backLinkContainer'}>
                     <Typography className={'backLinkText'}>Назад</Typography>
                 </Container>

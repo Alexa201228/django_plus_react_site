@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from pytils.translit import slugify
 
 from ..models import Course
-from accounts.models import Student
+from accounts.models import Student, Mentor
 from .serializers import *
 
 
@@ -13,7 +13,7 @@ class CourseViewSet(viewsets.ReadOnlyModelViewSet):
     lookup_field = 'slug'
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
 
     """
     Custom function to register user on course
@@ -45,18 +45,18 @@ class CourseViewSet(viewsets.ReadOnlyModelViewSet):
 class CourseListView(generics.ListAPIView):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class CourseDetailView(generics.RetrieveAPIView):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class ModuleDetailApiView(generics.RetrieveAPIView):
     serializer_class = ModuleSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_object(self):
         course_slug = self.kwargs.get('course_slug')

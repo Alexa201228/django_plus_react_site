@@ -27,7 +27,10 @@ export function TestResults(props) {
         dispatch(getUserTestAnswers(test_id, user.id))
     }, [test_id, user])
 
-
+    window.history.pushState(null, null, window.location.href);
+    window.onpopstate = function () {
+       window.history.go(1);
+    };
     const tryAgain = () => {
         const token = user.access_token;
         const config = {

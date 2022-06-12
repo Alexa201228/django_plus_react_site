@@ -191,8 +191,6 @@
     position: sticky;
     width: 483px;
     height: 478px;
-    left: 1346px;
-    top: 313px;
 
     background: rgba(51, 57, 211, 0.68);
     filter: blur(335px);
@@ -218,9 +216,9 @@
 .MuiContainer-root.pinkCircle.MuiContainer-maxWidthLg{
     position: sticky;
     width: 416px;
-    height: 350px;
+    height: 250px;
     left: 1138px;
-    top: 521px;
+    top: 500px;
 
     background: rgba(190, 114, 226, 0.68);
     filter: blur(335px);

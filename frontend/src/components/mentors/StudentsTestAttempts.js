@@ -78,7 +78,7 @@ export function StudentsTestAttempts() {
             <>
                 <Container>
                     <Container>
-                        <Typography>Результаты студента {currentStudent.first_name} {currentStudent.last_name}</Typography>
+                        <Typography>Результаты студента {currentStudent.last_name} {currentStudent.first_name?.[0]} </Typography>
                     </Container>
                     <TableContainer className={'testResultTableContainer'}>
                         <Table className={'testResultTable'}>

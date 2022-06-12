@@ -10,10 +10,9 @@ import {
 } from "@material-ui/core";
 import {Link, Outlet, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {useEffect, useState} from "react";
-import {getJustTest, getTest, getTestUsers} from "../../actions/tests";
-import axios from "axios";
-import {API_PATH} from "../../helpers/requiredConst";
+import { useEffect } from "react";
+import {getJustTest, getTestUsers} from "../../actions/tests";
+
 
 
 export function StudentTestResultPage() {
@@ -50,7 +49,7 @@ export function StudentTestResultPage() {
                                     <TableCell
                                         key={`${key + 10}`}
                                         align="center">
-                                        {student.first_name} {student.last_name} {student.patronymic}
+                                         {student.last_name} {student.first_name?.[0]} {student.patronymic?.[0]}
                                     </TableCell>
                                     <TableCell align="right">
                                         <Container className={'testUsersResult'}>

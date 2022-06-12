@@ -6,7 +6,6 @@ import {Link, NavLink} from 'react-router-dom';
 import {Button, Container, Typography} from '@material-ui/core';
 import renderHTML from 'react-render-html';
 import {getLesson} from '../../actions/courses';
-import {useStyles} from './../../App';
 
 
 export function CourseLesson() {
@@ -37,7 +36,7 @@ export function CourseLesson() {
                         <Container className={'lessonContentContainer'}>
                             {renderHTML(lesson.body)}
                         </Container>
-                        {lesson.module_test && isAuthenticated && !isMentor
+                        {lesson.module_test[0] && isAuthenticated && !isMentor
                         && user.student_courses.some(c => course.id === c.id) ?
                             <Container className={'goToTest'}>
                                 <Button
