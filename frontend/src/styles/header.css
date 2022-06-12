@@ -1,0 +1,106 @@
+.header {
+    box-sizing: border-box;
+    position: absolute;
+    width: 1920px;
+    height: 136px;
+    left: 0px;
+    top: 0px;
+
+    background: #FFFFFF;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.uniLogo {
+    position: absolute;
+    width: 97px;
+    height: 97px;
+    left: 83px;
+    top: 20px;
+    background: url('./images/kubstulogo 1.svg');
+    font-family: 'Montserrat', sans-serif;
+}
+
+.material-icons.MuiIcon-root.logoutIcon{
+    background: url('./images/bx-log-out-circle 1.svg');
+    width: 32px;
+    height: 32px;
+    margin: auto 0;
+}
+
+.MuiTypography-root.labelTextTypography.MuiTypography-h6.MuiTypography-colorInherit {
+    /* Информационная система по подготовке и тестированию обучающихся */
+
+    position: absolute;
+    width: 496px;
+    height: 40px;
+    left: 206px;
+    top: 40px;
+
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 20px;
+    /* or 100% */
+
+    color: #000000;
+
+}
+.MuiContainer-root.headerButtonContainer.MuiContainer-maxWidthLg {
+    display: flex;
+    position: absolute;
+    left: 60.38%;
+    right: 17.71%;
+    top: 25.1%;
+    bottom: 85.55%;
+}
+
+.MuiContainer-root.studentIcon.MuiContainer-maxWidthLg {
+    background: url('./images/student-icon.svg') no-repeat center;
+    height: 56px;
+    width: 59.7px;
+
+    border-radius: 0px;
+
+}
+
+.MuiContainer-root.headerProfileInfo.MuiContainer-maxWidthLg {
+    display: flex;
+    justify-content: space-between;
+    text-decoration: none;
+}
+.MuiTypography-root.personNames.MuiTypography-body1{
+    width: fit-content;
+    height: 20px;
+    top: 50px;
+    outline: none;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    text-align: left;
+
+    color: #000000;
+}
+
+
+.MuiTypography-root.personalHeaderInfo.MuiTypography-body1 {
+    width: 102px;
+    height: 20px;
+    margin-top: 10px;
+
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 20px;
+
+    color: #535353;
+}
+
+.MuiButtonBase-root.MuiButton-root.MuiButton-text.logoutButton {
+    height: 56px;
+    padding: 10px 0 10px 0;
+    margin: 0;
+}
