@@ -5,14 +5,24 @@ from django.core.exceptions import ObjectDoesNotExist
 
 import jwt
 
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, viewsets
+from rest_framework.decorators import action
 from rest_framework_simplejwt.tokens import RefreshToken, OutstandingToken, BlacklistedToken
 from rest_framework.response import Response
 from rest_framework import status
 
-from .serializers import LoginSerializer, RegisterSerializer, ResetPasswordSerializer, UserSerializer
+from .serializers import (
+    StudentLoginSerializer,
+    MentorLoginSerializer,
+    RegisterSerializer,
+    ResetPasswordSerializer,
+    UserSerializer,
+    MentorSerializer,
+    StudentSerializer
+)
 from ..utils import EmailManager
-from ..models import User
+from ..models import User, Mentor, Student
+from student_groups.models import StudentGroup, StudentBookNumber
 
 
 def send_email_with_link(user, request, subject, message, link):
@@ -34,17 +44,33 @@ class RegisterApiView(generics.GenericAPIView):
 
     def post(self, request):
         try:
-            serializer = self.get_serializer(data=request.data)
+            student_group = StudentGroup.objects.filter(group_name__iexact=request.data['student_group']).first()
+            if student_group is None:
+                raise ValueError('Такой группы нет в базе!')
+            student_book_number = StudentBookNumber.objects.filter(
+                student_book_number=request.data['student_book_number'],
+                student_group=student_group.id).first()
+            if student_book_number is None:
+                raise ValueError('Номер зачетной книжки не соответствует номеру группы')
+            data = {
+                'email': request.data['email'],
+                'first_name': request.data['first_name'],
+                'last_name': request.data['last_name'],
+                'password': request.data['password'],
+                'student_group': student_group.id,
+                'student_book_number': student_book_number.id
+            }
+            serializer = self.get_serializer(data=data)
             serializer.is_valid(raise_exception=True)
             user = serializer.save()
             email_message = '\nTo verify your email, please use this link\n'
-            access_url_path = '#/confirm/'
+            access_url_path = '/confirm/'
             email_subject = 'Activate account'
             send_email_with_link(user, request, email_subject,
                                  email_message, access_url_path)
             return Response(
                 {
-                    'user': UserSerializer(
+                    'user': StudentSerializer(
                         user,
                         context=self.get_serializer_context()).data
                 }
@@ -55,10 +81,56 @@ class RegisterApiView(generics.GenericAPIView):
                 e.messages,
                 status=status.HTTP_400_BAD_REQUEST,
             )
+        except ValueError as val_err:
+            return Response(
+                data=str(val_err),
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
 
-class LoginApiView(generics.GenericAPIView):
-    serializer_class = LoginSerializer
+class StudentLoginApiView(generics.GenericAPIView):
+    serializer_class = StudentLoginSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        try:
+            student_book_number = StudentBookNumber.objects.filter(
+                student_book_number=request.data['student_book_number']).first()
+            student = Student.objects.filter(student_book_number=student_book_number.id).first()
+            if student is None:
+                raise ValueError('Учащегося с данным номером зачетной книжки нет в базе.'
+                                 'Пожалуйста, зарегистрируйтесь для входа в систему')
+            data = {
+                'student_book_number': student_book_number.id,
+                'password': request.data['password']
+            }
+            serializer = self.get_serializer(data=data)
+            serializer.is_valid(raise_exception=True)
+            user = serializer.validated_data
+            student = Student.objects.filter(id=user['user'].id).first()
+            return Response(
+                {
+                    'user': StudentSerializer(student).data,
+                    'access_token': user['tokens']['access'],
+                    'refresh_token': user['tokens']['refresh'],
+                    'is_mentor': False
+                },
+                status=status.HTTP_200_OK
+            )
+        except ValidationError as e:
+            return Response(
+                e.messages,
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        except ValueError as val_error:
+            return Response(
+                data=str(val_error),
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+
+class MentorLoginApiView(generics.GenericAPIView):
+    serializer_class = MentorLoginSerializer
     permission_classes = [permissions.AllowAny]
 
     def post(self, request):
@@ -66,15 +138,13 @@ class LoginApiView(generics.GenericAPIView):
             serializer = self.get_serializer(data=request.data)
             serializer.is_valid(raise_exception=True)
             user = serializer.validated_data
+            mentor = Mentor.objects.filter(id=user['user'].id).first()
             return Response(
                 {
-                    'user': UserSerializer(
-                        user['user'],
-                        context=self.get_serializer_context()).data,
+                    'user': MentorSerializer(mentor).data,
                     'access_token': user['tokens']['access'],
                     'refresh_token': user['tokens']['refresh'],
-                    'isVerified': True,
-
+                    'is_mentor': True
                 },
                 status=status.HTTP_200_OK
             )
@@ -85,19 +155,36 @@ class LoginApiView(generics.GenericAPIView):
             )
 
 
-class UserApiView(generics.RetrieveAPIView):
+class UserApiView(generics.GenericAPIView):
     permission_classes = [
         permissions.IsAuthenticated,
     ]
-    serializer_class = UserSerializer
 
-    def get_object(self):
-        return self.request.user
+    def get_serializer_class(self):
+        mentor = Mentor.objects.filter(email=self.request.user.email).first()
+        if mentor is not None:
+            return MentorSerializer
+        return StudentSerializer
+
+    def get(self, *args, **kwargs):
+        curr_serializer = self.get_serializer()
+        user = Student.objects.filter(email=self.request.user.email).first()
+        is_mentor = False
+        if isinstance(curr_serializer, MentorSerializer):
+            is_mentor = True
+            user = Mentor.objects.filter(email=self.request.user.email).first()
+        return Response(
+                {
+                    'user': self.get_serializer(user).data,
+                    'is_mentor': is_mentor
+                },
+                status=status.HTTP_200_OK
+            )
 
 
 class LogoutView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated, ]
-    serializer_class = LoginSerializer
+    serializer_class = RegisterSerializer
 
     def post(self, request, *args, **kwargs):
         if self.request.data.get('all'):
@@ -125,9 +212,7 @@ class VerifyEmailView(generics.GenericAPIView):
             payload = jwt.decode(
                 token, settings.SECRET_KEY, algorithms='HS256')
             user = User.objects.get(id=payload['user_id'])
-            if not user.is_verified:
-                user.is_verified = True
-                user.save()
+            user.save()
             return Response(
                 status=status.HTTP_200_OK
             )
@@ -146,7 +231,7 @@ class VerifyEmailView(generics.GenericAPIView):
         try:
             user = User.objects.get(email=request.data)
             email_message = '\nTo verify your email, please use this link\n'
-            access_url = '#/confirm/'
+            access_url = '/confirm/'
             email_subject = 'Activate account'
             send_email_with_link(
                 user, request, email_subject, email_message, access_url)
@@ -169,6 +254,7 @@ class VerifyEmailView(generics.GenericAPIView):
 
 class SendResetPasswordEmailView(generics.GenericAPIView):
     permission_classes = [permissions.AllowAny, ]
+    serializer_class = None
 
     def get(self, request, *args, **kwargs):
         token = request.GET.get('token')
@@ -207,7 +293,7 @@ class SendResetPasswordEmailView(generics.GenericAPIView):
         try:
             user = User.objects.get(email=request.data)
             email_message = '\nTo reset your account password, please use this link\n'
-            reset_password_url = '#/reset-password/'
+            reset_password_url = '/reset-password/'
             email_subject = 'Reset password'
             send_email_with_link(user, request, email_subject,
                                  email_message, reset_password_url)
