@@ -21,7 +21,6 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-print(BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -85,7 +84,7 @@ ROOT_URLCONF = 'new_math_site.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'frontend/public')],
+        'DIRS': [os.path.join(BASE_DIR.parent, 'frontend/public')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
