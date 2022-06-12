@@ -2,6 +2,9 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+   "engines": {
+    "node": "14.x"
+  }
   "dependencies": {
     "@ckeditor/ckeditor5-autoformat": "^34.1.0",
     "@ckeditor/ckeditor5-block-quote": "^34.1.0",
