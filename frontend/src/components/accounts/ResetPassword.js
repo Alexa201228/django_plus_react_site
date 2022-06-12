@@ -90,7 +90,7 @@ export function ResetPassword(props) {
                         >
                             <Typography
                                 className={'loginButtonText '}>
-                                Отправить письмо для сброса пароля
+                                Отправить письмо
                             </Typography>
                         </Button>
                 </div>
