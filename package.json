@@ -1,0 +1,90 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": "14.x"
+  },
+  "dependencies": {
+    "@ckeditor/ckeditor5-autoformat": "^34.1.0",
+    "@ckeditor/ckeditor5-block-quote": "^34.1.0",
+    "@ckeditor/ckeditor5-essentials": "^34.1.0",
+    "@hookform/error-message": "^2.0.0",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.1.1",
+    "@testing-library/user-event": "^13.5.0",
+    "react": "^18.0.0",
+    "react-bootstrap": "^2.3.0",
+    "react-dom": "^18.0.0",
+    "react-render-html": "^0.6.0",
+    "react-router": "^6.3.0",
+    "react-scripts": "5.0.1",
+    "redux": "^4.2.0",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-persist": "^6.0.0",
+    "redux-thunk": "^2.4.1",
+    "stream": "0.0.2",
+    "util": "^0.12.4",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@ckeditor/ckeditor5-adapter-ckfinder": "^34.1.0",
+    "@ckeditor/ckeditor5-alignment": "^34.1.0",
+    "@ckeditor/ckeditor5-basic-styles": "^34.1.0",
+    "@ckeditor/ckeditor5-build-classic": "^34.0.0",
+    "@ckeditor/ckeditor5-ckfinder": "^34.1.0",
+    "@ckeditor/ckeditor5-code-block": "^34.1.0",
+    "@ckeditor/ckeditor5-editor-classic": "^34.1.0",
+    "@ckeditor/ckeditor5-font": "^34.1.0",
+    "@ckeditor/ckeditor5-heading": "^34.1.0",
+    "@ckeditor/ckeditor5-highlight": "^34.1.0",
+    "@ckeditor/ckeditor5-html-embed": "^34.1.0",
+    "@ckeditor/ckeditor5-image": "^34.1.0",
+    "@ckeditor/ckeditor5-indent": "^34.1.0",
+    "@ckeditor/ckeditor5-link": "^34.1.0",
+    "@ckeditor/ckeditor5-list": "^34.1.0",
+    "@ckeditor/ckeditor5-media-embed": "^34.1.0",
+    "@ckeditor/ckeditor5-paragraph": "^34.1.0",
+    "@ckeditor/ckeditor5-paste-from-office": "^34.1.0",
+    "@ckeditor/ckeditor5-react": "^5.0.1",
+    "@ckeditor/ckeditor5-table": "^34.1.0",
+    "@ckeditor/ckeditor5-typing": "^34.1.0",
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.11.3",
+    "axios": "^0.26.1",
+    "axios-auth-refresh": "^3.2.2",
+    "ckeditor5-custom-build": "0.0.6",
+    "material-ui": "^0.20.2",
+    "mui-rte": "^2.0.1",
+    "prop-types": "^15.8.1",
+    "react-alert": "^7.0.3",
+    "react-alert-template-snackbar-material-ui": "^1.0.6",
+    "react-hook-form": "^7.30.0",
+    "react-redux": "^8.0.1",
+    "react-router-dom": "^6.3.0"
+  }
+}
