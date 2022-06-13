@@ -128,7 +128,7 @@ class Student(User):
     )
     student_group = models.ForeignKey(StudentGroup,
                                       on_delete=models.DO_NOTHING,
-                                      null=False)
+                                      null=True)
 
     class Meta:
         verbose_name = 'Студент'
