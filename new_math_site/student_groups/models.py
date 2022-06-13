@@ -11,7 +11,7 @@ class StudentGroup(models.Model):
         to='accounts.Mentor',
         related_name='student_groups',
         blank=True,
-        verbose_name='Преаодаватели группы'
+        verbose_name='Преподаватели группы'
     )
 
     start_year = models.IntegerField(verbose_name='Год образования группы')
