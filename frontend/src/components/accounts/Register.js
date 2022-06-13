@@ -54,7 +54,7 @@ export function Register(props) {
     }
 
     if (props.isAuthenticated) {
-        return <Navigate to={`/user/profile/${user.id}`}/>;
+        return <Navigate to={`/user/profile/${user?.id}`}/>;
     }
 
 
