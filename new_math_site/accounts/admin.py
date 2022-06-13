@@ -31,6 +31,11 @@ class MentorAdmin(BaseUserAdmin):
     search_fields = ('first_name', 'last_name', 'patronymic')
     filter_horizontal = ('mentor_courses', 'mentors_groups', 'mentor_training_directions')
     ordering = ('last_name', )
+    add_fieldsets = (
+        (None, {
+            'fields': ('email', 'password'),
+        }),
+    )
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name', 'patronymic',
@@ -43,6 +48,11 @@ class StudentAdmin(BaseUserAdmin):
     search_fields = ('first_name', 'last_name', 'patronymic', 'student_group')
     filter_horizontal = ('student_courses', )
     readonly_fields = ('student_tests',)
+    add_fieldsets = (
+        (None, {
+            'fields': ('email', 'password'),
+        }),
+    )
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name', 'patronymic',
