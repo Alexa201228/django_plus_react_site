@@ -11,7 +11,7 @@ class UserAdmin(BaseUserAdmin):
         (_('Personal info'), {'fields': ('first_name', 'last_name')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
                                        'user_permissions')}),
-        (_('Important dates'), {'fields': ('date_joined', )}),
+        (_('Important dates'), {'fields': ('date_joined',)}),
     )
     add_fieldsets = (
         (None, {
@@ -29,35 +29,40 @@ class UserAdmin(BaseUserAdmin):
 class MentorAdmin(BaseUserAdmin):
     list_display = ('first_name', 'last_name', 'patronymic')
     search_fields = ('first_name', 'last_name', 'patronymic')
-    filter_horizontal = ('mentor_courses', 'mentors_groups', 'mentor_training_directions')
-    ordering = ('last_name', )
+    filter_horizontal = (
+    'mentor_courses', 'mentors_groups', 'mentor_training_directions')
+    ordering = ('last_name',)
     add_fieldsets = (
-        (None, {
-            'fields': ('email', 'password'),
-        }),
-    )
+        (None, {'fields': ('email', 'password')}),
+        (
+        _('Personal info'), {'fields': ('first_name', 'last_name', 'patronymic',
+                                        'mentor_courses', 'mentors_groups',
+                                        'mentor_training_directions')}))
+
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        (_('Personal info'), {'fields': ('first_name', 'last_name', 'patronymic',
-                                         'mentor_courses', 'mentors_groups', 'mentor_training_directions')}))
+        (
+        _('Personal info'), {'fields': ('first_name', 'last_name', 'patronymic',
+                                        'mentor_courses', 'mentors_groups',
+                                        'mentor_training_directions')}))
 
 
 @admin.register(Student)
 class StudentAdmin(BaseUserAdmin):
     list_display = ('first_name', 'last_name', 'patronymic', 'student_group')
     search_fields = ('first_name', 'last_name', 'patronymic', 'student_group')
-    filter_horizontal = ('student_courses', )
+    filter_horizontal = ('student_courses',)
     readonly_fields = ('student_tests',)
-    add_fieldsets = (
-        (None, {
-            'fields': ('email', 'password'),
-        }),
-    )
+    add_fieldsets = ((None, {'fields': ('email', 'password')}),
+                     (_('Personal info'),
+                      {'fields': ('first_name', 'last_name', 'patronymic',
+                                  'mentor_courses', 'mentors_groups',
+                                  'mentor_training_directions')}))
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        (_('Personal info'), {'fields': ('first_name', 'last_name', 'patronymic',
-                                         'student_courses', 'student_group',
-                                         'student_tests', 'student_book_number')}))
+        (
+        _('Personal info'), {'fields': ('first_name', 'last_name', 'patronymic',
+                                        'student_courses', 'student_group',
+                                        'student_tests',
+                                        'student_book_number')}))
     ordering = ('last_name',)
-
-
