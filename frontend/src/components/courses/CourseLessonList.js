@@ -7,6 +7,8 @@ import './../../styles/profileStyles.css'
 
 export function CourseLessonsList({lessons, course}, props) {
 
+
+
     return (
         <>
             <Container className={'mainLessonsContainer'}>

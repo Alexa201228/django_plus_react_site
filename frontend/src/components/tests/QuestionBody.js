@@ -21,7 +21,7 @@ export function QuestionBody(props) {
 
     const {test_id, question_id} = useParams();
     const dispatch = useDispatch();
-    const {question, user_chosen_answers, test} = useSelector(state => state.tests);
+    const {question, user_chosen_answers, test, question_amount} = useSelector(state => state.tests);
     const {course} = useSelector(state => state.courses);
     const navigate = useNavigate();
     useEffect(() => {
@@ -143,7 +143,7 @@ export function QuestionBody(props) {
                             <Typography className={'backLinkText'}>Назад</Typography>
                         </Container>
                         <Container className={'questionCount'}>
-                            Вопрос {getQuestionIndex()}/{test.questions_on_test.length}
+                            Вопрос {getQuestionIndex()}/{question_amount}
                         </Container>
                         <Container className={'questionShadowContainer'}>
                             <Typography>

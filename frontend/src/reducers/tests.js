@@ -19,7 +19,9 @@ const initialState = {
     finished: false,
     test_users: [],
     user_test_answers: [],
-    student_test_attempts: []
+    student_test_attempts: [],
+    questions_amount: 20,
+    chosen_questions: [],
 }
 
 
@@ -33,7 +35,8 @@ export default function (state = initialState, action) {
                 user_chosen_answers: clearChosenAnswers(action.payload.questions_on_test),
                 correct_answers: {},
                 test_users: [],
-                user_test_answers: []
+                user_test_answers: [],
+                chosen_questions: []
             }
         case GET_TEST_USERS:
             return {
@@ -53,7 +56,8 @@ export default function (state = initialState, action) {
                 user_chosen_answers: clearChosenAnswers(action.payload.test.questions_on_test),
                 correct_answers: {},
                 test_users: [],
-                user_test_answers: []
+                user_test_answers: [],
+                chosen_questions: []
             }
         case GET_QUESTION:
             return {
@@ -70,6 +74,7 @@ export default function (state = initialState, action) {
                 },
                 is_passed: action.payload.is_passed,
                 finished: action.payload.finished,
+                chosen_questions: []
             }
 
         case TRY_TEST_AGAIN:
@@ -79,7 +84,8 @@ export default function (state = initialState, action) {
                 user_chosen_answers: clearChosenAnswers(action.payload.questions_on_test),
                 correct_answers: {},
                 test_users: [],
-                user_test_answers: []
+                user_test_answers: [],
+                chosen_questions: []
             }
         case GET_ALL_STUDENT_TEST_ATTEMPTS:
             return {

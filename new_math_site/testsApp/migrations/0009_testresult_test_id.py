@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='testresult',
             name='test_id',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, related_name='tests_results', to='testsApp.test'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tests_results', to='testsApp.test'),
             preserve_default=False,
         ),
     ]
