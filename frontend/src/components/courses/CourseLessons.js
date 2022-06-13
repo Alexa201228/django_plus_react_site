@@ -6,17 +6,20 @@ import {Link, NavLink} from 'react-router-dom';
 import {Button, Container, Typography} from '@material-ui/core';
 import renderHTML from 'react-render-html';
 import {getLesson} from '../../actions/courses';
+import {getRandomQuestion} from '../../helpers/utils';
 
 
 export function CourseLesson() {
     const {slug, lesson_slug} = useParams();
     const dispatch = useDispatch();
-    const {course, lesson} = useSelector(state => state.courses)
-    const {user, isAuthenticated, isMentor} = useSelector(state => state.auth)
+    const {course, lesson} = useSelector(state => state.courses);
+    const {user, isAuthenticated, isMentor} = useSelector(state => state.auth);
+    const {chosen_questions} = useSelector(state => state.tests);
     //перезапускаем useEffect только если поменялся lesson_slug
     useEffect(() => {
         dispatch(getLesson({slug, lesson_slug}))
     }, [lesson_slug])
+
 
     return (
         <Fragment>
@@ -29,7 +32,7 @@ export function CourseLesson() {
                         </Container>
                         <Container
                             component={Link}
-                            to={-1}
+                            to={`/${course.slug}`}
                             className={'backLinkContainer'}>
                             <Typography className={'backLinkText'}>Назад</Typography>
                         </Container>

@@ -18,13 +18,14 @@ import {returnErrorMessages} from "../../actions/messages";
 
 export function TestResults(props) {
     const {test, user_test_answers} = useSelector(state => state.tests);
-    const {course, lesson} = useSelector((state) => state.courses);
+    const {course, lesson} = useSelector(state => state.courses);
     const {user} = useSelector(state => state.auth);
     const {test_id} = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch(getUserTestAnswers(test_id, user.id))
+        dispatch(getUserTestAnswers(test_id, user.id));
+        dispatch(getJustTest(test_id))
     }, [test_id, user])
 
     window.history.pushState(null, null, window.location.href);
@@ -87,11 +88,12 @@ export function TestResults(props) {
         }
         return answer
     }
-
     console.log(user_test_answers)
+    console.log(course)
+    console.log(test)
     return (
         <Fragment>
-            {course && test &&
+            {course && test && user_test_answers &&
             <Container>
                 <Container className={'courseInfoContainer'}>
                     <Typography className={'courseInfoTitle'}>{course.title}</Typography>

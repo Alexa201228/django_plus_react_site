@@ -35,18 +35,19 @@ export default function (state = initialState, action) {
                 user_chosen_answers: clearChosenAnswers(action.payload.questions_on_test),
                 correct_answers: {},
                 test_users: [],
-                user_test_answers: [],
-                chosen_questions: []
+                user_test_answers: []
             }
         case GET_TEST_USERS:
             return {
                 ...state,
-                test_users: action.payload.students
+                test_users: action.payload.students,
+                chosen_questions: []
             }
         case GET_USER_TEST_ANSWERS:
             return {
                 ...state,
-                user_test_answers: action.payload.test_results
+                user_test_answers: action.payload.test_results,
+                chosen_questions: []
             }
         case GET_TEST:
             return {
@@ -56,16 +57,14 @@ export default function (state = initialState, action) {
                 user_chosen_answers: clearChosenAnswers(action.payload.test.questions_on_test),
                 correct_answers: {},
                 test_users: [],
-                user_test_answers: [],
-                chosen_questions: []
+                user_test_answers: []
             }
         case GET_QUESTION:
             return {
                 ...state,
-                question: action.payload,
+                question: action.payload
             }
         case GET_TEST_RESULTS:
-
             return {
                 ...state,
                 result: action.payload.result,
@@ -91,10 +90,14 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 student_test_attempts: action.payload.test_results,
-                test_users: action.payload.test_users
+                test_users: action.payload.test_users,
+                chosen_questions: []
             }
         default:
-            return state;
+            return {
+                ...state,
+                chosen_questions: []
+            };
     }
 }
 

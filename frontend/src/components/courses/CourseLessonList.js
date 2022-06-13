@@ -1,13 +1,13 @@
 import React from 'react';
+import {useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 
 import {Container, Typography} from '@material-ui/core';
-import './../../styles/profileStyles.css'
+import './../../styles/profileStyles.css';
+import {getRandomQuestion} from '../../helpers/utils';
 
 
 export function CourseLessonsList({lessons, course}, props) {
-
-
 
     return (
         <>

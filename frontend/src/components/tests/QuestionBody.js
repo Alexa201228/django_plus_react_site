@@ -3,6 +3,7 @@ import {connect, useDispatch, useSelector} from 'react-redux';
 import {useParams} from 'react-router';
 import PropTypes from 'prop-types';
 import renderHTML from 'react-render-html';
+import {Link, useNavigate} from "react-router-dom";
 
 import {
     Button,
@@ -14,24 +15,27 @@ import {
 } from '@material-ui/core';
 
 import {getQuestion, testResults} from '../../actions/tests';
-import {Link, useNavigate} from "react-router-dom";
+import {getRandomQuestion} from '../../helpers/utils';
 
 
 export function QuestionBody(props) {
 
-    const {test_id, question_id} = useParams();
+    const {test_id, question_id, lesson_slug} = useParams();
     const dispatch = useDispatch();
-    const {question, user_chosen_answers, test, question_amount} = useSelector(state => state.tests);
+    const {question, user_chosen_answers, test, questions_amount, chosen_questions} = useSelector(state => state.tests);
     const {course} = useSelector(state => state.courses);
     const navigate = useNavigate();
     useEffect(() => {
         dispatch(getQuestion(question_id))
+        if(!chosen_questions.some(q => q == question_id)){
+            chosen_questions.push(parseInt(question_id))
+        }
     }, [question_id])
-
     window.history.pushState(null, null, window.location.href);
     window.onpopstate = function () {
-       window.history.go(1);
+        window.history.go(1);
     };
+    let chosenTemp = []
     //Получение результатов тестирования
     const getTestResult = () => {
         const test_time = localStorage.getItem('testTime')
@@ -43,6 +47,16 @@ export function QuestionBody(props) {
         localStorage.setItem('testTime', 0)
         props.testResults(requestBody);
         navigate(`/test/${test_id}/results/test_results`);
+    }
+
+    const getRandomNextQuestion = (allQuestions) => {
+        let questionsIds = [];
+        for (let i = 0; i < allQuestions.length; i++) {
+            questionsIds.push(allQuestions[i].id)
+        }
+        let temp = getRandomQuestion(questionsIds, chosen_questions);
+        console.log(temp)
+        return temp
     }
 
     const setSelectedAnswers = (ans) => {
@@ -79,17 +93,17 @@ export function QuestionBody(props) {
     }
 
     const getQuestionIndex = () => {
-        return test.questions_on_test.findIndex(q => q.id == question_id) + 1;
+        return chosen_questions.findIndex(q => q == question_id) + 1;
     }
 
     const getFurtherQuestion = () => {
         let lastPathSlash = window.location.pathname.lastIndexOf('/');
-        let newPath = window.location.pathname.substr(0, lastPathSlash) + `/${test.questions_on_test[getQuestionIndex()]?.id}`
+        let newPath = window.location.pathname.substr(0, lastPathSlash) + `/${getRandomNextQuestion(test.questions_on_test)}`
         return newPath;
     }
 
     const isLastQuestion = () => {
-        return getQuestionIndex() == test.questions_on_test.length;
+        return getQuestionIndex() == questions_amount || getQuestionIndex() == test.questions_on_test.length;
     }
 
     const answersContainer = (
@@ -138,12 +152,12 @@ export function QuestionBody(props) {
                         </Container>
                         <Container
                             component={Link}
-                            to={-1}
+                            to={`/${course.slug}`}
                             className={'backLinkContainer'}>
                             <Typography className={'backLinkText'}>Назад</Typography>
                         </Container>
                         <Container className={'questionCount'}>
-                            Вопрос {getQuestionIndex()}/{question_amount}
+                            Вопрос {getQuestionIndex()}/{questions_amount}
                         </Container>
                         <Container className={'questionShadowContainer'}>
                             <Typography>
