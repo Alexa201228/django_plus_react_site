@@ -32,7 +32,7 @@ export function CourseLesson() {
                         </Container>
                         <Container
                             component={Link}
-                            to={`/${course.slug}`}
+                            to={isMentor ? `/lessons-list/${course.slug}` : `/${course.slug}`}
                             className={'backLinkContainer'}>
                             <Typography className={'backLinkText'}>Назад</Typography>
                         </Container>
