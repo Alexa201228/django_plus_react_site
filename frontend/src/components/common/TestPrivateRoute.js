@@ -16,7 +16,7 @@ const TestPrivateRoute = ({ auth, course }) => {
         );
       }
       if (!auth.user.student_courses.some(c => course.course.id === c.id)) {
-        return <Navigate to={`${course.course.slug}`}/>;
+        return <Navigate to={`/user/profile/${auth.user.id}`}/>;
       } else {
         return <Outlet />;
       }
