@@ -266,6 +266,7 @@ export const getAllStudentGroups = () => (dispatch, getState) => {
             })
         })
         .catch(err => {
+            console.log(err)
             dispatch(returnErrorMessages({msg: err.response.data}, {status: err.response.status}))
         })
 }

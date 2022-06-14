@@ -7,7 +7,7 @@ import {Container, Typography} from "@material-ui/core";
 export function MentorTestsPage(){
     const location = useLocation();
     const {curr_course} = location.state
-    const { course } = useSelector((state) => state.courses)
+    const { course } = useSelector(state => state.courses)
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(courseDetails(curr_course))
