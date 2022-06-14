@@ -260,6 +260,7 @@ export const getGroupsByYear = ({year}) => (dispatch, getState) => {
 export const getAllStudentGroups = () => (dispatch, getState) => {
     axios.get(`${API_PATH}/api/student_groups`, tokenConfig(getState))
         .then(res => {
+            console.log(res.data)
             dispatch({
                 type: GET_STUDENT_GROUPS,
                 payload: res.data
