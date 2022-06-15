@@ -48,6 +48,7 @@ export const getTest = (id, user_id, course_slug) => (dispatch, getState) => {
             })
         })
         .catch(err => {
+            console.log(err)
             if (err.response.status === 401) {
                 return null;
             } else {
