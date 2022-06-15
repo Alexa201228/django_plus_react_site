@@ -96,6 +96,8 @@ class StudentLoginApiView(generics.GenericAPIView):
         try:
             student_book_number = StudentBookNumber.objects.filter(
                 student_book_number=request.data['student_book_number']).first()
+            if student_book_number is None:
+                raise ValueError('Такого номера зачетной книжки нет в базе!')
             student = Student.objects.filter(student_book_number=student_book_number.id).first()
             if student is None:
                 raise ValueError('Учащегося с данным номером зачетной книжки нет в базе.'

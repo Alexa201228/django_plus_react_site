@@ -14,7 +14,7 @@ import {
     Typography
 } from '@material-ui/core';
 
-import {getQuestion, testResults} from '../../actions/tests';
+import {getQuestion, testResults, getJustTest} from '../../actions/tests';
 import {getRandomQuestion} from '../../helpers/utils';
 
 
@@ -26,16 +26,19 @@ export function QuestionBody(props) {
     const {course} = useSelector(state => state.courses);
     const navigate = useNavigate();
     useEffect(() => {
+
         dispatch(getQuestion(question_id))
         if(!chosen_questions.some(q => q == question_id)){
             chosen_questions.push(parseInt(question_id))
         }
+        dispatch(getJustTest(test_id));
     }, [question_id])
     window.history.pushState(null, null, window.location.href);
     window.onpopstate = function () {
         window.history.go(1);
     };
-    let chosenTemp = []
+
+    console.log(test_id)
     //Получение результатов тестирования
     const getTestResult = () => {
         const test_time = localStorage.getItem('testTime')
@@ -51,11 +54,10 @@ export function QuestionBody(props) {
 
     const getRandomNextQuestion = (allQuestions) => {
         let questionsIds = [];
-        for (let i = 0; i < allQuestions.length; i++) {
+        for (let i = 0; i < allQuestions?.length; i++) {
             questionsIds.push(allQuestions[i].id)
         }
         let temp = getRandomQuestion(questionsIds, chosen_questions);
-        console.log(temp)
         return temp
     }
 
@@ -98,12 +100,12 @@ export function QuestionBody(props) {
 
     const getFurtherQuestion = () => {
         let lastPathSlash = window.location.pathname.lastIndexOf('/');
-        let newPath = window.location.pathname.substr(0, lastPathSlash) + `/${getRandomNextQuestion(test.questions_on_test)}`
+        let newPath = window.location.pathname.substr(0, lastPathSlash) + `/${getRandomNextQuestion(test?.questions_on_test)}`
         return newPath;
     }
 
     const isLastQuestion = () => {
-        return getQuestionIndex() == questions_amount || getQuestionIndex() == test.questions_on_test.length;
+        return getQuestionIndex() == questions_amount || getQuestionIndex() == test?.questions_on_test.length;
     }
 
     const answersContainer = (
@@ -143,7 +145,7 @@ export function QuestionBody(props) {
 
     return (
         <Fragment>
-            {question ?
+            {question && test && test.questions_on_test ?
                 <Fragment>
                     <Container>
                         <Container className={'courseInfoContainer'}>

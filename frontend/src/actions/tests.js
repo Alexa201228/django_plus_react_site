@@ -14,6 +14,7 @@ import {API_PATH} from "../helpers/requiredConst";
 
 //Get test
 export const getJustTest = (id) => (dispatch, getState) => {
+    console.log(id)
     axios.get(
         `${API_PATH}/api/tests/${id}/`,
         tokenConfig(getState)
