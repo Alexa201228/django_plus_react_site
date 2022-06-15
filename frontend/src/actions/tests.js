@@ -42,6 +42,7 @@ export const getTest = (id, user_id, course_slug) => (dispatch, getState) => {
         tokenConfig(getState)
     )
         .then(res => {
+            console.log(res)
             dispatch({
                 type: GET_TEST,
                 payload: res.data
