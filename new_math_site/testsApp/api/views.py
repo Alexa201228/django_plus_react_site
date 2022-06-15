@@ -72,6 +72,7 @@ class TestViewSet(viewsets.ReadOnlyModelViewSet):
         try:
             print('test attempt')
             logger.info('test attempt')
+            logger.debug('test attempt')
             student = Student.objects.filter(id=request.GET.get('user-id')).first()
             test = self.get_object()
             student_results = TestResult.objects.filter(test_id=test, user_id=student).all()
