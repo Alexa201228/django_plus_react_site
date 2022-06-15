@@ -1,7 +1,7 @@
 {
   "name": "frontend",
-  "homepage": "https://studenttestingsystem.herokuapp.com",
-  "proxy": "https://studenttestingsystem.herokuapp.com",
+  "homepage": "https://studenttestingsystem.herokuapp.com/",
+  "proxy": "https://studenttestingsystem.herokuapp.com/",
   "version": "0.1.0",
   "private": false,
   "engines": {
