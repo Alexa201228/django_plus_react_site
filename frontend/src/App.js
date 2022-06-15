@@ -82,7 +82,7 @@ export function App() {
                                     <Route path='/register' element={<Register/>}/>
                                     <Route path='/reset-password/:token' element={<ResetPasswordForm/>}/>
                                     <Route path='/reset-password' element={<ResetPassword/>}/>
-                                    {/*<Route element={<MentorPrivateRoute/>}>*/}
+                                    <Route element={<MentorPrivateRoute/>}>
 
                                         <Route path='/lessons-list/:slug' element={<MentorCoursePage/>}/>
                                         <Route path='/lessons-list/:slug/lessons/add' element={<MentorAddLesson/>}/>
@@ -109,7 +109,7 @@ export function App() {
                                                element={<StudentsTestAttempts/>}/>
                                         <Route path='/tests/:test_id/students/:user_id/attempts/:attempt_id'
                                                element={<StudentTestAnswers/>}/>
-                                    {/*</Route>*/}
+                                    </Route>
                                     <Route element={<PrivateRoute/>}>
                                         <Route path=':slug/*' element={<CourseDetail/>}/>
                                     </Route>
