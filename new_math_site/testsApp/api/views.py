@@ -177,18 +177,22 @@ class TestViewSet(viewsets.ReadOnlyModelViewSet):
         Method to add new test or edit existing one from frontend
         """
         try:
-            print(request.method, request.data)
             if request.method == 'PATCH':
-
                 new_test = Test.objects.filter(id=request.data.pop('test_id')).first()
                 for question in new_test.questions_on_test.all():
                     question.delete()
             if request.method == 'POST':
                 if request.data.get('lesson_id'):
                     lesson = Lesson.objects.filter(id=request.data.pop('lesson_id')).first()
+                    exist_test = Test.objects.filter(lesson=lesson).first()
+                    if exist_test:
+                        raise ValueError('Тест для данного урока уже существует!')
                     new_test = Test.objects.create(lesson=lesson)
                 if request.data.get('course_id'):
                     course = Course.objects.filter(id=request.data.pop('course_id')).first()
+                    exist_test = Test.objects.filter(course=course).first()
+                    if exist_test:
+                        raise ValueError('Тест для данного курса уже существует!')
                     new_test = Test.objects.create(course=course)
             new_test.title = request.data.pop('test_name')
             new_test.attempts_amount = request.data.pop('attempts_amount')
