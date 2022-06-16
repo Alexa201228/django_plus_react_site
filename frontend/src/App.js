@@ -1,5 +1,5 @@
 import React, {Fragment, useEffect} from "react";
-import {HashRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {positions, Provider as AlertProvider} from "react-alert";
 import {Provider} from "react-redux";
 import {PersistGate} from "redux-persist/integration/react";
@@ -69,7 +69,7 @@ export function App() {
         <Provider store={store}>
             <PersistGate persistor={persistor}>
                 <AlertProvider template={AlertTemplate} {...alertOptions}>
-                    <HashRouter basename={process.env.PUBLIC_URL}>
+                    <BrowserRouter basename={process.env.PUBLIC_URL}>
                         <Fragment>
                             <Header/>
                             <Alerts/>
@@ -132,7 +132,7 @@ export function App() {
                                 </Routes>
                             </div>
                         </Fragment>
-                    </HashRouter>
+                    </BrowserRouter>
                 </AlertProvider>
             </PersistGate>
         </Provider>
