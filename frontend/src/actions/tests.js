@@ -39,7 +39,7 @@ export const getTest = (id, user_id, course_slug) => (dispatch, getState) => {
     console.log(id)
     console.log(user_id)
     axios.get(
-        `/api/tests/${id}/get-test?user-id=${user_id}`,
+        `${API_PATH}/api/tests/${id}/get-test?user-id=${user_id}`,
         tokenConfig(getState)
     )
         .then(res => {
