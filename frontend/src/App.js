@@ -76,7 +76,7 @@ export function App() {
                             <div className='appContainer'>
                                 <Routes>
                                     <Route element={<TestPrivateRoute/>}>
-                                        <Route path={'/test/:slug/:test_id'} element={<MainTestPage/>}>
+                                        <Route path={'/test/:slug/:test_id/*'} element={<MainTestPage/>}>
                                             <Route path={':lesson_slug/questions/:question_id'}
                                                    element={<QuestionBody/>}/>
                                             <Route path={'questions/:question_id'}
