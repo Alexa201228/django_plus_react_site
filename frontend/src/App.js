@@ -1,5 +1,5 @@
 import React, {Fragment, useEffect} from "react";
-import {HashRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {positions, Provider as AlertProvider} from "react-alert";
 import {Provider} from "react-redux";
 import {PersistGate} from "redux-persist/integration/react";
@@ -69,18 +69,18 @@ export function App() {
         <Provider store={store}>
             <PersistGate persistor={persistor}>
                 <AlertProvider template={AlertTemplate} {...alertOptions}>
-                    <HashRouter basename={'/'}>
+                    <BrowserRouter basename={'/'}>
                         <Fragment>
                             <Header/>
                             <Alerts/>
                             <div className='appContainer'>
                                 <Routes>
                                     <Route element={<TestPrivateRoute/>}>
-                                        <Route path={'/test/:slug/:test_id/*'} element={<MainTestPage/>}>
+                                        <Route path={'/test/:slug/:test_id'} element={<MainTestPage/>}>
                                             <Route path={':lesson_slug/questions/:question_id'}
-                                                   element={<QuestionBody/>}/>
+                                                   exact element={<QuestionBody/>}/>
                                             <Route path={'questions/:question_id'}
-                                                   element={<QuestionBody/>}/>
+                                                   exact element={<QuestionBody/>}/>
                                         </Route>
 
                                     </Route>
@@ -132,7 +132,7 @@ export function App() {
                                 </Routes>
                             </div>
                         </Fragment>
-                    </HashRouter>
+                    </BrowserRouter>
                 </AlertProvider>
             </PersistGate>
         </Provider>
