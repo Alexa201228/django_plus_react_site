@@ -7,7 +7,7 @@ import {Button, Container, Typography} from "@material-ui/core";
 export function MentorGroupsPage() {
     const {groupsByYear} = useSelector(state => state.auth)
     const dispatch = useDispatch();
-    const {year} = useParams();
+    const {test_id, year} = useParams();
     useEffect(() => {
         dispatch(getGroupsByYear({year: year}))
     }, [year])
@@ -19,6 +19,12 @@ export function MentorGroupsPage() {
                 <Container>
                     <Container className={'courseInfoContainer'}>
                         <Typography className={'courseInfoTitle'}>Выберите группу:</Typography>
+                    </Container>
+                    <Container
+                        component={Link}
+                        to={`/tests/${test_id}`}
+                        className={'backLinkContainer'}>
+                        <Typography className={'backLinkText'}>Назад</Typography>
                     </Container>
                     <Container>
                         {groupsByYear.map((group, index) => (

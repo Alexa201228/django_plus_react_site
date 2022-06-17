@@ -74,6 +74,7 @@ export function App() {
                             <Alerts/>
                             <div className='appContainer'>
                                 <Routes>
+
                                     <Route element={<MentorPrivateRoute/>}>
                                         <Route path='/tests/:test_id/students/:user_id/attempts'
                                                element={<StudentsTestAttempts/>}/>
@@ -104,7 +105,8 @@ export function App() {
                                                exact element={<QuestionBody/>}/>
                                         <Route path={'/test/:slug/:test_id/questions/:question_id'}
                                                exact element={<QuestionBody/>}/>
-
+                                        <Route path={'/test/:test_id/results/test_results'} exact
+                                               element={<TestResults/>}/>
                                     </Route>
                                     <Route path={'/user/profile/:id'} element={<PrivateRoute/>}>
                                         <Route path={'/user/profile/:id'} element={<UserProfile/>}/>
@@ -117,11 +119,10 @@ export function App() {
                                     <Route path='/confirm/:token' element={<EmailVerified/>}/>
                                     <Route path='/mentor-login' element={<MentorLogin/>}/>
                                     <Route path='/student-login' element={<StudentLogin/>}/>
+
                                     <Route element={<PrivateRoute/>}>
-                                        <Route path={'/test/:test_id/results/test_results'} element={<TestResults/>}/>
                                         <Route path=':slug/*' element={<CourseDetail/>}/>
                                     </Route>
-
                                 </Routes>
                             </div>
                         </Fragment>
