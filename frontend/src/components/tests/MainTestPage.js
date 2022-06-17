@@ -20,7 +20,7 @@ export function TestPage(){
     const { test } = useSelector(state => state.tests);
     const { user } = useSelector(state => state.auth);
     const { course } = useSelector(state => state.courses);
-    const [seconds, setSeconds] = useState(0);
+    const [seconds, setSeconds] = useState(localStorage.getItem('testTime'));
     const [isActive, setIsActive] = useState(true)
     const dispatch = useDispatch();
     useEffect(()=>{

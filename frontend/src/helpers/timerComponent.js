@@ -11,7 +11,7 @@ interface TimerProps {
 
 export const formatSeconds = (secs: number) => {
     const pad = (n: number) => n < 10 ? `0${n}` : n;
-    localStorage.setItem('testTime', secs)
+    localStorage.setItem('testTime', parseInt(secs))
     const h = Math.floor(secs / 3600);
     const m = Math.floor(secs / 60) - (h * 60);
     const s = Math.floor(secs - h * 3600 - m * 60);
@@ -23,7 +23,7 @@ export const Timer = ({isActive, seconds, setSeconds}: TimerProps) => {
     useEffect(() => {
         if(isActive){
             const interval = setInterval(() => {
-                setSeconds(prevSeconds => prevSeconds + 1);
+                setSeconds(prevSeconds => parseInt(prevSeconds) + 1);
             }, 1000);
 
             return () => clearInterval(interval)

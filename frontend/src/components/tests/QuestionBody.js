@@ -1,4 +1,4 @@
-import React, {useEffect, Fragment} from 'react';
+import React, {useEffect, Fragment, useState} from 'react';
 import {connect, useDispatch, useSelector} from 'react-redux';
 import {useParams} from 'react-router';
 import PropTypes from 'prop-types';
@@ -14,24 +14,28 @@ import {
     Typography
 } from '@material-ui/core';
 
-import {getQuestion, testResults, getJustTest} from '../../actions/tests';
+import {getQuestion, testResults, getTest} from '../../actions/tests';
 import {getRandomQuestion} from '../../helpers/utils';
+import {Timer} from "../../helpers/timerComponent";
 
 
 export function QuestionBody(props) {
 
     const {test_id, question_id, lesson_slug} = useParams();
+    const {user} = useSelector(state => state.auth);
     const dispatch = useDispatch();
     const {question, user_chosen_answers, test, questions_amount, chosen_questions} = useSelector(state => state.tests);
     const {course} = useSelector(state => state.courses);
+    const [seconds, setSeconds] = useState(localStorage.getItem('testTime'));
+    const [isActive, setIsActive] = useState(true)
     const navigate = useNavigate();
     useEffect(() => {
 
         dispatch(getQuestion(question_id))
-        if(!chosen_questions.some(q => q == question_id)){
+        if (!chosen_questions.some(q => q == question_id)) {
             chosen_questions.push(parseInt(question_id))
         }
-        dispatch(getJustTest(test_id));
+        dispatch(getTest(test_id, user.id, course.slug));
     }, [question_id])
     window.history.pushState(null, null, window.location.href);
     window.onpopstate = function () {
@@ -148,6 +152,10 @@ export function QuestionBody(props) {
             {question && test && test.questions_on_test ?
                 <Fragment>
                     <Container>
+                        <Container className={'mainTestContainer'}>
+                            <Timer isActive={isActive} seconds={seconds} setSeconds={setSeconds}/>
+                        </Container>
+
                         <Container className={'courseInfoContainer'}>
                             <Typography className={'courseInfoTitle'}>{course.title}</Typography>
                             <Typography className={'lessonHeader'}>{test.title}</Typography>
@@ -175,9 +183,9 @@ export function QuestionBody(props) {
                             {isLastQuestion() ? finishTest : goAhead}
                         </Container>
                     </Container>
-
                 </Fragment>
                 : null}
+
         </Fragment>
     )
 }

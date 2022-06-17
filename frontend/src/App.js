@@ -76,12 +76,10 @@ export function App() {
                             <div className='appContainer'>
                                 <Routes>
                                     <Route element={<TestPrivateRoute/>}>
-                                        <Route path={'/test/:slug/:test_id'} element={<MainTestPage/>}>
-                                            <Route path={':lesson_slug/questions/:question_id'}
-                                                   exact element={<QuestionBody/>}/>
-                                            <Route path={'questions/:question_id'}
-                                                   exact element={<QuestionBody/>}/>
-                                        </Route>
+                                        <Route path={'/test/:slug/:test_id/:lesson_slug/questions/:question_id'}
+                                               exact element={<QuestionBody/>}/>
+                                        <Route path={'/test/:slug/:test_id/questions/:question_id'}
+                                               exact element={<QuestionBody/>}/>
 
                                     </Route>
                                     <Route path={'/user/profile/:id'} element={<PrivateRoute/>}>
@@ -109,11 +107,10 @@ export function App() {
 
                                         </Route>
                                         <Route path='/tests/:test_id/edit' element={<MentorTestEdit/>}/>
-                                        <Route path='/tests/:slug/report' element={<MentorReportYear/>}>
-                                            <Route path=':year' element={<MentorReportGroupPage/>}>
-                                                <Route path=':group' element={<MentorReportTestsPage/>}/>
-                                            </Route>
-                                        </Route>
+                                        <Route path='/tests/:slug/report' element={<MentorReportYear/>}/>
+                                        <Route path='/tests/:slug/report/:year' element={<MentorReportGroupPage/>}/>
+                                        <Route path='/tests/:slug/report/:year/:group'
+                                               element={<MentorReportTestsPage/>}/>
                                         <Route path='/tests/:test_id/students/:user_id/attempts'
                                                element={<StudentsTestAttempts/>}/>
                                         <Route path='/tests/:test_id/students/:user_id/attempts/:attempt_id'
