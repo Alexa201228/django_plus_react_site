@@ -75,6 +75,32 @@ export function App() {
                             <Alerts/>
                             <div className='appContainer'>
                                 <Routes>
+                                    <Route element={<MentorPrivateRoute/>}>
+                                        <Route path='/tests/:test_id/students/:user_id/attempts'
+                                               element={<StudentsTestAttempts/>}/>
+                                        <Route path='/tests/:test_id/students/:user_id/attempts/:attempt_id'
+                                               element={<StudentTestAnswers/>}/>
+                                        <Route path='/tests/:test_id/:year' element={<MentorGroupsPage/>}/>
+                                        <Route path='/tests/:test_id/:year/:group' element={<StudentTestResultPage/>}/>
+
+                                        <Route path='/tests/:test_id/edit' element={<MentorTestEdit/>}/>
+                                        <Route path='/tests/:slug/report' element={<MentorReportYear/>}/>
+                                        <Route path='/tests/:slug/report/:year' element={<MentorReportGroupPage/>}/>
+                                        <Route path='/tests/:slug/report/:year/:group'
+                                               element={<MentorReportTestsPage/>}/>
+
+                                        <Route path='/lessons-list/:slug' element={<MentorCoursePage/>}/>
+                                        <Route path='/lessons-list/:slug/lessons/add' element={<MentorAddLesson/>}/>
+                                        <Route path='/course-tests/:slug' element={<MentorTestsPage/>}/>
+                                        <Route path='/lessons-list/:slug/tests/new' element={<MentorMainAddTestPage/>}/>
+                                        <Route path='/lessons-list/:slug/tests/new/course' element={<MentorAddTest/>}/>
+                                        <Route path='/lessons-list/:slug/tests/new/lesson' element={<MentorAddTest/>}/>
+
+                                        <Route path='/lessons-list/:slug/lessons/:lesson_slug/edit'
+                                               element={<MentorLessonEdit/>}/>
+                                        <Route path='/tests/:test_id' element={<MentorStudentPageResult/>}/>
+                                    </Route>
+
                                     <Route element={<TestPrivateRoute/>}>
                                         <Route path={'/test/:slug/:test_id/:lesson_slug/questions/:question_id'}
                                                exact element={<QuestionBody/>}/>
@@ -89,38 +115,13 @@ export function App() {
                                     <Route path='/register' element={<Register/>}/>
                                     <Route path='/reset-password/:token' element={<ResetPasswordForm/>}/>
                                     <Route path='/reset-password' element={<ResetPassword/>}/>
-                                    <Route element={<MentorPrivateRoute/>}>
-                                        <Route path='/tests/:test_id/:year' element={<MentorGroupsPage/>}/>
-                                        <Route path='/tests/:test_id/:year/:group' element={<StudentTestResultPage/>}/>
 
-                                        <Route path='/tests/:test_id/edit' element={<MentorTestEdit/>}/>
-                                        <Route path='/tests/:slug/report' element={<MentorReportYear/>}/>
-                                        <Route path='/tests/:slug/report/:year' element={<MentorReportGroupPage/>}/>
-                                        <Route path='/tests/:slug/report/:year/:group'
-                                               element={<MentorReportTestsPage/>}/>
-                                        <Route path='/tests/:test_id/students/:user_id/attempts'
-                                               element={<StudentsTestAttempts/>}/>
-                                        <Route path='/tests/:test_id/students/:user_id/attempts/:attempt_id'
-                                               element={<StudentTestAnswers/>}/>
-                                        <Route path='/lessons-list/:slug' element={<MentorCoursePage/>}/>
-                                        <Route path='/lessons-list/:slug/lessons/add' element={<MentorAddLesson/>}/>
-                                        <Route path='/course-tests/:slug' element={<MentorTestsPage/>}/>
-                                        <Route path='/lessons-list/:slug/tests/new' element={<MentorMainAddTestPage/>}/>
-                                        <Route path='/lessons-list/:slug/tests/new/course' element={<MentorAddTest/>}/>
-                                        <Route path='/lessons-list/:slug/tests/new/lesson' element={<MentorAddTest/>}/>
-
-                                        <Route path='/lessons-list/:slug/lessons/:lesson_slug/edit'
-                                               element={<MentorLessonEdit/>}/>
-
-                                    </Route>
-                                    <Route element={<PrivateRoute/>}>
-                                        <Route path=':slug/*' element={<CourseDetail/>}/>
-                                    </Route>
                                     <Route path='/confirm/:token' element={<EmailVerified/>}/>
                                     <Route path='/mentor-login' element={<MentorLogin/>}/>
                                     <Route path='/student-login' element={<StudentLogin/>}/>
                                     <Route element={<PrivateRoute/>}>
                                         <Route path={'/test/:test_id/results/test_results'} element={<TestResults/>}/>
+                                        <Route path=':slug/*' element={<CourseDetail/>}/>
                                     </Route>
 
                                 </Routes>

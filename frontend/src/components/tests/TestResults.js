@@ -88,9 +88,7 @@ export function TestResults(props) {
         }
         return answer
     }
-    console.log(user_test_answers)
-    console.log(course)
-    console.log(test)
+
     return (
         <Fragment>
             {course && test && user_test_answers &&

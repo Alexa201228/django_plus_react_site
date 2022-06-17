@@ -14,7 +14,6 @@ import {API_PATH} from "../helpers/requiredConst";
 
 //Get test
 export const getJustTest = (id) => (dispatch, getState) => {
-    console.log(id)
     axios.get(
         `${API_PATH}/api/tests/${id}/`,
         tokenConfig(getState)
@@ -36,8 +35,6 @@ export const getJustTest = (id) => (dispatch, getState) => {
 
 //Get test by id for student
 export const getTest = (id, user_id, course_slug) => (dispatch, getState) => {
-    console.log(id)
-    console.log(user_id)
     axios.get(
         `${API_PATH}/api/tests/${id}/get-test?user-id=${user_id}`,
         tokenConfig(getState)

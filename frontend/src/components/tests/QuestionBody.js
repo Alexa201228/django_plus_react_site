@@ -35,14 +35,16 @@ export function QuestionBody(props) {
         if (!chosen_questions.some(q => q == question_id)) {
             chosen_questions.push(parseInt(question_id))
         }
-        dispatch(getJustTest(test_id));
     }, [question_id])
+
+    useEffect(() => {
+        dispatch(getJustTest(test_id))
+    }, [test_id])
     window.history.pushState(null, null, window.location.href);
     window.onpopstate = function () {
         window.history.go(1);
     };
 
-    console.log(test_id)
     //Получение результатов тестирования
     const getTestResult = () => {
         const test_time = localStorage.getItem('testTime')

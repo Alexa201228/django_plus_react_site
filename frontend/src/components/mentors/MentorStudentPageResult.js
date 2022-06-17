@@ -8,6 +8,7 @@ import {getAllStudentGroups} from "../../actions/auth";
 export function MentorStudentPageResult() {
 
     const {groups} = useSelector(state => state.auth);
+    const {course} = useSelector(state => state.courses)
     const {test_id} = useParams()
     const dispatch = useDispatch();
 
@@ -34,6 +35,12 @@ export function MentorStudentPageResult() {
                         <Button component={Link}
                                 to={`/tests/${test_id}/edit`}
                                 className={'yearButton'}>Изменить тест</Button>
+                    </Container>
+                    <Container
+                        component={Link}
+                        to={`/lessons-list/${course.slug}`}
+                        className={'backLinkContainer'}>
+                        <Typography className={'backLinkText'}>Назад</Typography>
                     </Container>
                     <Container>
                         {getDistinctYears().map((year, index) => (
