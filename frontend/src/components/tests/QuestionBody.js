@@ -14,7 +14,7 @@ import {
     Typography
 } from '@material-ui/core';
 
-import {getQuestion, testResults, getTest} from '../../actions/tests';
+import {getQuestion, testResults, getJustTest} from '../../actions/tests';
 import {getRandomQuestion} from '../../helpers/utils';
 import {Timer} from "../../helpers/timerComponent";
 
@@ -35,7 +35,7 @@ export function QuestionBody(props) {
         if (!chosen_questions.some(q => q == question_id)) {
             chosen_questions.push(parseInt(question_id))
         }
-        dispatch(getTest(test_id, user.id, course.slug));
+        dispatch(getJustTest(test_id));
     }, [question_id])
     window.history.pushState(null, null, window.location.href);
     window.onpopstate = function () {
