@@ -72,8 +72,8 @@ MIDDLEWARE = [
 CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ORIGIN_WHITELIST = (
-    'localhost:3000',
-    "studenttestingsystem.herokuapp.com"
+    'http://localhost:3000',
+    "https://studenttestingsystem.herokuapp.com"
 )
 
 ROOT_URLCONF = 'new_math_site.urls'
