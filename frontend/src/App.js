@@ -78,18 +78,20 @@ export function App() {
                                     <Route element={<MentorPrivateRoute/>}>
                                         <Route path='/lessons-list/tests/:test_id/students/:user_id/attempts'
                                                element={<StudentsTestAttempts/>}/>
-                                        <Route path='/lessons-list/tests/:test_id/students/:user_id/attempts/:attempt_id'
-                                               element={<StudentTestAnswers/>}/>
+                                        <Route
+                                            path='/lessons-list/tests/:test_id/students/:user_id/attempts/:attempt_id'
+                                            element={<StudentTestAnswers/>}/>
+                                        <Route path='/lessons-list/tests/:test_id/:year/:group'
+                                               element={<StudentTestResultPage/>}/>
                                         <Route path='/lessons-list/tests/:test_id/:year' element={<MentorGroupsPage/>}/>
-                                        <Route path='/lessons-list/tests/:test_id/:year/:group' element={<StudentTestResultPage/>}/>
-                                        <Route path='/lessons-list/tests/:test_id' element={<MentorStudentPageResult/>}/>
-                                        <Route path='/lessons-list/tests/:test_id/edit' element={<MentorTestEdit/>}/>
-                                        <Route path='/lessons-list/tests/:slug/report' element={<MentorReportYear/>}/>
-                                        <Route path='/lessons-list/tests/:slug/report/:year' element={<MentorReportGroupPage/>}/>
                                         <Route path='/lessons-list/tests/:slug/report/:year/:group'
                                                element={<MentorReportTestsPage/>}/>
+                                        <Route path='/lessons-list/tests/:test_id/edit' element={<MentorTestEdit/>}/>
 
-                                        <Route path='/lessons-list/:slug' element={<MentorCoursePage/>}/>
+                                        <Route path='/lessons-list/tests/:slug/report/:year'
+                                               element={<MentorReportGroupPage/>}/>
+                                        <Route path='/lessons-list/tests/:slug/report' element={<MentorReportYear/>}/>
+
                                         <Route path='/lessons-list/:slug/lessons/add' element={<MentorAddLesson/>}/>
                                         <Route path='/lessons-list/:slug/tests/new' element={<MentorMainAddTestPage/>}/>
                                         <Route path='/lessons-list/:slug/tests/new/course' element={<MentorAddTest/>}/>
@@ -97,7 +99,9 @@ export function App() {
 
                                         <Route path='/lessons-list/:slug/lessons/:lesson_slug/edit'
                                                element={<MentorLessonEdit/>}/>
-
+                                        <Route path='/lessons-list/tests/:test_id'
+                                               element={<MentorStudentPageResult/>}/>
+                                        <Route path='/lessons-list/:slug' element={<MentorCoursePage/>}/>
                                     </Route>
 
                                     <Route element={<TestPrivateRoute/>}>

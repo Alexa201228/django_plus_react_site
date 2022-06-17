@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     'drf_yasg',
+    'whitenoise.runserver_nostatic'
 ]
 
 MIDDLEWARE = [
@@ -267,12 +268,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 django_heroku.settings(locals())
 
-STATIC_URL = '/static/'
 # Place static in the same location as webpack build files
 STATICFILES_DIRS = [os.path.join(BASE_DIR.parent, 'frontend/build', 'static')]
 
-# If you want to serve user uploaded files add these settings
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'build', 'media')
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
