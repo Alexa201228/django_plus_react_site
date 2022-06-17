@@ -26,13 +26,15 @@ export function TestResults(props) {
     useEffect(() => {
         dispatch(getUserTestAnswers(test_id, user.id));
         dispatch(getJustTest(test_id))
+        localStorage.removeItem('testTime')
     }, [test_id, user])
 
     window.history.pushState(null, null, window.location.href);
     window.onpopstate = function () {
-       window.history.go(1);
+        window.history.go(1);
     };
     const tryAgain = () => {
+        localStorage.removeItem('testTime')
         const token = user.access_token;
         const config = {
             headers: {
@@ -89,9 +91,10 @@ export function TestResults(props) {
         return answer
     }
     console.log(user_test_answers)
+    localStorage.removeItem('testTime')
     return (
         <Fragment>
-            {course && test && user_test_answers &&
+            {course && test && user_test_answers != [] &&
             <Container>
                 <Container className={'courseInfoContainer'}>
                     <Typography className={'courseInfoTitle'}>{course.title}</Typography>

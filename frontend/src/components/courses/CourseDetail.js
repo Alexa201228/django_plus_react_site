@@ -1,39 +1,40 @@
-import React, { Fragment, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Route, Routes, useParams } from 'react-router';
+import React, {Fragment, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {Route, Routes, useParams} from 'react-router';
 
-import { Container } from '@material-ui/core';
+import {Container} from '@material-ui/core';
 
 
-import { courseDetails } from '../../actions/courses';
+import {courseDetails} from '../../actions/courses';
 
 import CourseLesson from './CourseLessons';
 import CourseInfo from './CourseInfo';
 
-export function CourseDetail(){
+export function CourseDetail() {
 
-    let { slug } = useParams()
+    let {slug} = useParams()
     const dispatch = useDispatch()
-    const { course } = useSelector(state => state.courses)
+    const {course} = useSelector(state => state.courses)
 
     useEffect(() => {
         dispatch(courseDetails(slug));
     }, []);
+    localStorage.removeItem('testTime')
 
-        return(   
-            <Fragment>{course ?
-                <Fragment>
-                    <Container >
-                        <Routes>
-                            <Route path=':lesson_slug' element={<CourseLesson/>}/>
-                            <Route path='/' element={<CourseInfo/>} />
-                        </Routes>
-                    </Container>                    
-                </Fragment>              
+    return (
+        <Fragment>{course ?
+            <Fragment>
+                <Container>
+                    <Routes>
+                        <Route path=':lesson_slug' element={<CourseLesson/>}/>
+                        <Route path='/' element={<CourseInfo/>}/>
+                    </Routes>
+                </Container>
+            </Fragment>
             : null}
-            </Fragment> 
-            
-        )
+        </Fragment>
+
+    )
 }
 
 export default CourseDetail;
