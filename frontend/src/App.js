@@ -106,10 +106,10 @@ export function App() {
 
                                     <Route element={<TestPrivateRoute/>}>
                                         <Route path={'/test/:slug/:test_id/:lesson_slug/questions/:question_id'}
-                                               exact element={<QuestionBody/>}/>
+                                               element={<QuestionBody/>}/>
                                         <Route path={'/test/:slug/:test_id/questions/:question_id'}
-                                               exact element={<QuestionBody/>}/>
-                                        <Route path={'/test/:test_id/results/test_results'} exact
+                                               element={<QuestionBody/>}/>
+                                        <Route path={'/test/:test_id/results/test_results'}
                                                element={<TestResults/>}/>
                                     </Route>
                                     <Route path={'/user/profile/:id'} element={<PrivateRoute/>}>
