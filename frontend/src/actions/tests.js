@@ -82,8 +82,9 @@ export const getQuestion = (id) => (dispatch, getState) => {
 }
 
 //Get Test results
-export const testResults = ({test_id, user_chosen_answers, test_time}) => (dispatch, getState) => {
-    const body = JSON.stringify({chosen_answers: user_chosen_answers, test_time: test_time})
+export const testResults = ({test_id, user_chosen_answers, test_time, user_id}) => (dispatch, getState) => {
+    console.log(user_id)
+    const body = JSON.stringify({chosen_answers: user_chosen_answers, test_time: test_time, user_id: user_id})
     axios.post(`${API_PATH}/api/tests/${test_id}/test_results/`, body, tokenConfig(getState))
         .then(res => {
             dispatch(createMessage({test_finished: `Вы завершили тест!`}));

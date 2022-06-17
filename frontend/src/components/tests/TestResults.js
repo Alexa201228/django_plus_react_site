@@ -94,7 +94,7 @@ export function TestResults(props) {
     localStorage.removeItem('testTime')
     return (
         <Fragment>
-            {course && test && user_test_answers != [] &&
+            {course && test && user_test_answers && user_test_answers != [] &&
             <Container>
                 <Container className={'courseInfoContainer'}>
                     <Typography className={'courseInfoTitle'}>{course.title}</Typography>

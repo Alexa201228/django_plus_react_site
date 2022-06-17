@@ -39,7 +39,7 @@ class TestViewSet(viewsets.ReadOnlyModelViewSet):
         """
         try:
             test = self.get_object()
-            student = Student.objects.filter(email=request.user.email).first()
+            student = Student.objects.filter(id=request.data['user_id']).first()
             test_checker = TestChecker(test, request.data['chosen_answers'], request.data['test_time'], student)
             result = test_checker.get_test_result()
 

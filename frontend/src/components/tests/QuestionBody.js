@@ -48,10 +48,12 @@ export function QuestionBody(props) {
     //Получение результатов тестирования
     const getTestResult = () => {
         const test_time = localStorage.getItem('testTime')
+        const user_id = user.id
         const requestBody = {
             test_id,
             user_chosen_answers,
-            test_time
+            test_time,
+            user_id
         }
         localStorage.setItem('testTime', 0)
         props.testResults(requestBody);
