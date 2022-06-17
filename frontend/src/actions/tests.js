@@ -147,11 +147,14 @@ export const getTestUsers = (test_id, group) => {
 
 
 export const getUserTestAnswers = (test_id, user_id) => (dispatch, getState) => {
+    console.log(test_id)
+    console.log(user_id)
     axios.get(
         `${API_PATH}/api/tests/${test_id}/students/student-result?user-id=${user_id}`,
         tokenConfig(getState)
     )
         .then(res => {
+            console.log(res)
             dispatch({
                 type: GET_USER_TEST_ANSWERS,
                 payload: res.data
