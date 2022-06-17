@@ -36,7 +36,7 @@ export function StudentTestResultPage() {
                 </Container>
                 <Container
                     component={Link}
-                    to={`/tests/${test_id}/${year}`}
+                    to={`/lessons-list/tests/${test_id}/${year}`}
                     className={'backLinkContainer'}>
                     <Typography className={'backLinkText'}>Назад</Typography>
                 </Container>
