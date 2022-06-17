@@ -35,6 +35,12 @@ export function MentorMainAddTestPage() {
     return (
         <>
             <Container>
+                <Container
+                    component={Link}
+                    to={`/lessons-list/${course.slug}`}
+                    className={'backLinkContainer'}>
+                    <Typography className={'backLinkText'}>Назад</Typography>
+                </Container>
                 <Container>
                     <Container className={'testChoiceButtonContainer'}>
                         <Button className={'questionButton'} onClick={handleTestOnLesson}>Тест для урока</Button>

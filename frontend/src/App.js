@@ -28,7 +28,6 @@ import './index.css';
 import StudentLogin from "./components/accounts/StudentLogin";
 import MentorCoursePage from "./components/mentors/MentorCoursePage";
 import MentorPrivateRoute from "./components/common/MentorPrivateRoute";
-import MentorTestsPage from "./components/mentors/MentorTestsPage";
 import TestPrivateRoute from "./components/common/TestPrivateRoute";
 import StudentTestResultPage from "./components/mentors/StudentTestResultPage";
 import StudentTestAnswers from "./components/mentors/StudentTestAnswers";
@@ -82,7 +81,7 @@ export function App() {
                                                element={<StudentTestAnswers/>}/>
                                         <Route path='/tests/:test_id/:year' element={<MentorGroupsPage/>}/>
                                         <Route path='/tests/:test_id/:year/:group' element={<StudentTestResultPage/>}/>
-
+                                        <Route path='/tests/:test_id' element={<MentorStudentPageResult/>}/>
                                         <Route path='/tests/:test_id/edit' element={<MentorTestEdit/>}/>
                                         <Route path='/tests/:slug/report' element={<MentorReportYear/>}/>
                                         <Route path='/tests/:slug/report/:year' element={<MentorReportGroupPage/>}/>
@@ -91,14 +90,13 @@ export function App() {
 
                                         <Route path='/lessons-list/:slug' element={<MentorCoursePage/>}/>
                                         <Route path='/lessons-list/:slug/lessons/add' element={<MentorAddLesson/>}/>
-                                        <Route path='/course-tests/:slug' element={<MentorTestsPage/>}/>
                                         <Route path='/lessons-list/:slug/tests/new' element={<MentorMainAddTestPage/>}/>
                                         <Route path='/lessons-list/:slug/tests/new/course' element={<MentorAddTest/>}/>
                                         <Route path='/lessons-list/:slug/tests/new/lesson' element={<MentorAddTest/>}/>
 
                                         <Route path='/lessons-list/:slug/lessons/:lesson_slug/edit'
                                                element={<MentorLessonEdit/>}/>
-                                        <Route path='/tests/:test_id' element={<MentorStudentPageResult/>}/>
+
                                     </Route>
 
                                     <Route element={<TestPrivateRoute/>}>
