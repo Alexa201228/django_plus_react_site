@@ -1,7 +1,7 @@
 {
   "name": "frontend",
   "version": "0.1.0",
-  "homepage": "/",
+  "homepage": "",
   "private": true,
   "engines": {
     "node": "14.x"
