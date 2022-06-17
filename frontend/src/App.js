@@ -100,12 +100,9 @@ export function App() {
 
                                         <Route path='/lessons-list/:slug/lessons/:lesson_slug/edit'
                                                element={<MentorLessonEdit/>}/>
-                                        <Route path='/tests/:test_id' element={<MentorStudentPageResult/>}>
-                                            <Route path=':year' element={<MentorGroupsPage/>}>
-                                                <Route path=':group' element={<StudentTestResultPage/>}/>
-                                            </Route>
+                                        <Route path='/tests/:test_id/:year' element={<MentorGroupsPage/>}/>
+                                        <Route path='/tests/:test_id/:year/:group' element={<StudentTestResultPage/>}/>
 
-                                        </Route>
                                         <Route path='/tests/:test_id/edit' element={<MentorTestEdit/>}/>
                                         <Route path='/tests/:slug/report' element={<MentorReportYear/>}/>
                                         <Route path='/tests/:slug/report/:year' element={<MentorReportGroupPage/>}/>
