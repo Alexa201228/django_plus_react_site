@@ -26,7 +26,7 @@ export function QuestionBody(props) {
     const dispatch = useDispatch();
     const {question, user_chosen_answers, test, questions_amount, chosen_questions} = useSelector(state => state.tests);
     const {course} = useSelector(state => state.courses);
-    const [seconds, setSeconds] = useState(localStorage.getItem('testTime'));
+    const [seconds, setSeconds] = useState(localStorage.getItem('testTime') ? localStorage.getItem('testTime') : 0);
     const [isActive, setIsActive] = useState(true)
     const navigate = useNavigate();
     useEffect(() => {
