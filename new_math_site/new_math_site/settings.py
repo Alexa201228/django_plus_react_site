@@ -274,7 +274,6 @@ django_heroku.settings(locals())
 
 STATIC_URL = '/static/'
 # Place static in the same location as webpack build files
-STATIC_ROOT = os.path.join(BASE_DIR.parent, 'frontend/build', 'static')
 STATICFILES_DIRS = [os.path.join(BASE_DIR.parent, 'frontend/build', 'static')]
 
 # If you want to serve user uploaded files add these settings
