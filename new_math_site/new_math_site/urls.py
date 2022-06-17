@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include, re_path
 from django.views.generic import TemplateView
+from django.views.decorators.cache import never_cache
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -53,5 +54,5 @@ urlpatterns = [
          cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc',
          cache_timeout=0), name='schema-redoc'),
-    re_path('', TemplateView.as_view(template_name='index.html')),
+    re_path('', never_cache(TemplateView.as_view(template_name='index.html'))),
 ]
