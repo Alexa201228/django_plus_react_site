@@ -82,7 +82,7 @@ ROOT_URLCONF = 'new_math_site.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR.parent, 'build')],
+        'DIRS': [os.path.join(BASE_DIR, 'build')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -259,13 +259,13 @@ DEFAULT_FROM_EMAIL = 'noreply@<math>.com'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-django_heroku.settings(locals())
-
 STATIC_URL = '/static/'
 # Place static in the same location as webpack build files
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR.parent, 'build/static')]
-STATIC_ROOT = os.path.join(BASE_DIR.parent, 'staticfiles')
+STATICFILES_DIRS = [os.path.join('build/static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+django_heroku.settings(locals())
+
+
