@@ -67,7 +67,7 @@ export function App() {
         <Provider store={store}>
             <PersistGate persistor={persistor}>
                 <AlertProvider template={AlertTemplate} {...alertOptions}>
-                    <BrowserRouter basename={'/frontend'}>
+                    <BrowserRouter basename={'/'}>
                         <Fragment>
                             <Header/>
                             <Alerts/>
