@@ -73,7 +73,7 @@ export function App() {
                             <Alerts/>
                             <div className='appContainer'>
                                 <Routes>
-                                    <Route element={<PrivateRoute/>}>
+
                                         <Route path='/lessons-list/tests/:test_id/students/:user_id/attempts'
                                                element={<StudentsTestAttempts/>}/>
                                         <Route
@@ -123,7 +123,6 @@ export function App() {
 
 
                                         <Route path=':slug/*' element={<CourseDetail/>}/>
-                                    </Route>
                                 </Routes>
                             </div>
                         </Fragment>
