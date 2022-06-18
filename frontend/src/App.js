@@ -67,13 +67,14 @@ export function App() {
         <Provider store={store}>
             <PersistGate persistor={persistor}>
                 <AlertProvider template={AlertTemplate} {...alertOptions}>
-                    <BrowserRouter>
+                    <BrowserRouter basename={'/frontend'}>
                         <Fragment>
                             <Header/>
                             <Alerts/>
                             <div className='appContainer'>
                                 <Routes>
 
+                                    <Route element={<MentorPrivateRoute/>}>
                                         <Route path='/lessons-list/tests/:test_id/students/:user_id/attempts'
                                                element={<StudentsTestAttempts/>}/>
                                         <Route
@@ -100,29 +101,31 @@ export function App() {
                                         <Route path='/lessons-list/tests/:test_id'
                                                element={<MentorStudentPageResult/>}/>
                                         <Route path='/lessons-list/:slug' element={<MentorCoursePage/>}/>
+                                    </Route>
 
-
+                                    <Route element={<TestPrivateRoute/>}>
                                         <Route path={'/test/:slug/:test_id/:lesson_slug/questions/:question_id'}
                                                element={<QuestionBody/>}/>
                                         <Route path={'/test/:slug/:test_id/questions/:question_id'}
                                                element={<QuestionBody/>}/>
                                         <Route path={'/test/:test_id/results/test_results'}
                                                element={<TestResults/>}/>
-
-
+                                    </Route>
+                                    <Route path={'/user/profile/:id'} element={<PrivateRoute/>}>
                                         <Route path={'/user/profile/:id'} element={<UserProfile/>}/>
+                                    </Route>
+                                    <Route path='/' element={<StudentLogin/>}/>
+                                    <Route path='/register' element={<Register/>}/>
+                                    <Route path='/reset-password/:token' element={<ResetPasswordForm/>}/>
+                                    <Route path='/reset-password' element={<ResetPassword/>}/>
 
-                                        <Route path='/' element={<StudentLogin/>}/>
-                                        <Route path='/register' element={<Register/>}/>
-                                        <Route path='/reset-password/:token' element={<ResetPasswordForm/>}/>
-                                        <Route path='/reset-password' element={<ResetPassword/>}/>
+                                    <Route path='/confirm/:token' element={<EmailVerified/>}/>
+                                    <Route path='/mentor-login' element={<MentorLogin/>}/>
+                                    <Route path='/student-login' element={<StudentLogin/>}/>
 
-                                        <Route path='/confirm/:token' element={<EmailVerified/>}/>
-                                        <Route path='/mentor-login' element={<MentorLogin/>}/>
-                                        <Route path='/student-login' element={<StudentLogin/>}/>
-
-
+                                    <Route element={<PrivateRoute/>}>
                                         <Route path=':slug/*' element={<CourseDetail/>}/>
+                                    </Route>
                                 </Routes>
                             </div>
                         </Fragment>

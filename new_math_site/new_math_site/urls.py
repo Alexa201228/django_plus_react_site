@@ -54,5 +54,5 @@ urlpatterns = [
          cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc',
          cache_timeout=0), name='schema-redoc'),
-    re_path('', never_cache(TemplateView.as_view(template_name='index.html'))),
+    re_path('.*', TemplateView.as_view(template_name='index.html')),
 ]
