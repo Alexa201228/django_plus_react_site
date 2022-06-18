@@ -37,9 +37,6 @@ export function QuestionBody(props) {
         }
     }, [question_id])
 
-    useEffect(() => {
-        dispatch(getJustTest(test_id))
-    }, [test_id])
     window.history.pushState(null, null, window.location.href);
     window.onpopstate = function () {
         window.history.go(1);
@@ -156,10 +153,6 @@ export function QuestionBody(props) {
             {question && test && test.questions_on_test ?
                 <Fragment>
                     <Container>
-                        <Container className={'mainTestContainer'}>
-                            <Timer isActive={isActive} seconds={seconds} setSeconds={setSeconds}/>
-                        </Container>
-
                         <Container className={'courseInfoContainer'}>
                             <Typography className={'courseInfoTitle'}>{course.title}</Typography>
                             <Typography className={'lessonHeader'}>{test.title}</Typography>

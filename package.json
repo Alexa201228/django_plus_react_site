@@ -1,12 +1,9 @@
 {
   "name": "frontend",
+  "homepage": ".",
   "version": "0.1.0",
-  "homepage": "https://studenttestingsystem.herokuapp.com/",
-  "proxy": "http://localhost:8000",
   "private": true,
-  "engines": {
-    "node": "14.x"
-  },
+  "proxy": "http://localhost:8000",
   "dependencies": {
     "@ckeditor/ckeditor5-autoformat": "^34.1.0",
     "@ckeditor/ckeditor5-block-quote": "^34.1.0",
@@ -32,8 +29,8 @@
   "scripts": {
     "heroku-prebuild": "npm install -g serve",
     "devstart": "react-scripts start",
-    "start": "cd frontend && serve -s build",
-    "build": "cd frontend && react-scripts build",
+    "start": "serve -s build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "heroku-postbuild": "npm run build"
