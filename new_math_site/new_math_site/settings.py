@@ -82,7 +82,7 @@ ROOT_URLCONF = 'new_math_site.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR.parent, 'build')],
+        'DIRS': [os.path.join(BASE_DIR, 'build')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -264,8 +264,8 @@ django_heroku.settings(locals())
 
 STATIC_URL = '/static/'
 # Place static in the same location as webpack build files
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'build/static')]
 
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'build/static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
