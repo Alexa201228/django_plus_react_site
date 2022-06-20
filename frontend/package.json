@@ -1,9 +1,8 @@
 {
   "name": "frontend",
-  "homepage": ".",
+  "homepage": "https://studenttestingsystem.site",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:8000",
   "dependencies": {
     "@ckeditor/ckeditor5-autoformat": "^34.1.0",
     "@ckeditor/ckeditor5-block-quote": "^34.1.0",
