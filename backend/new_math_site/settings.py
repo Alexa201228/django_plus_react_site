@@ -261,12 +261,8 @@ DEFAULT_FROM_EMAIL = 'noreply@<kubstu>.com'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_URL = '/static/'
 # Place static in the same location as webpack build files
-STATIC_ROOT = os.path.join(BASE_DIR, 'build/static')
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, '')]
-
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-django_heroku.settings(locals())
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [os.path.join(BASE_DIR.parent, 'frontend/build/static')]
 
 try:
     from .local_settings import *
