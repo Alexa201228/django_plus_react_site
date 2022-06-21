@@ -2,6 +2,7 @@
   "name": "frontend",
   "homepage": "https://studenttestingsystem.site",
   "version": "0.1.0",
+  "proxy": "http://localhost:",
   "private": true,
   "dependencies": {
     "@ckeditor/ckeditor5-autoformat": "^34.1.0",
