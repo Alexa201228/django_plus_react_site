@@ -74,7 +74,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',
-    "https://studenttestingsystem.herokuapp.com"
+    "https://studenttestingsystem.site"
 )
 
 ROOT_URLCONF = 'new_math_site.urls'
