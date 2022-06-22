@@ -77,16 +77,15 @@ export function App() {
                             <Alerts/>
                             <div className='appContainer'>
                                 <Routes>
-
                                     <Route element={<PrivateRoute/>}>
-                                        <Route key={'/test/:test_id/results/test_results'} path={'/test/:test_id/results/test_results'} element={<TestResults/>}/>
+                                        <Route path={'/test/:test_id/results/test_results'} element={<TestResults/>}/>
                                     </Route>
                                     <Route element={<TestPrivateRoute/>}>
-                                        <Route key={'/test/:slug'} path='/test/:slug'>
-                                            <Route key={'/test/:slug/:test_id'} path={':test_id'} element={<MainTestPage/>}>
-                                                <Route key={'/test/:slug/:test_id/questions/:question_id'} path={'/test/:slug/:test_id/questions/:question_id'}
+                                        <Route path='/test/:slug'>
+                                            <Route path={':test_id'} element={<MainTestPage/>}>
+                                                <Route path={'/test/:slug/:test_id/questions/:question_id'}
                                                        element={<QuestionBody/>}/>
-                                                <Route key={'/test/:slug/:test_id/:lesson_slug/questions/:question_id'} path={'/test/:slug/:test_id/:lesson_slug/questions/:question_id'}
+                                                <Route path={'/test/:slug/:test_id/:lesson_slug/questions/:question_id'}
                                                        element={<QuestionBody/>}/>
                                             </Route>
                                         </Route>
@@ -107,18 +106,18 @@ export function App() {
                                         <Route path='/lessons-list/:slug/tests/new/course' element={<MentorAddTest/>}/>
                                         <Route path='/lessons-list/:slug/tests/new/lesson' element={<MentorAddTest/>}/>
 
-                                        <Route key={'/lessons-list/:slug/lessons/:lesson_slug/edit'} path='/lessons-list/:slug/lessons/:lesson_slug/edit'
+                                        <Route path='/lessons-list/:slug/lessons/:lesson_slug/edit'
                                                element={<MentorLessonEdit/>}/>
-                                        <Route key={'/tests/:test_id/lessons-list/:slug/lessons/:lesson_slug/edit'} path='/tests/:test_id' element={<MentorStudentPageResult/>}>
-                                            <Route key={'/tests/:test_id/lessons-list/:slug/lessons/:lesson_slug/:year/edit'} path=':year' element={<MentorGroupsPage/>}>
-                                                <Route key={'/tests/:test_id/lessons-list/:slug/lessons/:lesson_slug/:year/:group/edit'} path=':group' element={<StudentTestResultPage/>}/>
+                                        <Route path='/tests/:test_id' element={<MentorStudentPageResult/>}>
+                                            <Route path=':year' element={<MentorGroupsPage/>}>
+                                                <Route path=':group' element={<StudentTestResultPage/>}/>
                                             </Route>
 
                                         </Route>
                                         <Route path='/tests/:test_id/edit' element={<MentorTestEdit/>}/>
-                                        <Route key={'/tests/:slug/report'} path='/tests/:slug/report' element={<MentorReportYear/>}>
-                                            <Route key={'/tests/:slug/report/:year'} path=':year' element={<MentorReportGroupPage/>}>
-                                                <Route key={'/tests/:slug/report/:year/:group'} path=':group' element={<MentorReportTestsPage/>}/>
+                                        <Route path='/tests/:slug/report' element={<MentorReportYear/>}>
+                                            <Route path=':year' element={<MentorReportGroupPage/>}>
+                                                <Route path=':group' element={<MentorReportTestsPage/>}/>
                                             </Route>
                                         </Route>
                                         <Route path='/tests/:test_id/students/:user_id/attempts'
