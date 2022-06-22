@@ -1,6 +1,8 @@
 {
   "name": "frontend",
   "version": "0.1.0",
+  "homepage": "https://studenttestingsystem.site",
+  "proxy": "https://studenttestingsystem.site/api",
   "private": true,
   "dependencies": {
     "@ckeditor/ckeditor5-autoformat": "^34.1.0",
