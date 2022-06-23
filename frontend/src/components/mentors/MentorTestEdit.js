@@ -132,7 +132,7 @@ export function MentorTestEdit() {
 
     return (
         <>
-            {questionList && test.questions_on_test &&
+            {questionList && test && test.questions_on_test &&
             <>
                 <Delayed>
                     <Container className={'addTestContainer'}>

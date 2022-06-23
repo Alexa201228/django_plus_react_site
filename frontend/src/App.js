@@ -42,7 +42,6 @@ import StudentsTestAttempts from "./components/mentors/StudentsTestAttempts";
 import MentorReportYear from "./components/mentors/MentorReportYear";
 import MentorReportTestsPage from "./components/mentors/MentorReportTestsPage";
 import MentorReportGroupPage from "./components/mentors/MentorReportGroupPage";
-import MentorTestsPage from './components/mentors/MentorTestsPage';
 import axios from 'axios';
 
 axios.defaults.xsrfCookieName = 'csrftoken'

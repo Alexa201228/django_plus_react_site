@@ -54,5 +54,6 @@ urlpatterns = [
          cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc',
          cache_timeout=0), name='schema-redoc'),
+    # Because of this line prod didn't work
     # re_path('', TemplateView.as_view(template_name='index.html')),
 ]
