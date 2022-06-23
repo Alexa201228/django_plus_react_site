@@ -49,6 +49,7 @@ export function MentorAddTest() {
     const handleAddAnswer = (question_id) => {
         let newQuestionList = [...questionList];
         newQuestionList[question_id].answers.push({answer: '', isCorrect: false})
+        localStorage.setItem(`checkbox${newQuestionList[question_id].answers.length - 1}${question_id}`, false)
         setQuestionList(newQuestionList)
     }
 
