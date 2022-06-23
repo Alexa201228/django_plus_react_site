@@ -11,8 +11,8 @@ export function MentorTestEdit() {
     const {test} = useSelector(state => state.tests);
     const dispatch = useDispatch();
     const {test_id} = useParams();
-    const [testName, setTestName] = useState(test.title);
-    const [testAttempts, setTestAttempts] = useState(test.attempts_amount);
+    const [testName, setTestName] = useState(test?.title);
+    const [testAttempts, setTestAttempts] = useState(test?.attempts_amount);
     const [questionList, setQuestionList] = useState(undefined)
     const [value, setValue] = useState();
 
