@@ -214,7 +214,7 @@ class TestViewSet(viewsets.ReadOnlyModelViewSet):
         except Exception as e:
             logger.error(e)
             return Response({
-                'error': type(e).__name__
+                'error': str(e)
             }, status=status.HTTP_400_BAD_REQUEST)
 
 
