@@ -24,7 +24,6 @@ export function MentorStudentPageResult() {
         return [...new Set(startYears)];
     }
 
-    console.log(groups)
     return (
         <>
             {groups &&

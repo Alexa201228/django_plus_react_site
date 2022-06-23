@@ -16,31 +16,31 @@ export function MentorTestEdit() {
     const [questionList, setQuestionList] = useState(undefined)
     const [value, setValue] = useState();
 
-
+    console.log(test)
     useEffect(() => {
         dispatch(getJustTest(test_id))
     }, [test_id])
 
     useEffect(() => {
         let initQuestionList = []
-        for (let i = 0; i < test.questions_on_test.length; i++) {
+        for (let i = 0; i < test?.questions_on_test.length; i++) {
             let question = {
-                question: test.questions_on_test[i].question_body,
+                question: test?.questions_on_test[i]?.question_body,
                 answers: []
             };
-            for (let j = 0; j < test.questions_on_test[i].answers_to_question.length; j++) {
+            for (let j = 0; j < test?.questions_on_test[i]?.answers_to_question?.length; j++) {
                 question['answers'].push({
-                    answer: test.questions_on_test[i].answers_to_question[j].answer_body,
-                    isCorrect: test.questions_on_test[i].answers_to_question[j].is_correct
+                    answer: test?.questions_on_test[i]?.answers_to_question[j]?.answer_body,
+                    isCorrect: test?.questions_on_test[i]?.answers_to_question[j]?.is_correct
                 })
             }
             initQuestionList.push(question)
         }
         setQuestionList(initQuestionList)
-        setTestAttempts(test.attempts_amount)
-        setTestName(test.title)
+        setTestAttempts(test?.attempts_amount)
+        setTestName(test?.title)
 
-    }, [test_id, test])
+    }, [test_id])
 
     const handleAddQuestion = () => {
         setQuestionList([...questionList, {
