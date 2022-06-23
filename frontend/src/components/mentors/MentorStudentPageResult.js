@@ -33,7 +33,7 @@ export function MentorStudentPageResult() {
                     <Container className={'courseInfoContainer'}>
                         <Typography className={'courseInfoTitle'}>Выберите год обучения:</Typography>
                         <Button component={Link}
-                                to={`/lessons-list/tests/${test_id}/edit`}
+                                to={`/tests/${test_id}/edit`}
                                 className={'yearButton'}>Изменить тест</Button>
                     </Container>
                     <Container

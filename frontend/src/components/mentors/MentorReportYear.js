@@ -6,6 +6,7 @@ import {Button, Container, Typography} from "@material-ui/core";
 
 export function MentorReportYear() {
     const {groups} = useSelector(state => state.auth);
+    const {course} = useSelector(state => state.courses)
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -26,6 +27,12 @@ export function MentorReportYear() {
                 <Container>
                     <Container className={'courseInfoContainer'}>
                         <Typography className={'courseInfoTitle'}>Выберите год обучения:</Typography>
+                    </Container>
+                    <Container
+                        component={Link}
+                        to={`/lessons-list/${course.slug}`}
+                        className={'backLinkContainer'}>
+                        <Typography className={'backLinkText'}>Назад</Typography>
                     </Container>
                     <Container>
                         {getDistinctYears().map((year, index) => (

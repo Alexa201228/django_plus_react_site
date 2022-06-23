@@ -101,7 +101,6 @@ export function App() {
 
                                         <Route path='/lessons-list/:slug' element={<MentorCoursePage/>}/>
                                         <Route path='/lessons-list/:slug/lessons/add' element={<MentorAddLesson/>}/>
-                                        <Route path='/course-tests/:slug' element={<MentorTestsPage/>}/>
                                         <Route path='/lessons-list/:slug/tests/new' element={<MentorMainAddTestPage/>}/>
                                         <Route path='/lessons-list/:slug/tests/new/course' element={<MentorAddTest/>}/>
                                         <Route path='/lessons-list/:slug/tests/new/lesson' element={<MentorAddTest/>}/>

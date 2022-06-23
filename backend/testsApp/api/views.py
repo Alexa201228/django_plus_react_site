@@ -196,7 +196,6 @@ class TestViewSet(viewsets.ReadOnlyModelViewSet):
                     new_test = Test.objects.create(course=course)
             new_test.title = request.data.pop('test_name')
             new_test.attempts_amount = request.data.pop('attempts_amount')
-
             for question in request.data:
 
                 new_question = Question.objects.create(test=new_test, question_body=request.data[question]['question'])
@@ -204,7 +203,7 @@ class TestViewSet(viewsets.ReadOnlyModelViewSet):
                 for answer in request.data[question]['answers']:
                     question_answers = Answer.objects.create(question=new_question,
                                                              answer_body=request.data[question]['answers'][answer]['answer'],
-                                                             is_correct=request.data[question]['answers'][answer]['isCorrect'] == 'true')
+                                                             is_correct=request.data[question]['answers'][answer]['isCorrect'])
                     question_answers.save()
             new_test.save()
             return Response({

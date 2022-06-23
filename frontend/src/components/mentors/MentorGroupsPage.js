@@ -20,12 +20,6 @@ export function MentorGroupsPage() {
                     <Container className={'courseInfoContainer'}>
                         <Typography className={'courseInfoTitle'}>Выберите группу:</Typography>
                     </Container>
-                    <Container
-                        component={Link}
-                        to={`/lessons-list/tests/${test_id}`}
-                        className={'backLinkContainer'}>
-                        <Typography className={'backLinkText'}>Назад</Typography>
-                    </Container>
                     <Container>
                         {groupsByYear.map((group, index) => (
                             <Button

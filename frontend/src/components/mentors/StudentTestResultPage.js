@@ -34,12 +34,6 @@ export function StudentTestResultPage() {
                 <Container className={'courseInfoContainer'}>
                     <Typography className={'courseInfoTitle'}>{test.title}</Typography>
                 </Container>
-                <Container
-                    component={Link}
-                    to={`/lessons-list/tests/${test_id}/${year}`}
-                    className={'backLinkContainer'}>
-                    <Typography className={'backLinkText'}>Назад</Typography>
-                </Container>
                 <TableContainer className={'testResultTableContainer'}>
                     <Table className={'testResultTable'}>
                         <TableHead>

@@ -103,11 +103,9 @@ export function MentorAddTest() {
         }
         if (localStorage.hasOwnProperty('lessonTestId')) {
             testData['lesson_id'] = localStorage.getItem('lessonTestId')
-            localStorage.removeItem('lessonTestId');
         }
         if (localStorage.hasOwnProperty('courseTest')) {
             testData['course_id'] = localStorage.getItem('courseTest')
-            localStorage.removeItem('courseTest');
         }
         dispatch(addTest(testData))
     }
