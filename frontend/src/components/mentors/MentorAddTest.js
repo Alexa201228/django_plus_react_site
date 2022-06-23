@@ -61,6 +61,7 @@ export function MentorAddTest() {
     const handleRightAnswerCheck = (question_id, e) => {
         let newQuestionList = [...questionList];
         newQuestionList[question_id].answers[e.target.value].isCorrect = e.target.checked;
+        localStorage.setItem(e.target.name, e.target.checked);
         setQuestionList(newQuestionList)
     }
 
@@ -87,7 +88,7 @@ export function MentorAddTest() {
                 }
                 testData[questionKey]['answers'][answerKey] = {
                     answer: localStorage.getItem(localStorage.key(i)),
-                    isCorrect: questionList[questionKey].answers[answerKey].isCorrect
+                    isCorrect: localStorage.getItem(`checkbox${answerKey}${questionKey}`)
                 };
 
                 console.log(testData)
@@ -96,9 +97,10 @@ export function MentorAddTest() {
         for (let i = 0; i < localStorage.length; i++) {
             if (localStorage.key(i).includes('answer')) {
                 let questionKey = parseInt(localStorage.key(i).slice(localStorage.key(i).indexOf('question') + 8));
-
+                let answerKey = parseInt(localStorage.key(i).slice(localStorage.key(i).indexOf('answer') + 6, localStorage.key(i).indexOf('question')));
                 localStorage.removeItem(localStorage.key(i))
                 localStorage.removeItem(`question${questionKey}`)
+                localStorage.removeItem(`checkbox${answerKey}${questionKey}`)
             }
         }
         if (localStorage.hasOwnProperty('lessonTestId')) {
@@ -141,8 +143,8 @@ export function MentorAddTest() {
             <Container>
                 <Typography className={'newLessonName'}>Укажите количество попыток прохождения теста:</Typography>
                 <TextField name={'testAttempts'} type={'number'} defaultValue={1}
-                InputProps={{ inputProps: { min: 1 } }}
-                onChange={(e) => handleAttemptsAmountChange(e)}/>
+                           InputProps={{inputProps: {min: 1}}}
+                           onChange={(e) => handleAttemptsAmountChange(e)}/>
             </Container>
             <Container className={'addTestFormContainer'}>
                 {questionList.map((question, index) => (
@@ -157,6 +159,7 @@ export function MentorAddTest() {
                                     <FormControlLabel control={
                                         <Checkbox key={index}
                                                   value={answerKey}
+                                                  name={`checkbox${answerKey}${index}`}
                                                   onChange={(e) => handleRightAnswerCheck(index, e)}/>}
                                                       label={'Правильный ответ'}/>
                                 </Container>
