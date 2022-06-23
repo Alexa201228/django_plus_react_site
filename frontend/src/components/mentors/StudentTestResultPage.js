@@ -22,8 +22,6 @@ export function StudentTestResultPage() {
     useEffect(() => {
         dispatch(getJustTest(test_id));
         dispatch(getTestUsers(test_id, group));
-
-
     }, [test_id, group, year])
 
     return (

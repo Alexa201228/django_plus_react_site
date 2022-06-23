@@ -11,36 +11,38 @@ export function MentorTestEdit() {
     const {test} = useSelector(state => state.tests);
     const dispatch = useDispatch();
     const {test_id} = useParams();
-    const [testName, setTestName] = useState(test?.title);
-    const [testAttempts, setTestAttempts] = useState(test?.attempts_amount);
+    const [testName, setTestName] = useState(undefined);
+    const [testAttempts, setTestAttempts] = useState(undefined);
     const [questionList, setQuestionList] = useState(undefined)
     const [value, setValue] = useState();
 
-    console.log(test)
     useEffect(() => {
         dispatch(getJustTest(test_id))
     }, [test_id])
 
     useEffect(() => {
-        let initQuestionList = []
-        for (let i = 0; i < test?.questions_on_test.length; i++) {
-            let question = {
-                question: test?.questions_on_test[i]?.question_body,
-                answers: []
-            };
-            for (let j = 0; j < test?.questions_on_test[i]?.answers_to_question?.length; j++) {
-                question['answers'].push({
-                    answer: test?.questions_on_test[i]?.answers_to_question[j]?.answer_body,
-                    isCorrect: test?.questions_on_test[i]?.answers_to_question[j]?.is_correct
-                })
+        if(test != null){
+            let initQuestionList = []
+            for (let i = 0; i < test.questions_on_test.length; i++) {
+                let question = {
+                    question: test.questions_on_test[i].question_body,
+                    answers: []
+                };
+                for (let j = 0; j < test.questions_on_test[i].answers_to_question.length; j++) {
+                    question['answers'].push({
+                        answer: test.questions_on_test[i].answers_to_question[j].answer_body,
+                        isCorrect: test.questions_on_test[i].answers_to_question[j].is_correct
+                    })
+                }
+                initQuestionList.push(question)
             }
-            initQuestionList.push(question)
-        }
-        setQuestionList(initQuestionList)
-        setTestAttempts(test?.attempts_amount)
-        setTestName(test?.title)
+            setQuestionList(initQuestionList)
+            setTestAttempts(test.attempts_amount)
+            setTestName(test.title)
 
-    }, [test_id])
+        }
+
+    }, [test])
 
     const handleAddQuestion = () => {
         setQuestionList([...questionList, {
@@ -165,17 +167,17 @@ export function MentorTestEdit() {
                                    onChange={(e) => handleAttemptsAmountChange(e)}/>
                     </Container>
                     <Container className={'addTestFormContainer'}>
-                        {test.questions_on_test && test.questions_on_test.map((question, index) => (
+                        {questionList && questionList.map((question, index) => (
                             <Container className={'addLessonShadowContainer'}>
                                 <Typography className={'ckeditorQuestionLabel'}>Вопрос {index + 1}</Typography>
-                                <CkeditorComponent name={`question${index}`} content={question.question_body}/>
-                                {question.answers_to_question.map((answer, answerKey) => (
+                                <CkeditorComponent name={`question${index}`} content={question.question}/>
+                                {question.answers.map((answer, answerKey) => (
                                     <Container className={'answerContainer'}>
                                         <Typography className={'ckeditorQuestionLabel'}>Ответ:</Typography>
                                         <CkeditorComponent name={`answer${answerKey}question${index}`}
-                                                           content={answer.answer_body}/>
+                                                           content={answer.answer}/>
                                         <Container>
-                                            {questionList[index] && questionList[index].answers[answerKey] && questionList[index].answers[answerKey].isCorrect &&
+                                            {questionList[index] &&
                                             <FormControlLabel control={
                                                 <Checkbox key={index}
                                                           value={answerKey}
@@ -188,7 +190,7 @@ export function MentorTestEdit() {
                                         </Container>
 
                                         <Container button>
-                                            {question.answers_to_question.length > 1 && (
+                                            {question.answers.length > 1 && (
                                                 <Button
                                                     className={'removeAnswer'}
                                                     onClick={() => handleRemoveAnswer(index, answerKey)}>Удалить
@@ -196,7 +198,7 @@ export function MentorTestEdit() {
                                             )}
                                         </Container>
                                         <Container>
-                                            {(question.answers_to_question.length - 1 === answerKey || question.answers_to_question.length === 0) && (
+                                            {(question.answers.length - 1 === answerKey || question.answers.length === 0) && (
                                                 <Button className={'addAnswer'}
                                                         onClick={() => handleAddAnswer(index)}>Добавить
                                                     ответ</Button>

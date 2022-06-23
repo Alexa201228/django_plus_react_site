@@ -3,6 +3,7 @@ import {Link, Outlet, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import {getAllStudentGroups} from "../../actions/auth";
+import {getJustTest} from "../../actions/tests";
 
 
 export function MentorStudentPageResult() {
@@ -14,7 +15,8 @@ export function MentorStudentPageResult() {
 
     useEffect(() => {
         dispatch(getAllStudentGroups())
-    }, [])
+        dispatch(getJustTest(test_id))
+    }, [test_id])
 
     const getDistinctYears = () => {
         let startYears = []
