@@ -201,9 +201,11 @@ class TestViewSet(viewsets.ReadOnlyModelViewSet):
                 new_question = Question.objects.create(test=new_test, question_body=request.data[question]['question'])
                 new_question.save()
                 for answer in request.data[question]['answers']:
+                    is_correct = request.data[question]['answers'][answer]['isCorrect'] == 'true' \
+                        if isinstance(request.data[question]['answers'][answer]['isCorrect'], str) else request.data[question]['answers'][answer]['isCorrect']
                     question_answers = Answer.objects.create(question=new_question,
                                                              answer_body=request.data[question]['answers'][answer]['answer'],
-                                                             is_correct=request.data[question]['answers'][answer]['isCorrect'])
+                                                             is_correct=is_correct)
                     question_answers.save()
             new_test.save()
             return Response({
