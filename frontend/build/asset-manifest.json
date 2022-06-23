@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.49764271.css",
-    "main.js": "/static/js/main.5ac2757a.js",
+    "main.js": "/static/js/main.8b706e51.js",
     "static/js/787.cda612ba.chunk.js": "/static/js/787.cda612ba.chunk.js",
     "static/media/IKSIB meeting.svg": "/static/media/IKSIB meeting.ff0827af57984d678816.svg",
     "static/media/kubstulogo 1.svg": "/static/media/kubstulogo 1.d4085a7bde7605993f40.svg",
@@ -15,11 +15,11 @@
     "static/media/bx-lock-alt 1.svg": "/static/media/bx-lock-alt 1.a35c662b93e08f6ec185.svg",
     "static/media/bx-arrow-back 1.svg": "/static/media/bx-arrow-back 1.7bc84132779aa33677a8.svg",
     "main.49764271.css.map": "/static/css/main.49764271.css.map",
-    "main.5ac2757a.js.map": "/static/js/main.5ac2757a.js.map",
+    "main.8b706e51.js.map": "/static/js/main.8b706e51.js.map",
     "787.cda612ba.chunk.js.map": "/static/js/787.cda612ba.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.49764271.css",
-    "static/js/main.5ac2757a.js"
+    "static/js/main.8b706e51.js"
   ]
 }
