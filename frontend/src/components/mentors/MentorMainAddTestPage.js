@@ -14,9 +14,14 @@ export function MentorMainAddTestPage() {
         localStorage.removeItem('lessonTestName');
         localStorage.removeItem('courseTest');
         localStorage.removeItem('lessonTestId');
-        for(let i = 0; i < localStorage.length; i++){
+        let i = 0
+        const j = localStorage.length;
+        while(i < j){
             if(localStorage.key(i).includes('answer') || localStorage.key(i).includes('question') || localStorage.key(i).includes('checkbox')){
                 localStorage.removeItem(localStorage.key(i))
+            }
+            else{
+                i++
             }
         }
     }, [])
