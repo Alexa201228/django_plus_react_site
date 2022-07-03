@@ -4,6 +4,7 @@ from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 
 import jwt
+import os
 
 from rest_framework import generics, permissions, viewsets
 from rest_framework.decorators import action
@@ -163,18 +164,21 @@ class UserApiView(generics.GenericAPIView):
     ]
 
     def get_serializer_class(self):
-        mentor = Mentor.objects.filter(email=self.request.user.email).first()
+        user_id = jwt.decode(self.request.headers.get('Authorization').replace('Bearer ', ''), os.getenv('SECRET_KEY'),
+                             algorithms=['HS256']).get('user_id')
+        mentor = Mentor.objects.filter(id=user_id).first()
         if mentor is not None:
             return MentorSerializer
         return StudentSerializer
 
     def get(self, *args, **kwargs):
         curr_serializer = self.get_serializer()
-        user = Student.objects.filter(email=self.request.user.email).first()
+        user_id = jwt.decode(self.request.headers.get('Authorization').replace('Bearer ', ''), os.getenv('SECRET_KEY'), algorithms=['HS256']).get('user_id')
+        user = Student.objects.filter(id=user_id).first()
         is_mentor = False
         if isinstance(curr_serializer, MentorSerializer):
             is_mentor = True
-            user = Mentor.objects.filter(email=self.request.user.email).first()
+            user = Mentor.objects.filter(id=user_id).first()
         return Response(
                 {
                     'user': self.get_serializer(user).data,

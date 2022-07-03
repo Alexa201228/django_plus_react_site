@@ -1,4 +1,4 @@
-import { GET_COURSES, GET_COURSE_DETAILS, GET_LESSON } from '../actions/types.js';
+import { GET_COURSES, GET_COURSE_DETAILS, ENROLL_COURSE, GET_LESSON } from '../actions/types.js';
 
 const initialState = {
     courses: [],
@@ -22,6 +22,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 lesson: action.payload,
+            }
+        case ENROLL_COURSE:
+            return {
+                ...state,
+                course: action.payload.course
             }
         default:
             return state;

@@ -1,7 +1,6 @@
 {
   "name": "frontend",
   "version": "0.1.0",
-
   "private": true,
   "dependencies": {
     "@ckeditor/ckeditor5-autoformat": "^34.1.0",
@@ -75,6 +74,7 @@
     "@material-ui/icons": "^4.11.3",
     "axios": "^0.26.1",
     "axios-auth-refresh": "^3.2.2",
+    "ckeditor": "^4.12.1",
     "ckeditor5-custom-build": "0.0.6",
     "material-ui": "^0.20.2",
     "mui-rte": "^2.0.1",

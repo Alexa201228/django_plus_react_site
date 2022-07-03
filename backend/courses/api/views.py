@@ -4,6 +4,9 @@ from rest_framework_simplejwt.exceptions import AuthenticationFailed
 from rest_framework.response import Response
 from pytils.translit import slugify
 
+import jwt
+import os
+
 from ..models import Course
 from accounts.models import Student, Mentor
 from .serializers import *
@@ -26,10 +29,15 @@ class CourseViewSet(viewsets.ReadOnlyModelViewSet):
     def enroll(self, request, *args, **kwargs):
         try:
             course = self.get_object()
-            student = Student.objects.filter(email=request.user.email).first()
+            user_id = jwt.decode(self.request.headers.get('Authorization').replace('Bearer ', ''),
+                                 os.getenv('SECRET_KEY'), algorithms=['HS256']).get('user_id')
+            student = Student.objects.filter(id=user_id).first()
             course.students_on_course.add(student)
             student.student_courses.add(course)
-            return Response(status=status.HTTP_202_ACCEPTED)
+            return Response(
+                {'course': CourseSerializer(course).data},
+                status=status.HTTP_202_ACCEPTED
+            )
         except AuthenticationFailed as auth_fail:
             return Response(
                 {'error': auth_fail.detail},
