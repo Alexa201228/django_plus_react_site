@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 from pathlib import Path
 
 import pandas as pd
@@ -57,7 +58,7 @@ def generate_pdf_report(group_name, titles, data):
         color: rgba(0, 0, 0, 0.87);
     }
     ''')
-    filename = f'{uuid.uuid4()}-{group_name}.pdf'
+    filename = f'{datetime.now().strftime("%d-%m-%Y; %H:%M:%S")}-{group_name}.pdf'
     if not os.path.exists(str(Path().resolve().parent) + '/frontend/public/reports'):
         os.mkdir(str(Path().resolve().parent) + '/frontend/public/reports')
     html_doc.write_pdf(f'{str(Path().resolve().parent)}/frontend/public/reports/{filename}', stylesheets=[css])

@@ -118,23 +118,5 @@ class StudentGroupAPIView(viewsets.ModelViewSet,
                 'error': type(e).__name__
             }, status=status.HTTP_400_BAD_REQUEST)
 
-    @action(
-        detail=False,
-        methods=['delete'],
-        permission_classes=[permissions.IsAuthenticated],
-        url_path='group/students/reports/delete'
-    )
-    def delete_temp_report_file(self, request, *args, **kwargs):
-        """
-        Method to delete report file from server after its' download
-        """
-        try:
-            os.remove(f'{str(Path().resolve().parent)}/frontend/public{request.GET.get("file")}')
-            return Response({})
-        except Exception as e:
-            return Response({
-                'error': type(e).__name__
-            }, status=status.HTTP_400_BAD_REQUEST)
-
 
 

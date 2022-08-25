@@ -284,17 +284,6 @@ export const getGroupStudents = (group_name, course_slug) => (dispatch, getState
         })
 }
 
-//Method to delete downloaded file from folder
-export const deleteDownloadedReport = (filename) => (dispatch, getState) => {
-    axios.delete(`${API_PATH}/api/student_groups/group/students/reports/delete?file=${filename}`, tokenConfig(getState))
-        .then(res => {
-            console.log('temp file deleted')
-        })
-        .catch(err => {
-            dispatch(returnErrorMessages({msg: err.response.data}, {status: err.response.status}))
-        })
-}
-
 //Setup config
 export const tokenConfig = getState => {
     const token = getState().auth.access_token;

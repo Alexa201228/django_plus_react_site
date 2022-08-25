@@ -50,9 +50,6 @@ export function MentorReportTestsPage() {
                 document.removeChild(link)
 
             })
-            .then(setTimeout(() => {
-                dispatch(deleteDownloadedReport(localStorage.getItem('reportFilepath')))
-            }, 10000))
             .catch(err => {
                 console.log(err)
             })
