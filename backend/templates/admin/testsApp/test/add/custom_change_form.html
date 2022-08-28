@@ -1,0 +1,8 @@
+{% extends 'admin/change_form.html' %}
+{% load static %}
+{% block content %}
+<h3>Добавить тест с помощью Excel</h3>
+<a href="/admin/web/testsApp/test/upload-xlsx"/>Загрузить файл
+{{ block.super }}
+
+{% endblock %}

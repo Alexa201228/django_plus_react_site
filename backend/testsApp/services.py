@@ -5,7 +5,7 @@ from .api.serializers import AnswerSerializer
 from accounts.models import Student
 
 
-class TestChecker():
+class TestChecker:
     """
     Класс для проверки теста.
     Метод проверки возвращает результат в процентах,
@@ -84,3 +84,7 @@ class TestChecker():
             raise e
         
 
+class XLSXParser:
+    """
+    Class to preprocess xlsx file and get data to add to DB.
+    """
