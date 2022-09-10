@@ -82,7 +82,7 @@ ROOT_URLCONF = 'new_math_site.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR.parent, 'frontend/build')],
+        'DIRS': [os.path.join(BASE_DIR.parent, 'frontend/build'), os.path.join(BASE_DIR.parent, 'backend/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
